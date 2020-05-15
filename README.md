@@ -86,7 +86,7 @@ This site can serve as an alternative to reddit or facebook as it reduces the ne
 | P1  | Registered User  | I want to exchange the points I receive by logging in for badges to add to my profile  | User would send a **PATCH request** to v1/marketplace/{ItemID}, where the ItemID will be an input included with their request. The ItemID corresponds to a table of possible items and badges from **the users/marketplace/process database**. From there, the user’s profile will update to include the page they selected.  |
 | P2  | Unregistered User  | I want to know how to sign up  | User would locate the sign-up page in the web client. Then, they would send a **POST request** with their inputted information (email, password, etc.) to create their account, similar to UserHandler.  |
 
----
+### Architectural Diagram
 
 ![our new architectural diagram](img/INFO_441_Architectual_Diagram.png)
 
