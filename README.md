@@ -3,9 +3,12 @@ By Ashmann Syngle, Shray Arora and Sarah West
 
 ## Project Pitch
 For our project, our target audience is people struggling with addictive substances, such as nicotine. 
-Quitting nicotine is hard, especially when you lack support. Groups like Alcoholics Anonymous exist for people with alcoholism, but there aren’t very many groups for people addicted to nicotine products, such as vaping or smoking. There are also people who don’t know where to start with the whole process of quitting.
-Our platform will allow users struggling with nicotine addiction to connect with one another to exchange advice and offer support. 
-It will be forum-based, with various threads that people can search for and respond to. Users can also create new threads about a variety of subjects regarding addiction. Along with the forums, our site will help keep track of a user's progress towards sobriety, awarding them points which can be exchanged for achievement badges to be included on one's profile.
+Quitting nicotine is hard, especially when you lack support. Groups like Alcoholics Anonymous exist for people with alcoholism, but there aren’t very many groups for people addicted to nicotine products, such as vaping or smoking. There are also people who don’t know where to start with the whole process of quitting. Most addicts are unaware that there exist certain patterns or trends in their addiction behaviour. Our project aims to help nicotine addicts notice these patterns through the use of a 'sobriety clock' in order to prevent possible relapses. 
+
+The 'sobriety clock' requires the user to clock-in everyday they don't use nicotine. For every day that they clock-in, the users are awarded some points which can be thought of as a 'currency' to our website's marketplace. The marketplace will include badges that the user can pin to their profile in a similar way to how people in Alcoholics Anonymous recieve badges for  milestones achieved in the quitting process.
+
+Additionally, our platform will allow users struggling with nicotine addiction to connect with one another to exchange advice and offer support. It will be forum-based, with various threads that people can search for and respond to. Users can also create new threads about a variety of subjects regarding addiction. 
+
 This site can serve as an alternative to reddit or facebook as it reduces the need to create “throwaway accounts” to have anonymity when discussing sensitive subjects. Furthermore, the progress and incentive features allows our site to be more engaged and focused on our user's goals and motivation, unlike the aforementioned cites.
 
 ## Technical Description
@@ -90,7 +93,8 @@ This site can serve as an alternative to reddit or facebook as it reduces the ne
 
 ![our architectural diagram](img/INFO_441_Architectual_Diagram.png)
 
-(description goes here)
+When the user makes a request to our website, the gateway server first authenticates the user and verifies the session token provided against the redis store. Based on this request, the reverse proxy will redirect the request to either the ‘threads’ microservice or the ‘User Information’ microservice. The threads microservice will render a page that will show data stored in our ‘threads and posts’ database. The User Information Microservice will render a page that will show specific user data stored in our ‘User Progress and Marketplace’ database.
+
 
 ### Appendix
 
@@ -144,4 +148,17 @@ This site can serve as an alternative to reddit or facebook as it reduces the ne
         foreign key (threadID) references Threads(threadID)
     }
 
+* **Threads**:
+  * **threadID** int primary key auto_increment not null,
+  * **userWhoCreatedID** int not null,
+  * **timeCreated** datetime not null,
+  foreign key (userWhoCreatedID) references Users(id)
 
+* **Posts**:
+  * **postID** int primary key auto_increment not null,
+  * **threadID** int not null,
+  * **content** varchar (500) not null,
+  * **userWhoCreatedID** int not null,
+  * **timeCreated** datetime not null,
+  foreign key (userWhoCreatedID) references Users(id)
+  foreign key (threadID) references Threads(threadID)
