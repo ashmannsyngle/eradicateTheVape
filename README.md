@@ -86,9 +86,62 @@ This site can serve as an alternative to reddit or facebook as it reduces the ne
 | P1  | Registered User  | I want to exchange the points I receive by logging in for badges to add to my profile  | User would send a **PATCH request** to v1/marketplace/{ItemID}, where the ItemID will be an input included with their request. The ItemID corresponds to a table of possible items and badges from **the users/marketplace/process database**. From there, the user’s profile will update to include the page they selected.  |
 | P2  | Unregistered User  | I want to know how to sign up  | User would locate the sign-up page in the web client. Then, they would send a **POST request** with their inputted information (email, password, etc.) to create their account, similar to UserHandler.  |
 
----
+### Architectural Diagram
 
-![our new architectural diagram](img/INFO_441_Architectual_Diagram.png)
+![our architectural diagram](img/INFO_441_Architectual_Diagram.png)
 
+(description goes here)
+
+### Appendix
+
+#### Database Schemas
+
+
+    Users {
+        id int primary key auto_increment not null,
+        email varchar(80) not null,passHash char(60) not null,
+        username varchar(255) not null,
+        firstName varchar(64) not null,
+        lastName varchar(128) not null,
+        bio varchar(500) not null,
+        points int not null,
+        photoUrl varchar(255) not null
+    }
+
+    Progress {
+        progressID int primary key auto_increment not null,
+        daysSober int not null,
+        userID int not null,
+        foreign key (userID) references Users(id)
+    }
+
+    Marketplace {
+        badgeID int primary key auto_increment not null,
+        cost int not null
+    }
+
+    Badges {
+        badgeID int not null,
+        userID int not null,
+        foreign key (badgeID) references Marketplace(badgeID)
+        foreign key (userID) references Users(id)
+    }
+
+    Threads{
+        threadID int primary key auto_increment not null, 
+        userWhoCreatedID int not null, 
+        timeCreated datetime not null, 
+        foreign key (userWhoCreatedID) references Users(id)
+    }
+
+    Posts {
+        postID int primary key auto_increment not null,
+        threadID int not null,
+        content varchar (500) not null,
+        userWhoCreatedID int not null,
+        timeCreated datetime not null,
+        foreign key (userWhoCreatedID) references Users(id)
+        foreign key (threadID) references Threads(threadID)
+    }
 
 
