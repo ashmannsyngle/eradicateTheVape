@@ -90,5 +90,21 @@ This site can serve as an alternative to reddit or facebook as it reduces the ne
 
 ![our new architectural diagram](img/INFO_441_Architectual_Diagram.png)
 
+When the user makes a request to our website, the gateway server first authenticates the user and verifies the session token provided against the redis store. Based on this request, the reverse proxy will redirect the request to either the ‘threads’ microservice or the ‘User Information’ microservice. The threads microservice will render a page that will show data stored in our ‘threads and posts’ database. The User Information Microservice will render a page that will show specific user data stored in our ‘User Progress and Marketplace’ database.
+
+## Appendix
+
+### Database Schemas
+* Users:
+  * **id** int primary key auto_increment not null,
+	* **email** varchar(80) not null,
+  * **passHash** char(60) not null,
+  * **username** varchar(255) not null,
+  * **firstName** varchar(64) not null,
+  * **lastName** varchar(128) not null,
+	* **bio** varchar(500) not null,
+	* **points** int not null,
+  * **photoUrl** varchar(255) not null
+
 
 
