@@ -100,50 +100,44 @@ When the user makes a request to our website, the gateway server first authentic
 
 #### Database Schemas
 
+* **Users**:
+  * **id** int primary key auto_increment not null,
+  * **email** varchar(80) not null,
+  * **passHash** char(60) not null,
+  * **username** varchar(255) not null,
+  * **firstName** varchar(64) not null,
+  * **lastName** varchar(128) not null,
+  * **bio** varchar(500) not null,
+  * **points** int not null,
+  * **photoUrl** varchar(255) not null
+  
+* **Progress**:
+  * **progressID** int primary key auto_increment not null,
+  * **daysSober** int not null,
+  * **userID** int not null,
+  * foreign key (userID) references Users(id)
 
-    Users {
-        id int primary key auto_increment not null,
-        email varchar(80) not null,passHash char(60) not null,
-        username varchar(255) not null,
-        firstName varchar(64) not null,
-        lastName varchar(128) not null,
-        bio varchar(500) not null,
-        points int not null,
-        photoUrl varchar(255) not null
-    }
+* **Marketplace**:
+  * **badgeID** int primary key auto_increment not null,
+  * **cost** int not null
+  
+* **Badges**:
+  * **badgeID** int not null,
+  * **userID** int not null,
+  * foreign key (badgeID) references Marketplace(badgeID)
+  * foreign key (userID) references Users(id)
 
-    Progress {
-        progressID int primary key auto_increment not null,
-        daysSober int not null,
-        userID int not null,
-        foreign key (userID) references Users(id)
-    }
+* **Threads**:
+  * **threadID** int primary key auto_increment not null,
+  * **userWhoCreatedID** int not null,
+  * **timeCreated** datetime not null,
+  * foreign key (userWhoCreatedID) references Users(id)
 
-    Marketplace {
-        badgeID int primary key auto_increment not null,
-        cost int not null
-    }
-
-    Badges {
-        badgeID int not null,
-        userID int not null,
-        foreign key (badgeID) references Marketplace(badgeID)
-        foreign key (userID) references Users(id)
-    }
-
-    Threads{
-        threadID int primary key auto_increment not null, 
-        userWhoCreatedID int not null, 
-        timeCreated datetime not null, 
-        foreign key (userWhoCreatedID) references Users(id)
-    }
-
-    Posts {
-        postID int primary key auto_increment not null,
-        threadID int not null,
-        content varchar (500) not null,
-        userWhoCreatedID int not null,
-        timeCreated datetime not null,
-        foreign key (userWhoCreatedID) references Users(id)
-        foreign key (threadID) references Threads(threadID)
-    }
+* **Posts**:
+  * **postID** int primary key auto_increment not null,
+  * **threadID** int not null,
+  * **content** varchar (500) not null,
+  * **userWhoCreatedID** int not null,
+  * **timeCreated** datetime not null,
+  * foreign key (userWhoCreatedID) references Users(id)
+  * foreign key (threadID) references Threads(threadID)
