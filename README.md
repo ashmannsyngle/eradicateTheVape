@@ -147,18 +147,3 @@ When the user makes a request to our website, the gateway server first authentic
         foreign key (userWhoCreatedID) references Users(id)
         foreign key (threadID) references Threads(threadID)
     }
-
-* **Threads**:
-  * **threadID** int primary key auto_increment not null,
-  * **userWhoCreatedID** int not null,
-  * **timeCreated** datetime not null,
-  foreign key (userWhoCreatedID) references Users(id)
-
-* **Posts**:
-  * **postID** int primary key auto_increment not null,
-  * **threadID** int not null,
-  * **content** varchar (500) not null,
-  * **userWhoCreatedID** int not null,
-  * **timeCreated** datetime not null,
-  foreign key (userWhoCreatedID) references Users(id)
-  foreign key (threadID) references Threads(threadID)
