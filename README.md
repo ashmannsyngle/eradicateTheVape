@@ -4,9 +4,12 @@ By Ashmann Syngle, Shray Arora and Sarah West
 ## Project Pitch
 For our project, our target audience is people struggling with addictive substances, such as nicotine. 
 Quitting nicotine is hard, especially when you lack support. Groups like Alcoholics Anonymous exist for people with alcoholism, but there aren’t very many groups for people addicted to nicotine products, such as vaping or smoking. There are also people who don’t know where to start with the whole process of quitting. Most addicts are unaware that there exist certain patterns or trends in their addiction behaviour. Our project aims to help nicotine addicts notice these patterns through the use of a 'sobriety clock' in order to prevent possible relapses. 
+
 The 'sobriety clock' requires the user to clock-in everyday the user doesn't use nicotine. For every day that they clock-in, the users are awarded some points which can be thought of as a 'currency' to our website's marketplace. The marketplace will include badges that the user can pin to their profile in a similar way to how people in Alcoholics Anonymous recieve badges for  milestones achieved in the quitting process.
 Our platform will allow users struggling with nicotine addiction to connect with one another to exchange advice and offer support. 
+
 It will be forum-based, with various threads that people can search for and respond to. Users can also create new threads about a variety of subjects regarding addiction. Along with the forums, our site will help keep track of a user's progress towards sobriety, awarding them points which can be exchanged for achievement badges to be included on one's profile.
+
 This site can serve as an alternative to reddit or facebook as it reduces the need to create “throwaway accounts” to have anonymity when discussing sensitive subjects. Furthermore, the progress and incentive features allows our site to be more engaged and focused on our user's goals and motivation, unlike the aforementioned cites.
 
 ## Technical Description
