@@ -1,15 +1,15 @@
-docker rm -f db
+docker rm -f postsdb
 
-docker pull ashmann7/eradicatethevapedb
+docker pull ashmann7/postsdb
 
 docker run -d \
 --network customNetwork \
 -v /etc/letsencrypt:/etc/letsencrypt:ro \
 -p 3306:3306 \
---name db \
+--name postsdb \
 -e MYSQL_ROOT_PASSWORD="password" \
--e MYSQL_DATABASE=mysqlstoredb \
-ashmann7/eradicatethevapedb:latest
+-e MYSQL_DATABASE=postsdb \
+ashmann7/postsdb:latest
 
 exit
 
