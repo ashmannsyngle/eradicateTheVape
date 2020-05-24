@@ -22,42 +22,42 @@ func NewMySQLStore(DB *sql.DB) *MySQLStore {
 
 //GetByID returns the User with the given ID
 func (msq *MySQLStore) GetByID(id int64) (*User, error) {
-	sqlQuery := "select id,email,passHash,username,firstName,lastName,photoUrl from Users where id=?"
+	sqlQuery := "select id,email,passHash,username,firstName,lastName,bio,points,photoUrl from Users where id=?"
 	res, err := msq.db.Query(sqlQuery, id)
 	if err != nil {
 		return nil, err
 	}
 	var userNew User
 	if res.Next() {
-		res.Scan(&userNew.ID, &userNew.Email, &userNew.PassHash, &userNew.UserName, &userNew.FirstName, &userNew.LastName, &userNew.PhotoURL)
+		res.Scan(&userNew.ID, &userNew.Email, &userNew.PassHash, &userNew.UserName, &userNew.FirstName, &userNew.LastName, &userNew.Bio, &userNew.Points, &userNew.PhotoURL)
 	}
 	return &userNew, err
 }
 
 //GetByEmail returns the User with the given email
 func (msq *MySQLStore) GetByEmail(email string) (*User, error) {
-	sqlQuery := "select id,email,passHash,username,firstName,lastName,photoUrl from Users use index (email_index) where email=?"
+	sqlQuery := "select id,email,passHash,username,firstName,lastName,bio,points,photoUrl from Users use index (email_index) where email=?"
 	res, err := msq.db.Query(sqlQuery, email)
 	if err != nil {
 		return nil, err
 	}
 	var userNew User
 	if res.Next() {
-		res.Scan(&userNew.ID, &userNew.Email, &userNew.PassHash, &userNew.UserName, &userNew.FirstName, &userNew.LastName, &userNew.PhotoURL)
+		res.Scan(&userNew.ID, &userNew.Email, &userNew.PassHash, &userNew.UserName, &userNew.FirstName, &userNew.LastName, &userNew.Bio, &userNew.Points, &userNew.PhotoURL)
 	}
 	return &userNew, err
 }
 
 //GetByUserName returns the User with the given Username
 func (msq *MySQLStore) GetByUserName(username string) (*User, error) {
-	sqlQuery := "select id,email,passHash,username,firstName,lastName,photoUrl from Users use index (username_index) where username=?"
+	sqlQuery := "select id,email,passHash,username,firstName,lastName,bio,points,photoUrl from Users use index (username_index) where username=?"
 	res, err := msq.db.Query(sqlQuery, username)
 	if err != nil {
 		return nil, err
 	}
 	var userNew User
 	if res.Next() {
-		res.Scan(&userNew.ID, &userNew.Email, &userNew.PassHash, &userNew.UserName, &userNew.FirstName, &userNew.LastName, &userNew.PhotoURL)
+		res.Scan(&userNew.ID, &userNew.Email, &userNew.PassHash, &userNew.UserName, &userNew.FirstName, &userNew.LastName, &userNew.Bio, &userNew.Points, &userNew.PhotoURL)
 	}
 	return &userNew, err
 }
@@ -65,9 +65,9 @@ func (msq *MySQLStore) GetByUserName(username string) (*User, error) {
 //Insert inserts the user into the database, and returns
 //the newly-inserted User, complete with the DBMS-assigned ID
 func (msq *MySQLStore) Insert(user *User) (*User, error) {
-	insq := "insert into Users(email, passHash, username, firstName, lastName, photoUrl) values (?, ?, ?, ?, ?, ?)"
+	insq := "insert into Users(email, passHash, username, firstName, lastName, bio, points, photoUrl) values (?, ?, ?, ?, ?, ?)"
 
-	res, err := msq.db.Exec(insq, user.Email, user.PassHash, user.UserName, user.FirstName, user.LastName, user.PhotoURL)
+	res, err := msq.db.Exec(insq, user.Email, user.PassHash, user.UserName, user.FirstName, user.LastName, user.Bio, user.Points, user.PhotoURL)
 	if err != nil {
 		return nil, err
 	}
@@ -84,8 +84,8 @@ func (msq *MySQLStore) Insert(user *User) (*User, error) {
 //Update applies UserUpdates to the given user ID
 //and returns the newly-updated user
 func (msq *MySQLStore) Update(id int64, updates *Updates) (*User, error) {
-	updq := "update Users set firstName = ?, lastName = ? where id = ? "
-	_, err := msq.db.Exec(updq, updates.FirstName, updates.LastName, id)
+	updq := "update Users set firstName = ?, lastName = ?, bio = ? where id = ? "
+	_, err := msq.db.Exec(updq, updates.FirstName, updates.LastName, updates.Bio, id)
 	if err != nil {
 		return nil, errors.New("error updating User")
 	}
@@ -98,17 +98,6 @@ func (msq *MySQLStore) Delete(id int64) error {
 	_, err := msq.db.Exec(delq, id)
 	if err != nil {
 		return errors.New("error deleting User")
-	}
-	return nil
-}
-
-//AddSignIn logs all user sign-in attempts, as defined by calls to the
-//POST /v1/sessions endpoint.
-func (msq *MySQLStore) AddSignIn(id int64, ipAddress string) error {
-	signq := "insert into SignIns(id, dTime, ipAddress) values (?, NOW(), ?)"
-	_, err := msq.db.Exec(signq, id, ipAddress)
-	if err != nil {
-		return errors.New("error adding sign-in")
 	}
 	return nil
 }

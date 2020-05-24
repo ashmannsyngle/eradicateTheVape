@@ -26,6 +26,8 @@ type User struct {
 	UserName  string `json:"userName"`
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
+	Bio       string `json:"bio"`
+	Points    int    `json:"points"`
 	PhotoURL  string `json:"photoURL"`
 }
 
@@ -43,12 +45,14 @@ type NewUser struct {
 	UserName     string `json:"userName"`
 	FirstName    string `json:"firstName"`
 	LastName     string `json:"lastName"`
+	Bio          string `json:"bio"`
 }
 
 //Updates represents allowed updates to a user profile
 type Updates struct {
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
+	Bio       string `json:"bio"`
 }
 
 //Validate validates the new user and returns an error if
@@ -146,6 +150,10 @@ func (u *User) ApplyUpdates(updates *Updates) error {
 
 	u.FirstName = updates.FirstName
 	u.LastName = updates.LastName
+
+	if updates.Bio != "" {
+		u.Bio = updates.Bio
+	}
 
 	return nil
 }

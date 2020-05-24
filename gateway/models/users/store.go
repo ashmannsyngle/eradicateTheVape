@@ -28,8 +28,4 @@ type Store interface {
 
 	//Delete deletes the user with the given ID
 	Delete(id int64) error
-
-	////AddSignIn logs all user sign-in attempts, as defined by calls to the
-	//POST /v1/sessions endpoint.
-	AddSignIn(id int64, ipAddress string) error
 }
