@@ -28,7 +28,7 @@ func (msq *MySQLStore) GetByID(id int64) (*User, error) {
 		return nil, err
 	}
 	var userNew User
-	if res.Next() {
+	for res.Next() {
 		res.Scan(&userNew.ID, &userNew.Email, &userNew.PassHash, &userNew.UserName, &userNew.FirstName, &userNew.LastName, &userNew.Bio, &userNew.Points, &userNew.PhotoURL)
 	}
 	return &userNew, err
@@ -42,7 +42,7 @@ func (msq *MySQLStore) GetByEmail(email string) (*User, error) {
 		return nil, err
 	}
 	var userNew User
-	if res.Next() {
+	for res.Next() {
 		res.Scan(&userNew.ID, &userNew.Email, &userNew.PassHash, &userNew.UserName, &userNew.FirstName, &userNew.LastName, &userNew.Bio, &userNew.Points, &userNew.PhotoURL)
 	}
 	return &userNew, err
@@ -56,7 +56,7 @@ func (msq *MySQLStore) GetByUserName(username string) (*User, error) {
 		return nil, err
 	}
 	var userNew User
-	if res.Next() {
+	for res.Next() {
 		res.Scan(&userNew.ID, &userNew.Email, &userNew.PassHash, &userNew.UserName, &userNew.FirstName, &userNew.LastName, &userNew.Bio, &userNew.Points, &userNew.PhotoURL)
 	}
 	return &userNew, err
