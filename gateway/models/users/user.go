@@ -95,6 +95,8 @@ func (nu *NewUser) ToUser() (*User, error) {
 		UserName:  nu.UserName,
 		FirstName: nu.FirstName,
 		LastName:  nu.LastName,
+		Bio:       nu.Bio,
+		Points:    0,
 		PhotoURL:  photoURL,
 	}
 

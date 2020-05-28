@@ -65,7 +65,7 @@ func (msq *MySQLStore) GetByUserName(username string) (*User, error) {
 //Insert inserts the user into the database, and returns
 //the newly-inserted User, complete with the DBMS-assigned ID
 func (msq *MySQLStore) Insert(user *User) (*User, error) {
-	insq := "insert into Users(email, passHash, username, firstName, lastName, bio, points, photoUrl) values (?, ?, ?, ?, ?, ?)"
+	insq := "insert into Users(email, passHash, username, firstName, lastName, bio, points, photoUrl) values (?, ?, ?, ?, ?, ?, ?, ?)"
 
 	res, err := msq.db.Exec(insq, user.Email, user.PassHash, user.UserName, user.FirstName, user.LastName, user.Bio, user.Points, user.PhotoURL)
 	if err != nil {

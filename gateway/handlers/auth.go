@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"info441sp20-ashraysa/gateway/models/users"
 	"info441sp20-ashraysa/gateway/sessions"
-	"net"
 	"net/http"
 	"path"
 	"strconv"
@@ -141,15 +140,6 @@ func (c *HandlerContext) SessionsHandler(w http.ResponseWriter, r *http.Request)
 		}
 		newSession := &SessionState{time.Now(), user}
 		sessions.BeginSession(c.Key, c.SessionStore, newSession, w)
-		var userIP string
-		if r.Header.Get("X-Forwarded-For") != "" {
-			ips := strings.Split(r.Header.Get("X-Forwarded-For"), ",")
-			userIP = ips[0]
-		} else {
-			ip, _, _ := net.SplitHostPort(r.RemoteAddr)
-			userIP = net.ParseIP(ip).String()
-		}
-		c.UserStore.AddSignIn(user.ID, userIP)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
 		enc := json.NewEncoder(w)
