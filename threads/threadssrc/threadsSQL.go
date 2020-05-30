@@ -40,6 +40,12 @@ type Post struct {
 	EditedAt time.Time `json:"editedAt"`
 }
 
+//InputPost represents a post someone is about to submit
+type InputPost struct {
+	Content string `json:"content"`
+	Creator	*users.User `json:"creator"`
+}
+
 //PostUpdates represents the changes made to a particular post
 type PostUpdates struct {
 	Content string `json:"content"`
