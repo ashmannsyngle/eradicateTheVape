@@ -80,6 +80,9 @@ class SignIn extends Component {
         const values = this.state;
         const { error } = this.state;
         return <div className="sign-in-page">
+            <div className="logo">
+                <h1>EradicateThe<span className="red">Vape</span></h1>
+            </div>
             <div className="container">
                 <h1>Sign <span className="red">In</span></h1>
             </div>
