@@ -8,14 +8,15 @@ class UpdateName extends Component {
         this.state = {
             firstName: '',
             lastName: '',
+            bio: '',
             error: ''
         }
     }
 
     sendRequest = async (e) => {
         e.preventDefault();
-        const { firstName, lastName } = this.state;
-        const sendData = { firstName, lastName };
+        const { firstName, lastName , bio} = this.state;
+        const sendData = { firstName, lastName, bio};
         const response = await fetch(api.base + api.handlers.myuser, {
             method: "PATCH",
             body: JSON.stringify(sendData),
@@ -44,7 +45,7 @@ class UpdateName extends Component {
     }
 
     render() {
-        const { firstName, lastName, error } = this.state;
+        const { firstName, lastName, bio, error } = this.state;
         return <>
             <Errors error={error} setError={this.setError} />
             <div>Enter a new name</div>
@@ -56,6 +57,10 @@ class UpdateName extends Component {
                 <div>
                     <span>Last name: </span>
                     <input name={"lastName"} value={lastName} onChange={this.setValue} />
+                </div>
+                <div>
+                    <span>Bio: </span>
+                    <input name={"bio"} value={bio} onChange={this.setValue} />
                 </div>
                 <input type="submit" value="Change name" />
             </form>
