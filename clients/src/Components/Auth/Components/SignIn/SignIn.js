@@ -79,16 +79,23 @@ class SignIn extends Component {
     render() {
         const values = this.state;
         const { error } = this.state;
-        return <>
-            <Errors error={error} setError={this.setError} />
-            <SignForm
-                setField={this.setField}
-                submitForm={this.submitForm}
-                values={values}
-                fields={this.fields} />
-            <button onClick={(e) => this.props.setPage(e, PageTypes.signUp)}>Sign up instead</button>
-            <button onClick={(e) => this.props.setPage(e, PageTypes.forgotPassword)}>Forgot password</button>
-        </>
+        return <div className="sign-in-page">
+            <div className="container">
+                <h1>Sign <span className="red">In</span></h1>
+            </div>
+            <div className="form">
+                <Errors error={error} setError={this.setError} />
+                <SignForm
+                    setField={this.setField}
+                    submitForm={this.submitForm}
+                    values={values}
+                    fields={this.fields} />
+                <div className="button-group">
+                    <button className="btn btn-primary mr-2" onClick={(e) => this.props.setPage(e, PageTypes.signUp)}>NEW? SIGN UP!</button>
+                    <button className="btn btn-primary" onClick={(e) => this.props.setPage(e, PageTypes.forgotPassword)}>FORGOT PASSWORD</button>
+                </div>
+            </div>
+        </div>
     }
 }
 

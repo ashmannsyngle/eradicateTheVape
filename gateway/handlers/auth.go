@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"info441sp20-ashraysa/gateway/models/users"
 	"info441sp20-ashraysa/gateway/sessions"
 	"net/http"
@@ -89,6 +90,9 @@ func (c *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *http.Requ
 			http.Error(w, "request body must be in JSON", http.StatusUnsupportedMediaType)
 			return
 		}
+		if urlBase == "me" {
+			id = currSession.User.ID
+		}
 		decoder := json.NewDecoder(r.Body)
 		newUpdate := &users.Updates{}
 		decoder.Decode(newUpdate)
@@ -103,6 +107,8 @@ func (c *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *http.Requ
 			http.Error(w, errFour.Error(), http.StatusNotFound)
 			return
 		}
+		fmt.Println(id)
+		fmt.Println(user)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		enc := json.NewEncoder(w)

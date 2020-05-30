@@ -105,6 +105,7 @@ func main() {
 
 	mux.HandleFunc("/v1/users", handlerctx.UsersHandler)
 	mux.HandleFunc("/v1/users/", handlerctx.SpecificUserHandler)
+
 	mux.HandleFunc("/v1/sessions", handlerctx.SessionsHandler)
 	mux.HandleFunc("/v1/sessions/", handlerctx.SpecificSessionHandler)
 	// mux.Handle("/v1/summary", summaryProxy)
