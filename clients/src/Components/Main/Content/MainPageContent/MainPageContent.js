@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Component} from 'react';
 import PageTypes from '../../../../Constants/PageTypes/PageTypes';
 import './Styles/MainPageContent.css';
 import api from '../../../../Constants/APIEndpoints/APIEndpoints';
+import BackGroundImage from './BackGroundImage';
+import {ContentOne, ContentTwo, ContentThree, ContentFour, ContentFive} from './FirstPageContent';
 
 const MainPageContent = ({ user, setPage }) => {
     const [avatar, setAvatar] = useState(null)
@@ -28,12 +30,32 @@ const MainPageContent = ({ user, setPage }) => {
     }, []);
 
     return <>
-        <div>Welcome to my application, {user.firstName} {user.lastName}</div>
-
+        <div className="display-user">
+           <h1>Welcome {user.firstName} {user.lastName}</h1> 
+        </div>
         {avatar && <img className={"avatar"} src={avatar} alt={`${user.firstName}'s avatar`} />}
         <div><button onClick={(e) => { setPage(e, PageTypes.signedInUpdateName) }}>Update name</button></div>
         <div><button onClick={(e) => { setPage(e, PageTypes.signedInUpdateAvatar) }}>Update avatar</button></div>
+        <Content />
     </>
+}
+
+export class Content extends Component {
+    render() {
+      let content = (
+        <div>
+          <BackGroundImage />
+          <div className="content">
+            <ContentOne />
+            <ContentTwo />
+            <ContentThree />
+            <ContentFour />
+            <ContentFive />
+          </div>
+        </div>
+      )
+      return content;
+    }
 }
 
 export default MainPageContent;

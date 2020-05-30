@@ -1,3 +1,286 @@
 .avatar {
     max-width: 300px;
 }
+
+span.green {
+	color: green;
+}
+
+span.red {
+	color: red;
+}
+
+nav{
+	position: fixed;
+	width: 100%;
+	background-color: black;
+	text-align: center;
+	left: 0;
+	top: 0;
+	z-index: 999999;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+nav h1 {
+  float: left;
+  margin: 0;
+  width: 200px;
+  margin-right: 0;
+  margin-left: 10px;
+  text-align: left;
+  text-decoration: none;
+  font-family: 'Caveat', cursive;
+  font-size: 30px;
+  padding: 0px 5px;
+  display: block;
+  color: #FFF;
+}
+
+nav ul {
+	margin: 0;
+	padding: 0;
+	display: inline-block;
+}
+
+nav ul li {
+	margin: 0;
+    padding: 0;
+    float:left;
+}
+
+nav h1 a{
+    text-decoration: none;
+    color: white;
+  }
+  
+  nav ul li button{
+    text-decoration: none;
+    padding: 10px 30px;
+    display: block;
+    text-align: center;
+    transition: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  nav ul li button:hover{
+    color: red;
+    transform: translateY(-3px);
+  }
+
+.hero-image {
+  background-image: url("images/man_smoking.jpg");
+
+  top: 10px;
+  height: 900px;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-left: -10px;
+  margin-right: -10px;
+  position: relative;
+}
+
+.hero-text {
+  font-style: normal;
+  text-align: center;
+  position: relative;
+  top: 80%;
+  left: 50%;
+  font-weight: 300;
+  font-size: 22px;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
+.content {
+    padding-top: 20px;
+}
+
+.content .one h2 {
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 20px;
+    text-align: center;
+    color: black;
+}
+
+.content .two {
+    padding-top: 20px;
+}
+  
+.content .two h2 {
+    font-weight: 350;
+    font-size: 25px;
+    line-height: 0;
+    text-align: center;
+    color: black;
+}
+
+.content p {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 40px;
+    text-align: center;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.content .cards {
+    display: flex;
+    justify-content: center;
+}
+  
+.content .cards li {
+    font-weight: 300;
+    color: white;
+}
+
+.column {
+    float: left;
+    padding: 0 15px;
+    transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  
+  .column:hover {
+    transform: translateY(-8px);
+  }
+  
+  .row {
+    margin: 5px -5px;
+  }
+  
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    padding: 10px 35px;
+    text-align: center;
+    background-color: black;
+  }
+
+  .column img {
+    width:100%;
+  }
+
+.content .box {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 80px 0 200px 0;
+  }
+  
+ .content .box .picture {
+    text-align: right;
+    margin-left: auto;
+    width: 500px;
+  }
+  
+ .content .box img {
+    height: 360px;
+  }
+  
+ .content .box .text {
+      width: 700px;
+      margin-left: 50px;
+  }
+  
+.content .box .text h4{
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 0;
+    color: black;
+    margin-bottom: 28px;
+  }
+  
+.content .four p {
+    width: 40%;
+  }
+  
+.content .box .text p{
+    margin-left: 0;
+    text-align: left;
+    width: 100%;
+  }
+  
+.content .four .line {
+      border: 0.6px solid #C6C4C4;
+      width: 50%;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 60px;
+      margin-bottom: 80px;
+  }
+
+  footer {
+    position: absolute;
+    margin-top: 50px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0;
+    height: 200px;
+    background-color: black;
+    color: white;
+    text-align: center;
+  }
+  
+  footer .contact_group {
+    position: relative;
+    display: grid;
+    top: 15px;
+    grid-template-columns: repeat(3, auto);
+    margin: 0 auto;
+    max-width: 630px;
+    align-items: center;
+    justify-items: center;
+  }
+  
+  footer address {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    margin: 0 auto;
+    max-width: 500px;
+    align-items: center;
+    justify-items: center;
+    font-style: normal;
+  }
+
+footer a {
+    color: white;
+    margin:20px auto;
+    font-size: 15px;
+    font-weight: 400;
+    text-decoration: none;
+    background: rgba(229, 229, 229, 0.08);
+    opacity: 0.6;
+    padding: 15px 60px;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 29px;
+    transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+footer a:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+    transform: translateY(-6px);
+    opacity: 1;
+}
+
+footer img {
+    width: 200px;
+    height: 1px;  
+}
+
+footer h3 {
+    font-weight: 400;
+    font-style: normal;
+    font-size: 20px;
+    text-align: center;
+    color: #707070;
+  }

@@ -3,9 +3,6 @@ import PageTypes from '../../Constants/PageTypes/PageTypes';
 import MainPageContent from './Content/MainPageContent/MainPageContent';
 import SignOutButton from './Components/SignOutButton/SignOutButton';
 import UpdateName from './Components/UpdateName/UpdateName';
-import NavBar from './Components/NavBar/NavBar';
-import BackGroundImage from './BackGroundImage';
-import {ContentOne, ContentTwo, ContentThree, ContentFour, ContentFive} from './FirstPageContent';
 import UpdateAvatar from './Components/UpdateAvatar/UpdateAvatar';
 import { BrowserRouter, Route, Switch, Link, NavLink, Redirect } from 'react-router-dom';
 
@@ -28,35 +25,38 @@ const Main = ({ page, setPage, setAuthToken, setUser, user }) => {
             break;
     }
     return <>
-        <NavBar />
-        <Switch>
-              <Route exact path = "/" component={Content} />
-              {/* <Route exact path="/others" render={this.getList} />
-              <Route exact path="/confession" component={Confession} />
-              <Route exact path="/postconfession" render={this.getUser} /> */}
-          </Switch>
+        <div>
+        <nav>
+            <h1 id="logo"><a href="/">EradicateThe<span className="red">Vape</span></a></h1>
+            <ul>
+              <li id="home">
+                <div><button onClick={(e) => { setPage(e, PageTypes.signedInUpdateName) }}>Update name</button></div>
+              </li>
+              <li id="others">
+                <div><button onClick={(e) => { setPage(e, PageTypes.signedInUpdateName) }}>Update name</button></div>
+              </li>
+              <li id="confession">
+                <div><button onClick={(e) => { setPage(e, PageTypes.signedInUpdateName) }}>Update name</button></div>
+              </li>
+            </ul>
+          </nav>
+        </div>
         {content}
         {contentPage && <button onClick={(e) => setPage(e, PageTypes.signedInMain)}>Back to main</button>}
         <SignOutButton setUser={setUser} setAuthToken={setAuthToken} />
+        <footer>
+        <div className="contact_group">
+          <img src="images/line.png" alt="line for decoration" />
+          <h3>CONTACT US</h3>
+          <img src="images/line.png" alt="line for decoration" />
+        </div>
+        <address>
+          <a href="mailto:shray8@uw.edu" aria-label="Mail us">MAIL US</a>
+          <a href="tel:555-123-4567" aria-label="Call Us">CALL US</a>
+        </address>
+        <p>&copy; 2020 Designed &amp; Coded by <span className="red">Ashmann Syngle</span> and <span className="red">Shray Arora</span></p>
+        </footer>
     </>
 }
-
-export class Content extends Component {
-    render() {
-      let content = (
-        <div>
-          <BackGroundImage />
-          <div className="content">
-            <ContentOne />
-            <ContentTwo />
-            <ContentThree />
-            <ContentFour />
-            <ContentFive />
-          </div>
-        </div>
-      )
-      return content;
-    }
-  }
 
 export default Main;

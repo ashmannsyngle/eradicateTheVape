@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 export class ContentOne extends Component {
   render() {
     let content = (
-      <div class="one">
-        <h2>What is <span class="red">vaping</span>?</h2>
+      <div className="one">
+        <h2>What is <span className="red">vaping</span>?</h2>
         <p>Vaping is the act of inhaling and exhaling the aerosol produced by an e-cigarette or similar device.
           The liquid is heated into a vapor, which the person inhales. That's why using e-cigarettes is called 'vaping'.
           A majority of smokers turn to this method to transition from smoking cigarettes to not smoking at all.
@@ -134,7 +134,7 @@ export class ContentFive extends Component {
           <blockquote>"It made me look cool and tasted just like mango." <span>- Anonymous user</span></blockquote>
           <blockquote>"I don't feel like starting my day without it." <span>- Anonymous user</span></blockquote>
           <h1>That's how I feel!</h1>
-          <h2>Yeah, we <span class="red">know</span>.</h2>
+          <h2>Yeah, we <span className="red">know</span>.</h2>
           <img src="images/read_posts.png" alt="person reading online posts" className="center" />
           <p>Read posts like this where users from around the world talk about their vaping addiction in a separate section. Feel free to like some of these posts as well so that we can help you overcome your addiction better!</p>
           <div className="btn">
