@@ -22,6 +22,17 @@ func (newPost *InputPost) toPost(threadID int64) (*Post) {
 	return post
 }
 
+//toThread converts an InputThread into a Thread
+func (newThread *InputThread) toThread() (*Thread) {
+	thread := &Thread{
+		Name: newThread.Name,
+		Description: newThread.Description,
+		CreatedAt: time.Now(),
+		Creator: newThread.Creator,
+	}
+	return thread
+}
+
 //ThreadsHandler handles requests to the /v1/threads endpoint
 func (ctx *HandlerContext) ThreadsHandler(w http.ResponseWriter, r *http.Request) {
 	userHead := r.Header.Get("X-User")
@@ -44,6 +55,24 @@ func (ctx *HandlerContext) ThreadsHandler(w http.ResponseWriter, r *http.Request
 		w.Header().Add("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		if err := json.NewEncoder(w).Encode(availableThreads); err != nil {
+			http.Error(w, fmt.Sprintf("Error encoding JSON: %v", err), http.StatusInternalServerError)
+			return
+		}
+	case http.MethodPost:
+		threadToAdd := &InputThread{}
+		if err := json.NewDecoder(r.Body).Decode(threadToAdd); err != nil {
+			http.Error(w, "Error decoding new thread JSON", http.StatusInternalServerError)
+			return
+		}
+		newThread := threadToAdd.toThread()
+		newThread, err := ctx.Store.InsertThread(newThread)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Error occurred when posting: %v", err), http.StatusInternalServerError)
+			return
+		}
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusCreated)
+		if err := json.NewEncoder(w).Encode(newThread); err != nil {
 			http.Error(w, fmt.Sprintf("Error encoding JSON: %v", err), http.StatusInternalServerError)
 			return
 		}

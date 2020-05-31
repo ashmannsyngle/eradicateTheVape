@@ -30,6 +30,13 @@ type Thread struct {
 	EditedAt time.Time `json:"editedAt"`
 }
 
+//InputThread is a thread to be created on the forum
+type InputThread struct {
+	Name string	`json:"name"`
+	Description string	`json:"description"`
+	Creator	*users.User `json:"creator"`
+}
+
 //Post represents a post made on a specific thread
 type Post struct {
 	ID int64	`json:"id"`

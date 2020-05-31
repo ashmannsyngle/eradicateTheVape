@@ -117,7 +117,7 @@ func main() {
 	mux.HandleFunc("/v1/sessions/", handlerctx.SpecificSessionHandler)
 	mux.Handle("/v1/progress", progressProxy)
 	mux.Handle("/v1/threads", threadsProxy)
-	mux.Handle("/v1/threads/id/", threadsProxy)
+	mux.Handle("/v1/threads/", threadsProxy)
 	mux.Handle("/v1/posts/", threadsProxy)
 	mux.Handle("/v1/marketplace", marketplaceProxy)
 	mux.Handle("/v1/marketplace/", marketplaceProxy)
