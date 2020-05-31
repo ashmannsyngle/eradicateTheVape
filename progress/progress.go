@@ -57,9 +57,12 @@ func (msq *MySQLStore) ProgressUserHandler(w http.ResponseWriter, r *http.Reques
 		if r.Method == "GET" {
 			sqlQuery := "select daysSober from Progress where userID = ?"
 			res, _ := msq.db.Query(sqlQuery, user.ID)
-			if err != nil {
+			for res.Next() {
+				res.Scan(&progress.DaysSober)
+			}
+			if progress.DaysSober == 0 {
 				sqlQueryTwo := "insert into Progress(daysSober, userID) values (?, ?)"
-				_, errTwo := msq.db.Exec(sqlQueryTwo, 1, user.ID)
+				_, errTwo := msq.db.Exec(sqlQueryTwo, 0, user.ID)
 				if errTwo != nil {
 					http.Error(w, errTwo.Error(), http.StatusInternalServerError)
 					return
