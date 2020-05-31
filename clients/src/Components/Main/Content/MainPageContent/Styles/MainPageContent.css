@@ -456,3 +456,56 @@ footer h3 {
   opacity: 1;
   cursor: pointer;
 }
+
+.progress {
+  padding: 70px;
+  text-align: center;
+  justify-items: center;
+}
+
+.progress h3{
+  font-size: 25px;
+  margin-bottom: 0;
+}
+
+.progress h2{
+  margin-left: 50px;
+  font-weight: 200;
+  margin: 0;
+  font-size: 250px;
+}
+
+.progress p{
+  margin: 0;
+  font-size: 20px;
+}
+
+.progress img {
+  float: left;
+  height: 360px;
+}
+
+.progress .clock {
+  display: inline-flex;
+}
+
+.progress button {
+  background-color: red;
+  border: none;
+  padding: 7px 20px;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.progress button:hover {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+  transform: translateY(-6px);
+  opacity: 1;
+  cursor: pointer;
+}
+

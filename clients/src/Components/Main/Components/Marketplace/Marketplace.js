@@ -17,7 +17,10 @@ class Marketplace extends Component {
     sendRequest = async (e) => {
         //e.preventDefault();
         const response = await fetch(api.base + api.handlers.marketplace, {
-            method: "GET"
+            method: "GET",
+            headers: new Headers({
+              "Authorization": localStorage.getItem("Authorization")
+          })
         });
         if (response.status >= 300) {
             const error = await response.text();
@@ -67,8 +70,12 @@ class Marketplace extends Component {
             </Card>
           </li>
         );
+        console.log(this.props.user.points)
         return <div className="marketplace">
             <Errors error={error} setError={this.setError} />
+            <div className="display-user">
+              <h1>Logged in as: <span className="red">{this.props.user.userName}</span></h1> 
+            </div>
             <h1>Marketplace</h1>
             <p>Welcome to a place where you get rewarded for your efforts! </p>
             <h4>Points Available: <span className="red">{this.props.user.points}</span></h4>
