@@ -55,10 +55,10 @@ func (msq *MySQLStore) ProgressUserHandler(w http.ResponseWriter, r *http.Reques
 		progress := &Progress{}
 
 		if r.Method == "GET" {
-			sqlQuery := "select daysSober from Progress where userID = ?"
+			sqlQuery := "select progressID, daysSober, userID from Progress where userID = ?"
 			res, _ := msq.db.Query(sqlQuery, user.ID)
 			for res.Next() {
-				res.Scan(&progress.DaysSober)
+				res.Scan(&progress.ProgressID, &progress.DaysSober, &progress.UserID)
 			}
 			if progress.DaysSober == 0 {
 				sqlQueryTwo := "insert into Progress(daysSober, userID) values (?, ?)"
@@ -73,14 +73,14 @@ func (msq *MySQLStore) ProgressUserHandler(w http.ResponseWriter, r *http.Reques
 			enc := json.NewEncoder(w)
 			enc.Encode(progress)
 		} else if r.Method == "PATCH" {
-			sqlQuery := "select daysSober from Progress where userID = ?"
+			sqlQuery := "select progressID, daysSober, userID from Progress where userID = ?"
 			res, err := msq.db.Query(sqlQuery, user.ID)
 			if err != nil {
 				http.Error(w, "User has not logged any days in the sobriety clock", http.StatusBadRequest)
 				return
 			}
 			for res.Next() {
-				res.Scan(&progress.DaysSober)
+				res.Scan(&progress.ProgressID, &progress.DaysSober, &progress.UserID)
 			}
 
 			/*sqlQueryTwo := "insert into Progress(daysSober, userID) values (?, ?)"
