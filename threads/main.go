@@ -5,8 +5,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"std/info441sp20-ashraysa/threads/threadssrc"
 
-	//"std/info441sp20-ashraysa/servers/threads/threadssrc"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -24,9 +24,11 @@ func main() {
 	}
 	defer db.Close()
 
-	//handlerContext
+	threadsContext := threads.NewHandlerContext(threads.NewSQLStore(db))
 	mux := http.NewServeMux()
-	//handleFunctions
+	mux.HandleFunc("/v1/threads", threadsContext.ThreadsHandler)
+	mux.HandleFunc("v1/threads/id/", threadsContext.SpecificThreadsHandler)
+	mux.HandleFunc("/v1/posts/", threadsContext.SpecificPostHandler)
 	log.Printf("Server is listening at %s...\n", addr)
 	log.Fatal(http.ListenAndServe(addr, mux))
 }
