@@ -52,9 +52,24 @@ func (msq *MySQLStore) ProgressUserHandler(w http.ResponseWriter, r *http.Reques
 		// w.WriteHeader(http.StatusOK)
 		// enc := json.NewEncoder(w)
 		// enc.Encode(user)
+		progress := &Progress{}
 
-		if r.Method == "PATCH" {
-			progress := &Progress{}
+		if r.Method == "GET" {
+			sqlQuery := "select daysSober from Progress where userID = ?"
+			res, err := msq.db.Query(sqlQuery, user.ID)
+			if err != nil {
+				sqlQueryTwo := "insert into Progress(daysSober, userID) values (?, ?)"
+				_, errTwo := msq.db.Exec(sqlQueryTwo, 1, user.ID)
+				if errTwo != nil {
+					http.Error(w, errTwo.Error(), http.StatusInternalServerError)
+					return
+				}
+			}
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			enc := json.NewEncoder(w)
+			enc.Encode(progress)
+		} else if r.Method == "PATCH" {
 			sqlQuery := "select daysSober from Progress where userID = ?"
 			res, err := msq.db.Query(sqlQuery, user.ID)
 			if err != nil {
@@ -64,14 +79,16 @@ func (msq *MySQLStore) ProgressUserHandler(w http.ResponseWriter, r *http.Reques
 			for res.Next() {
 				res.Scan(&progress.DaysSober)
 			}
-			sqlQueryTwo := "insert into Progress(daysSober, userID) values (?, ?)"
+
+			/*sqlQueryTwo := "insert into Progress(daysSober, userID) values (?, ?)"
 			if progress.DaysSober == 0 {
 				_, errTwo := msq.db.Exec(sqlQueryTwo, 1, user.ID)
 				if errTwo != nil {
 					http.Error(w, errTwo.Error(), http.StatusInternalServerError)
 					return
 				}
-			}
+			}*/
+
 			// update daysSober and update points for user
 			sqlQueryThree := "update Progress set daysSober = ? where userID = ?"
 			_, errThree := msq.db.Exec(sqlQueryThree, progress.DaysSober+1, user.ID)
@@ -85,8 +102,10 @@ func (msq *MySQLStore) ProgressUserHandler(w http.ResponseWriter, r *http.Reques
 				http.Error(w, "Error adding points for the current user", http.StatusInternalServerError)
 				return
 			}
+			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusOK)
-			w.Write([]byte("daysSober and points sucessfully updated"))
+			enc := json.NewEncoder(w)
+			enc.Encode(progress)
 		} else {
 			http.Error(w, "invalid request method", http.StatusMethodNotAllowed)
 			return
