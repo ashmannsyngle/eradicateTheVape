@@ -146,4 +146,23 @@ export class ContentFive extends Component {
     return content;
   }
 }
+
+export class OurMission extends Component {
+  render() {
+    let mission = (
+      <div className="mission">
+        <h2><span className="vapemission">OUR MISSION</span></h2>
+        <p>
+        Quitting nicotine is hard, especially when you lack support. Groups like Alcoholics Anonymous exist for people with 
+        alcoholism, but there aren’t very many groups for people addicted to nicotine products, such as vaping or smoking. 
+        There are also people who don’t know where to start with the whole process of quitting, or need reliable resources 
+        on how to quit. Through Eradicate the Vape, we wish to connect people across all stages of recovery, from those who 
+        haven’t started to those who’ve crossed the finish line. Through our forums service and personalized goals, we hope 
+        to provide support, connections, and resources to everyone on their journey to quit nicotine once and for all. 
+        </p>
+      </div>
+    );
+    return mission;
+  }
+}
 export default ContentOne;

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import api from '../../../../Constants/APIEndpoints/APIEndpoints';
 import Errors from '../../../Errors/Errors';
-
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 
 
 class Marketplace extends Component {
@@ -50,12 +51,23 @@ class Marketplace extends Component {
         //console.log(this.state.badges)
         const { error} = this.state;
         const listItems = this.state.badges.map((badge) =>
-          <li>{badge.badgeID}</li>
+          <li>
+            <Card style={{ width: '18rem' }}>
+              <h4>Cost: {badge.cost}</h4>
+              <Card.Img variant="top" src="images/award.png" />
+              <Card.Body>
+                <h2>Name of Badge</h2>
+                <Card.Text>
+                  Add this to your profile for free! Think of this as a gift from us to you for having the courage to log onto our website.
+                </Card.Text>
+                <Button variant="primary">ADD TO PROFILE</Button>
+              </Card.Body>
+            </Card>
+          </li>
         );
         return <div className="marketplace">
             <Errors error={error} setError={this.setError} />
-            <ul>{listItems}</ul>
-            
+            {listItems}
         </div>
     }
 
