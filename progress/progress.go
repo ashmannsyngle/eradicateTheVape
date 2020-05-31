@@ -37,21 +37,6 @@ func (msq *MySQLStore) ProgressUserHandler(w http.ResponseWriter, r *http.Reques
 			http.Error(w, "error decoding response body", http.StatusBadRequest)
 			return
 		}
-		// If method is GET
-		// If no entry for user, add progrss entry with 0 (port over from pATCH)
-		// return the progress struct in response body
-		// status OK
-
-		// If method is PATCH
-		// Update entry with daysSober + 1
-		// return progress struct in response body
-		// status oK
-
-		// Returning:
-		// w.Header().Set("Content-Type", "application/json")
-		// w.WriteHeader(http.StatusOK)
-		// enc := json.NewEncoder(w)
-		// enc.Encode(user)
 		progress := &Progress{}
 
 		if r.Method == "GET" {
@@ -83,15 +68,6 @@ func (msq *MySQLStore) ProgressUserHandler(w http.ResponseWriter, r *http.Reques
 				res.Scan(&progress.ProgressID, &progress.DaysSober, &progress.UserID)
 			}
 
-			/*sqlQueryTwo := "insert into Progress(daysSober, userID) values (?, ?)"
-			if progress.DaysSober == 0 {
-				_, errTwo := msq.db.Exec(sqlQueryTwo, 1, user.ID)
-				if errTwo != nil {
-					http.Error(w, errTwo.Error(), http.StatusInternalServerError)
-					return
-				}
-			}*/
-
 			// update daysSober and update points for user
 			sqlQueryThree := "update Progress set daysSober = ? where userID = ?"
 			_, errThree := msq.db.Exec(sqlQueryThree, progress.DaysSober+1, user.ID)
@@ -118,25 +94,3 @@ func (msq *MySQLStore) ProgressUserHandler(w http.ResponseWriter, r *http.Reques
 		return
 	}
 }
-
-// func (msq *MySQLStore) HandleGeneralChannel() {
-// 	var rootUser int64
-// 	sqlQueryRoot := "select id from Users use index (username_index) where username=?"
-// 	resRoot, _ := msq.db.Query(sqlQueryRoot, "rootuser")
-// 	if resRoot.Next() {
-// 		resRoot.Scan(&rootUser)
-// 	}
-
-// 	newChannel := &Channel{}
-// 	sqlQuery := "select id from Channels where channelName = ?"
-// 	res, _ := msq.db.Query(sqlQuery, "general")
-// 	if res.Next() {
-// 		res.Scan(&newChannel.ID)
-// 	}
-// 	if newChannel.ID == 0 {
-// 		sqlQueryTwo := "insert into Channels(channelName, channelDescription, channelPrivate, createdAt, creator, editedAt) values (?, ?, ?, ?, ?, ?)"
-// 		msq.db.Exec(sqlQueryTwo, "general", "This is the general channel", false, time.Now(), rootUser, time.Now())
-// 	}
-// }
-
-// GET -> NO ENTRY OF PROGRESS FOR THAT USER -> ADD AN ENTRY IF {DAYS PROGRESS = 0} -> ADDED ENTRY WILL HAVE DAYS SOBER AS 0
