@@ -12,9 +12,11 @@ import (
 
 // Marketplace represents a Marketplace struct
 type Marketplace struct {
-	BadgeID  int    `json:"badgeID"`
-	Cost     int    `json:"cost"`
-	ImageURL string `json:"imgURL"`
+	BadgeID     int    `json:"badgeID"`
+	Cost        int    `json:"cost"`
+	Name        string `json:"badgeName"`
+	Description string `json:"badgeDescription"`
+	ImageURL    string `json:"imgURL"`
 }
 
 // Badges represents a Badges struct
@@ -39,7 +41,7 @@ func NewMySQLStore(DB *sql.DB) *MySQLStore {
 func (msq *MySQLStore) MarketplaceHandler(w http.ResponseWriter, r *http.Request) {
 	// Get all badges in the marketplace and encode it as an array in the response
 	if r.Method == "GET" {
-		sqlQuery := "select badgeID, cost, imgURL from Marketplace"
+		sqlQuery := "select badgeID, cost, badgeName, badgeDescription, imgURL from Marketplace"
 		res, err := msq.db.Query(sqlQuery)
 		if err != nil {
 			http.Error(w, "Failed to find badges from marketplace", http.StatusInternalServerError)
@@ -49,7 +51,7 @@ func (msq *MySQLStore) MarketplaceHandler(w http.ResponseWriter, r *http.Request
 		defer res.Close()
 		for res.Next() {
 			var badge Marketplace
-			if err := res.Scan(&badge.BadgeID, &badge.Cost, &badge.ImageURL); err != nil {
+			if err := res.Scan(&badge.BadgeID, &badge.Cost, &badge.Name, &badge.Description, &badge.ImageURL); err != nil {
 				http.Error(w, "Error reading marketplace badges from result", http.StatusInternalServerError)
 				return
 			}
@@ -81,7 +83,7 @@ func (msq *MySQLStore) BadgeUserHandler(w http.ResponseWriter, r *http.Request) 
 			badgeID, _ := strconv.Atoi(urlBase)
 
 			marketplace := &Marketplace{}
-			sqlQuery := "select badgeID, cost, imgURL from Marketplace where badgeID = ?"
+			sqlQuery := "select badgeID, cost, badgeName, badgeDescription, imgURL from Marketplace where badgeID = ?"
 			res, err := msq.db.Query(sqlQuery, badgeID)
 			if err != nil {
 				http.Error(w, "Failed to find badge from marketplace", http.StatusBadRequest)

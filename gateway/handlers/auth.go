@@ -75,6 +75,11 @@ func (c *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *http.Requ
 			}
 		} else {
 			user = currSession.User
+			user, er = c.UserStore.GetByID(user.ID)
+			if er != nil {
+				http.Error(w, "user not found", http.StatusNotFound)
+				return
+			}
 		}
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)

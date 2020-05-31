@@ -3,7 +3,7 @@ import PageTypes from '../../../../Constants/PageTypes/PageTypes';
 import './Styles/MainPageContent.css';
 import api from '../../../../Constants/APIEndpoints/APIEndpoints';
 import BackGroundImage from './BackGroundImage';
-import {ContentOne, ContentTwo, ContentThree, ContentFour, ContentFive} from './FirstPageContent';
+import {ContentOne, ContentTwo, ContentThree, ContentFour, ContentFive, OurMission} from './FirstPageContent';
 
 const MainPageContent = ({ user, setPage }) => {
     const [avatar, setAvatar] = useState(null)
@@ -46,6 +46,7 @@ export class Content extends Component {
         <div>
           <BackGroundImage />
           <div className="content">
+            <OurMission />
             <ContentOne />
             <ContentTwo />
             <ContentThree />

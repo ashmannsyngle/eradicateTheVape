@@ -5,9 +5,10 @@ import SignOutButton from './Components/SignOutButton/SignOutButton';
 import UpdateName from './Components/UpdateName/UpdateName';
 import UpdateAvatar from './Components/UpdateAvatar/UpdateAvatar';
 import Marketplace from './Components/Marketplace/Marketplace';
+import Progress from './Components/Progress/Progress';
 import { BrowserRouter, Route, Switch, Link, NavLink, Redirect } from 'react-router-dom';
 
-const Main = ({ page, setPage, setAuthToken, setUser, user, setBadges }) => {
+const Main = ({ page, setPage, setAuthToken, setUser, user, setProgress }) => {
     let content = <></>
     let contentPage = true;
     switch (page) {
@@ -21,7 +22,10 @@ const Main = ({ page, setPage, setAuthToken, setUser, user, setBadges }) => {
             content = <UpdateAvatar user={user} setUser={setUser} />;
             break;
         case PageTypes.marketplace:
-            content = <Marketplace user={user} setBadges={setBadges} />;
+            content = <Marketplace user={user}/>;
+            break;
+        case PageTypes.progress:
+            content = <Progress user={user} setUser={setUser}/>;
             break;
         default:
             content = <>Error, invalid path reached</>;
@@ -37,7 +41,7 @@ const Main = ({ page, setPage, setAuthToken, setUser, user, setBadges }) => {
                 <div><button onClick={(e) => { setPage(e, PageTypes.marketplace) }}>MARKETPLACE</button></div>
               </li>
               <li id="others">
-                <div><button onClick={(e) => { setPage(e, PageTypes.signedInUpdateName) }}>Update name</button></div>
+                <div><button onClick={(e) => { setPage(e, PageTypes.progress) }}>PROGRESS</button></div>
               </li>
               <li id="confession">
                 <div><button onClick={(e) => { setPage(e, PageTypes.signedInUpdateName) }}>Update name</button></div>
