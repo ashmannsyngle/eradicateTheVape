@@ -2,16 +2,19 @@ import React, { Component } from 'react';
 import api from '../../../../Constants/APIEndpoints/APIEndpoints';
 import Errors from '../../../Errors/Errors';
 
+
+
 class Marketplace extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            badges: []
+            badges: [],
+            error: ''
         }
     }
 
     sendRequest = async (e) => {
-        e.preventDefault();
+        //e.preventDefault();
         const response = await fetch(api.base + api.handlers.marketplace, {
             method: "GET"
         });
@@ -22,12 +25,20 @@ class Marketplace extends Component {
             return;
         }
         //alert("") // TODO make this better by refactoring errors IS THIS REQUIRED?
-        const badges = await response.json();
-        this.props.setBadges(badges);
+        const badgesResponse = await response.json();
+        //console.log(response)
+        this.setState({
+          badges: badgesResponse.map(badge => ({
+            badgeID: badge.badgeID,
+            cost: badge.cost,
+            imgURL: badge.imgURL,
+          }))
+        });
+        //this.props.setBadges(badges);
     }
 
-    setValue = (e) => {
-        this.setState({ [e.target.name]: e.target.value });
+    componentWillMount() {
+      {this.sendRequest()}
     }
 
     setError = (error) => {
@@ -35,11 +46,17 @@ class Marketplace extends Component {
     }
 
     render() {
-        const { badges} = this.state;
-        return <>
+        //{this.sendRequest()}
+        //console.log(this.state.badges)
+        const { error} = this.state;
+        const listItems = this.state.badges.map((badge) =>
+          <li>{badge.badgeID}</li>
+        );
+        return <div className="marketplace">
             <Errors error={error} setError={this.setError} />
-            <div>{badges}</div>
-        </>
+            <ul>{listItems}</ul>
+            
+        </div>
     }
 
 }
