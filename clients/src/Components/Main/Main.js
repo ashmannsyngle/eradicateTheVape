@@ -21,7 +21,7 @@ const Main = ({ page, setPage, setAuthToken, setUser, user, setBadges }) => {
             content = <UpdateAvatar user={user} setUser={setUser} />;
             break;
         case PageTypes.marketplace:
-            content = <Marketplace />;
+            content = <Marketplace user={user}/>;
             break;
         default:
             content = <>Error, invalid path reached</>;

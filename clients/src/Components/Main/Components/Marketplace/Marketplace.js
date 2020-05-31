@@ -32,6 +32,8 @@ class Marketplace extends Component {
           badges: badgesResponse.map(badge => ({
             badgeID: badge.badgeID,
             cost: badge.cost,
+            badgeName: badge.badgeName,
+            badgeDescription: badge.badgeDescription,
             imgURL: badge.imgURL,
           }))
         });
@@ -53,12 +55,12 @@ class Marketplace extends Component {
         const listItems = this.state.badges.map((badge) =>
           <li>
             <Card style={{ width: '18rem' }}>
-              <h4>Cost: {badge.cost}</h4>
-              <Card.Img variant="top" src="images/award.png" />
+              <h4>Cost: <span className="red">{badge.cost}</span></h4>
+              <Card.Img variant="top" src={badge.imgURL} />
               <Card.Body>
-                <h2>Name of Badge</h2>
+                <h2>{badge.badgeName}</h2>
                 <Card.Text>
-                  Add this to your profile for free! Think of this as a gift from us to you for having the courage to log onto our website.
+                  {badge.badgeDescription}
                 </Card.Text>
                 <Button variant="primary">ADD TO PROFILE</Button>
               </Card.Body>
@@ -67,6 +69,9 @@ class Marketplace extends Component {
         );
         return <div className="marketplace">
             <Errors error={error} setError={this.setError} />
+            <h1>Marketplace</h1>
+            <p>Welcome to a place where you get rewarded for your efforts! </p>
+            <h4>Points Available: <span className="red">{this.props.user.points}</span></h4>
             {listItems}
         </div>
     }

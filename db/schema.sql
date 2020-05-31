@@ -28,10 +28,13 @@ create table if not exists Progress (
 create table if not exists Marketplace (
     badgeID int primary key auto_increment not null,
     cost int not null,
+    badgeName varchar(30) not null,
+    badgeDescription varchar(255) not null,
     imgURL varchar(255) not null
 );
 
-insert into Marketplace (badgeID, cost, imgURL) values (1, 0, "random badge");
+insert into Marketplace (cost, badgeName, badgeDescription, imgURL) values (0, "New Member", "Add this to your profile for free! Think of this as a gift from us to you for having the courage to log onto our website.", "images/award.png");
+insert into Marketplace (cost, badgeName, badgeDescription, imgURL) values (100, "One Day Sober", "Congratulations for your first step! It may not seem like much, but we are now your fans! It's time to Eradicate The Vape.", "images/peach.png");
 
 create table if not exists Badges (
     badgeID int not null,
