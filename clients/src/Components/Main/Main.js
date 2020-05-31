@@ -7,7 +7,7 @@ import UpdateAvatar from './Components/UpdateAvatar/UpdateAvatar';
 import Marketplace from './Components/Marketplace/Marketplace';
 import { BrowserRouter, Route, Switch, Link, NavLink, Redirect } from 'react-router-dom';
 
-const Main = ({ page, setPage, setAuthToken, setUser, user }) => {
+const Main = ({ page, setPage, setAuthToken, setUser, user, setBadges }) => {
     let content = <></>
     let contentPage = true;
     switch (page) {
