@@ -56,7 +56,7 @@ func (msq *MySQLStore) ProgressUserHandler(w http.ResponseWriter, r *http.Reques
 
 		if r.Method == "GET" {
 			sqlQuery := "select daysSober from Progress where userID = ?"
-			res, err := msq.db.Query(sqlQuery, user.ID)
+			res, _ := msq.db.Query(sqlQuery, user.ID)
 			if err != nil {
 				sqlQueryTwo := "insert into Progress(daysSober, userID) values (?, ?)"
 				_, errTwo := msq.db.Exec(sqlQueryTwo, 1, user.ID)
@@ -115,3 +115,25 @@ func (msq *MySQLStore) ProgressUserHandler(w http.ResponseWriter, r *http.Reques
 		return
 	}
 }
+
+// func (msq *MySQLStore) HandleGeneralChannel() {
+// 	var rootUser int64
+// 	sqlQueryRoot := "select id from Users use index (username_index) where username=?"
+// 	resRoot, _ := msq.db.Query(sqlQueryRoot, "rootuser")
+// 	if resRoot.Next() {
+// 		resRoot.Scan(&rootUser)
+// 	}
+
+// 	newChannel := &Channel{}
+// 	sqlQuery := "select id from Channels where channelName = ?"
+// 	res, _ := msq.db.Query(sqlQuery, "general")
+// 	if res.Next() {
+// 		res.Scan(&newChannel.ID)
+// 	}
+// 	if newChannel.ID == 0 {
+// 		sqlQueryTwo := "insert into Channels(channelName, channelDescription, channelPrivate, createdAt, creator, editedAt) values (?, ?, ?, ?, ?, ?)"
+// 		msq.db.Exec(sqlQueryTwo, "general", "This is the general channel", false, time.Now(), rootUser, time.Now())
+// 	}
+// }
+
+// GET -> NO ENTRY OF PROGRESS FOR THAT USER -> ADD AN ENTRY IF {DAYS PROGRESS = 0} -> ADDED ENTRY WILL HAVE DAYS SOBER AS 0

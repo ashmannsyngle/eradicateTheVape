@@ -31,7 +31,7 @@ const MainPageContent = ({ user, setPage }) => {
 
     return <>
         <div className="display-user">
-           <h1>Welcome {user.firstName} {user.lastName}</h1> 
+           <h1>Logged in as: <span className="red">{user.userName}</span></h1> 
         </div>
         {avatar && <img className={"avatar"} src={avatar} alt={`${user.firstName}'s avatar`} />}
         <div><button onClick={(e) => { setPage(e, PageTypes.signedInUpdateName) }}>Update name</button></div>

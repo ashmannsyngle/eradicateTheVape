@@ -27,7 +27,7 @@ const Main = ({ page, setPage, setAuthToken, setUser, user }) => {
     return <>
         <div>
         <nav>
-            <h1 id="logo"><a href="/">EradicateThe<span className="red">Vape</span></a></h1>
+            <h1 id="logo"><a onClick={(e) => setPage(e, PageTypes.signedInMain)}>EradicateThe<span className="red">Vape</span></a></h1>
             <ul>
               <li id="home">
                 <div><button onClick={(e) => { setPage(e, PageTypes.signedInUpdateName) }}>Update name</button></div>
