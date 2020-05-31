@@ -284,3 +284,39 @@ footer h3 {
     text-align: center;
     color: #707070;
   }
+
+  blockquote{
+    text-align: left;
+    font-size: 1.4em;
+    width:60%;
+    margin:50px auto;
+    font-style:italic;
+    color: #555555;
+    padding:1.2em 30px 1.2em 75px;
+    border-left:8px solid red ;
+    line-height:1.6;
+    position: relative;
+    background:#EDEDED;
+  }
+  
+  blockquote::before{
+    font-family:Arial, sans-serif;
+    content: "\201C";
+    color:red;
+    font-size:4em;
+    position: absolute;
+    left: 10px;
+    top:-10px;
+  }
+  
+  blockquote::after{
+    content: '';
+  }
+  
+  blockquote span{
+    display:block;
+    color:#333333;
+    font-style: normal;
+    font-size: 0.8em;
+    margin-top:1em;
+  }
