@@ -61,7 +61,7 @@ type PostUpdates struct {
 //GetMostRecentThreads returns the most recent 50 threads --WILL LIKELY INCLUDE BEFORE QUERY--
 func (store SQLStore) GetMostRecentThreads() ([]*Thread, error) {
 	output := make([]*Thread, 5)
-	inq := regexp.QuoteMeta("select top 50 threadID, threadName, threadDescription, userWhoCreatedID, timeCreated, editedAt from Threads order by timeCreated desc")
+	inq := regexp.QuoteMeta("select threadID, threadName, threadDescription, userWhoCreatedID, timeCreated, editedAt from Threads order by timeCreated desc")
 	threadRows, err := store.db.Query(inq)
 	if err != nil {
 		return nil, err
@@ -115,7 +115,7 @@ func (store SQLStore) GetThreadByID(id int64) (*Thread, error) {
 //GetOldestPosts retrieves the first 25 posts of the thread with the given ID --WILL LIKELY INCLUDE AFTER QUERY--
 func (store SQLStore) GetOldestPosts(threadID int64) ([]*Post, error) {
 	output := make([]*Post, 5)
-	postInq := regexp.QuoteMeta("select top 25 postID, threadID, content, userWhoCreatedID, timeCreated, editedAt from Posts where threadID=? order by timeCreated asc")
+	postInq := regexp.QuoteMeta("select postID, threadID, content, userWhoCreatedID, timeCreated, editedAt from Posts where threadID=? order by timeCreated asc")
 	postRows, err := store.db.Query(postInq, threadID)
 	if err != nil {
 		return nil, err
