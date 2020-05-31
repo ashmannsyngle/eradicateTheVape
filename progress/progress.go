@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
+	"info441sp20-ashraysa/gateway/models/users"
 	"net/http"
 	"strings"
 )
@@ -36,6 +37,22 @@ func (msq *MySQLStore) ProgressUserHandler(w http.ResponseWriter, r *http.Reques
 			http.Error(w, "error decoding response body", http.StatusBadRequest)
 			return
 		}
+		// If method is GET
+		// If no entry for user, add progrss entry with 0 (port over from pATCH)
+		// return the progress struct in response body
+		// status OK
+
+		// If method is PATCH
+		// Update entry with daysSober + 1
+		// return progress struct in response body
+		// status oK
+
+		// Returning:
+		// w.Header().Set("Content-Type", "application/json")
+		// w.WriteHeader(http.StatusOK)
+		// enc := json.NewEncoder(w)
+		// enc.Encode(user)
+
 		if r.Method == "PATCH" {
 			progress := &Progress{}
 			sqlQuery := "select daysSober from Progress where userID = ?"
@@ -63,7 +80,7 @@ func (msq *MySQLStore) ProgressUserHandler(w http.ResponseWriter, r *http.Reques
 				return
 			}
 			sqlQueryFour := "update Users set points = ? where id = ?"
-			_, errFour := msq.db.Exec(sqlQueryFour, user.Points+1, user.ID)
+			_, errFour := msq.db.Exec(sqlQueryFour, user.Points+100, user.ID)
 			if errFour != nil {
 				http.Error(w, "Error adding points for the current user", http.StatusInternalServerError)
 				return
