@@ -72,17 +72,42 @@ nav h1 a{
 
 .display-user h1 {
     position: fixed;
-    right: 20px;
+    right: 180px;
+    top: 6px;
     color: white;
     font-weight: 400;
     z-index: 999999999999;
     font-size: 15px;
 }
 
+.sign-out button {
+    position: fixed;
+    top: 12px;
+    z-index: 999999999999;
+    right: 10px;
+    background-color: red;
+    border: none;
+    padding: 5px 20px;
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  
+  .sign-out button:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+    transform: translateY(-6px);
+    opacity: 1;
+    cursor: pointer;
+  }
+
 .hero-image {
   background-image: url("images/man_smoking.jpg");
 
-  top: 10px;
+  top: 18px;
   height: 900px;
 
   background-position: center;

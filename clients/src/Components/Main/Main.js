@@ -42,19 +42,18 @@ const Main = ({ page, setPage, setAuthToken, setUser, user }) => {
           </nav>
         </div>
         {content}
-        {contentPage && <button onClick={(e) => setPage(e, PageTypes.signedInMain)}>Back to main</button>}
         <SignOutButton setUser={setUser} setAuthToken={setAuthToken} />
         <footer>
-        <div className="contact_group">
-          <img src="images/line.png" alt="line for decoration" />
-          <h3>CONTACT US</h3>
-          <img src="images/line.png" alt="line for decoration" />
-        </div>
-        <address>
-          <a href="mailto:shray8@uw.edu" aria-label="Mail us">MAIL US</a>
-          <a href="tel:555-123-4567" aria-label="Call Us">CALL US</a>
-        </address>
-        <p>&copy; 2020 Designed &amp; Coded by <span className="red">Ashmann Syngle</span> and <span className="red">Shray Arora</span></p>
+            <div className="contact_group">
+            <img src="images/line.png" alt="line for decoration" />
+            <h3>CONTACT US</h3>
+            <img src="images/line.png" alt="line for decoration" />
+            </div>
+            <address>
+            <a href="mailto:shray8@uw.edu" aria-label="Mail us">MAIL US</a>
+            <a href="tel:555-123-4567" aria-label="Call Us">CALL US</a>
+            </address>
+            <p>&copy; 2020 Designed &amp; Coded by <span className="red">Ashmann Syngle</span>, <span className="red">Shray Arora</span> and <span className="red">Sarah West</span></p>
         </footer>
     </>
 }

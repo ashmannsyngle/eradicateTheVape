@@ -33,9 +33,9 @@ const MainPageContent = ({ user, setPage }) => {
         <div className="display-user">
            <h1>Logged in as: <span className="red">{user.userName}</span></h1> 
         </div>
-        {avatar && <img className={"avatar"} src={avatar} alt={`${user.firstName}'s avatar`} />}
+        {/* {avatar && <img className={"avatar"} src={avatar} alt={`${user.firstName}'s avatar`} />}
         <div><button onClick={(e) => { setPage(e, PageTypes.signedInUpdateName) }}>Update name</button></div>
-        <div><button onClick={(e) => { setPage(e, PageTypes.signedInUpdateAvatar) }}>Update avatar</button></div>
+        <div><button onClick={(e) => { setPage(e, PageTypes.signedInUpdateAvatar) }}>Update avatar</button></div> */}
         <Content />
     </>
 }
