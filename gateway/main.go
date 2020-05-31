@@ -80,21 +80,28 @@ func main() {
 	}
 
 	marketplaceAddresses := strings.Split(os.Getenv("MARKETPLACEADDR"), ",")
-	// summaryAddresses := strings.Split(os.Getenv("SUMMARYADDR"), ",")
+	progressAddresses := strings.Split(os.Getenv("PROGRESSADDR"), ",")
+	threadsAddresses := strings.Split(os.Getenv("THREADSADDR"), ",")
 
 	var marketplaceURLs []*url.URL
-	// var summaryURLs []*url.URL
+	var progressURLs []*url.URL
+	var threadsURLs []*url.URL
 
 	for _, v := range marketplaceAddresses {
 		marketplaceURLs = append(marketplaceURLs, &url.URL{Scheme: "http", Host: v})
 	}
 
-	// for _, v := range summaryAddresses {
-	// 	summaryURLs = append(summaryURLs, &url.URL{Scheme: "http", Host: v})
-	// }
+	for _, v := range progressAddresses {
+		progressURLs = append(progressURLs, &url.URL{Scheme: "http", Host: v})
+	}
 
-	// summaryProxy := &httputil.ReverseProxy{Director: CustomDirector(handlerctx, summaryURLs)}
+	for _, v := range threadsAddresses {
+		threadsURLs = append(threadsURLs, &url.URL{Scheme: "http", Host: v})
+	}
+
+	progressProxy := &httputil.ReverseProxy{Director: CustomDirector(handlerctx, progressURLs)}
 	marketplaceProxy := &httputil.ReverseProxy{Director: CustomDirector(handlerctx, marketplaceURLs)}
+	threadsProxy := &httputil.ReverseProxy{Director: CustomDirector(handlerctx, threadsURLs)}
 
 	if len(tlsCertPath) == 0 || len(tlsKeyPath) == 0 {
 		os.Stdout.Write([]byte("Environment variables are not set"))
@@ -108,9 +115,8 @@ func main() {
 
 	mux.HandleFunc("/v1/sessions", handlerctx.SessionsHandler)
 	mux.HandleFunc("/v1/sessions/", handlerctx.SpecificSessionHandler)
-	// mux.Handle("/v1/summary", summaryProxy)
-	// mux.Handle("/v1/channels", marketplaceProxy)
-	// mux.Handle("/v1/channels/", marketplaceProxy)
+	mux.Handle("/v1/progress", progressProxy)
+	mux.Handle("/v1/threads", threadsProxy)
 	mux.Handle("/v1/marketplace", marketplaceProxy)
 	mux.Handle("/v1/marketplace/", marketplaceProxy)
 	wrappedMux := handlers.NewResponseHeader(mux)

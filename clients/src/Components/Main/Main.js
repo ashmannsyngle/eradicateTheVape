@@ -4,6 +4,7 @@ import MainPageContent from './Content/MainPageContent/MainPageContent';
 import SignOutButton from './Components/SignOutButton/SignOutButton';
 import UpdateName from './Components/UpdateName/UpdateName';
 import UpdateAvatar from './Components/UpdateAvatar/UpdateAvatar';
+import Marketplace from './Components/Marketplace/Marketplace';
 import { BrowserRouter, Route, Switch, Link, NavLink, Redirect } from 'react-router-dom';
 
 const Main = ({ page, setPage, setAuthToken, setUser, user }) => {
@@ -19,6 +20,9 @@ const Main = ({ page, setPage, setAuthToken, setUser, user }) => {
         case PageTypes.signedInUpdateAvatar:
             content = <UpdateAvatar user={user} setUser={setUser} />;
             break;
+        case PageTypes.marketplace:
+            content = <Marketplace user={user} setBadges={setBadges} />;
+            break;
         default:
             content = <>Error, invalid path reached</>;
             contentPage = false;
@@ -30,7 +34,7 @@ const Main = ({ page, setPage, setAuthToken, setUser, user }) => {
             <h1 id="logo"><a onClick={(e) => setPage(e, PageTypes.signedInMain)}>EradicateThe<span className="red">Vape</span></a></h1>
             <ul>
               <li id="home">
-                <div><button onClick={(e) => { setPage(e, PageTypes.signedInUpdateName) }}>Update name</button></div>
+                <div><button onClick={(e) => { setPage(e, PageTypes.marketplace) }}>MARKETPLACE</button></div>
               </li>
               <li id="others">
                 <div><button onClick={(e) => { setPage(e, PageTypes.signedInUpdateName) }}>Update name</button></div>

@@ -15,6 +15,8 @@ docker run -d \
 -e REDISADDR="redisServer:6379" \
 -e DSN="root:password@tcp(db:3306)/db" \
 -e MARKETPLACEADDR="marketplace:5200" \
+-e THREADSADDR="threads:5300" \
+-e PROGRESSADDR="progress:5400" \
 -p 443:443 \
 --name gateway \
 ashmann7/etvgateway
