@@ -52,6 +52,11 @@ func (msq *MySQLStore) ProgressUserHandler(w http.ResponseWriter, r *http.Reques
 					http.Error(w, errTwo.Error(), http.StatusInternalServerError)
 					return
 				}
+				sqlQueryThree := "select progressID, daysSober, userID from Progress where userID = ?"
+				res, _ := msq.db.Query(sqlQueryThree, user.ID)
+				for res.Next() {
+					res.Scan(&progress.ProgressID, &progress.DaysSober, &progress.UserID)
+				}
 			}
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusOK)
@@ -80,6 +85,15 @@ func (msq *MySQLStore) ProgressUserHandler(w http.ResponseWriter, r *http.Reques
 			if errFour != nil {
 				http.Error(w, "Error adding points for the current user", http.StatusInternalServerError)
 				return
+			}
+			sqlQueryFive := "select progressID, daysSober, userID from Progress where userID = ?"
+			resTwo, err := msq.db.Query(sqlQueryFive, user.ID)
+			if err != nil {
+				http.Error(w, "User has not logged any days in the sobriety clock", http.StatusBadRequest)
+				return
+			}
+			for resTwo.Next() {
+				resTwo.Scan(&progress.ProgressID, &progress.DaysSober, &progress.UserID)
 			}
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusOK)

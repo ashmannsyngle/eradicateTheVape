@@ -2,10 +2,10 @@ package main
 
 import (
 	"database/sql"
+	threads "info441sp20-ashraysa/threads/threadssrc"
 	"log"
 	"net/http"
 	"os"
-	"std/info441sp20-ashraysa/threads/threadssrc"
 
 	_ "github.com/go-sql-driver/mysql"
 )

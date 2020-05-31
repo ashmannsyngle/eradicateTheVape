@@ -1,23 +1,23 @@
 package threads
 
 import (
-	"net/http"
 	"encoding/json"
-	"std/info441sp20-ashraysa/gateway/models/users"
-	"strings"
 	"fmt"
-	"strconv"
+	"info441sp20-ashraysa/gateway/models/users"
+	"net/http"
 	"path"
+	"strconv"
+	"strings"
 	"time"
 )
 
 //toPost converts an InputPost into a Post
-func (newPost *InputPost) toPost(threadID int64) (*Post) {
+func (newPost *InputPost) toPost(threadID int64) *Post {
 	post := &Post{
-		ThreadID: threadID,
-		Content: newPost.Content,
+		ThreadID:  threadID,
+		Content:   newPost.Content,
 		CreatedAt: time.Now(),
-		Creator: newPost.Creator,
+		Creator:   newPost.Creator,
 	}
 	return post
 }
@@ -40,7 +40,7 @@ func (ctx *HandlerContext) ThreadsHandler(w http.ResponseWriter, r *http.Request
 		http.Error(w, "You must sign in to view this content.", http.StatusUnauthorized)
 		return
 	}
-	thisUser := &users.User{}	
+	thisUser := &users.User{}
 	if err := json.NewDecoder(strings.NewReader(userHead)).Decode(thisUser); err != nil {
 		http.Error(w, "error decoding user header", http.StatusBadRequest)
 		return
@@ -89,7 +89,7 @@ func (ctx *HandlerContext) SpecificThreadsHandler(w http.ResponseWriter, r *http
 		http.Error(w, "You must sign in to view this content.", http.StatusUnauthorized)
 		return
 	}
-	thisUser := &users.User{}	
+	thisUser := &users.User{}
 	if err := json.NewDecoder(strings.NewReader(userHead)).Decode(thisUser); err != nil {
 		http.Error(w, "error decoding user header", http.StatusBadRequest)
 		return
@@ -161,7 +161,7 @@ func (ctx *HandlerContext) SpecificPostHandler(w http.ResponseWriter, r *http.Re
 		http.Error(w, "You must sign in to view this content.", http.StatusUnauthorized)
 		return
 	}
-	thisUser := &users.User{}	
+	thisUser := &users.User{}
 	if err := json.NewDecoder(strings.NewReader(userHead)).Decode(thisUser); err != nil {
 		http.Error(w, "error decoding user header", http.StatusBadRequest)
 		return

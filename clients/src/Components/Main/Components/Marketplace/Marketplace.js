@@ -6,17 +6,12 @@ class Marketplace extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: '',
-            lastName: '',
-            bio: '',
-            error: ''
+            badges: []
         }
     }
 
     sendRequest = async (e) => {
         e.preventDefault();
-        const { firstName, lastName , bio} = this.state;
-        const sendData = { firstName, lastName, bio};
         const response = await fetch(api.base + api.handlers.marketplace, {
             method: "GET"
         });
@@ -26,9 +21,9 @@ class Marketplace extends Component {
             this.setError(error);
             return;
         }
-        alert("Name changed") // TODO make this better by refactoring errors
-        const user = await response.json();
-        this.props.setUser(user);
+        //alert("") // TODO make this better by refactoring errors IS THIS REQUIRED?
+        const badges = await response.json();
+        this.props.setBadges(badges);
     }
 
     setValue = (e) => {
@@ -40,25 +35,10 @@ class Marketplace extends Component {
     }
 
     render() {
-        const { firstName, lastName, bio, error } = this.state;
+        const { badges} = this.state;
         return <>
             <Errors error={error} setError={this.setError} />
-            <div>Enter a new name</div>
-            <form onSubmit={this.sendRequest}>
-                <div>
-                    <span>First name: </span>
-                    <input name={"firstName"} value={firstName} onChange={this.setValue} />
-                </div>
-                <div>
-                    <span>Last name: </span>
-                    <input name={"lastName"} value={lastName} onChange={this.setValue} />
-                </div>
-                <div>
-                    <span>Bio: </span>
-                    <input name={"bio"} value={bio} onChange={this.setValue} />
-                </div>
-                <input type="submit" value="Change name" />
-            </form>
+            <div>{badges}</div>
         </>
     }
 

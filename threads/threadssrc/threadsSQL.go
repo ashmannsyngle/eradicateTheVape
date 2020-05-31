@@ -2,8 +2,8 @@ package threads
 
 import (
 	"database/sql"
+	"info441sp20-ashraysa/gateway/models/users"
 	"regexp"
-	"std/info441sp20-ashraysa/gateway/models/users"
 	"time"
 
 	//importing the MySQL driver without creating a local name for the package in our code
@@ -22,12 +22,12 @@ func NewSQLStore(db *sql.DB) SQLStore {
 
 //Thread represents a thread on the forum
 type Thread struct {
-	ID	int64	`json:"id"`
-	Name string	`json:"name"`
-	Description string	`json:"description"`
-	Creator	*users.User `json:"creator"`
-	CreatedAt time.Time `json:"createdAt"`
-	EditedAt time.Time `json:"editedAt"`
+	ID          int64       `json:"id"`
+	Name        string      `json:"name"`
+	Description string      `json:"description"`
+	Creator     *users.User `json:"creator"`
+	CreatedAt   time.Time   `json:"createdAt"`
+	EditedAt    time.Time   `json:"editedAt"`
 }
 
 //InputThread is a thread to be created on the forum
@@ -39,18 +39,18 @@ type InputThread struct {
 
 //Post represents a post made on a specific thread
 type Post struct {
-	ID int64	`json:"id"`
-	ThreadID int64 `json:"threadID"`
-	Content string	`json:"content"`
-	CreatedAt time.Time `json:"createdAt"`
-	Creator	*users.User `json:"creator"`
-	EditedAt time.Time `json:"editedAt"`
+	ID        int64       `json:"id"`
+	ThreadID  int64       `json:"threadID"`
+	Content   string      `json:"content"`
+	CreatedAt time.Time   `json:"createdAt"`
+	Creator   *users.User `json:"creator"`
+	EditedAt  time.Time   `json:"editedAt"`
 }
 
 //InputPost represents a post someone is about to submit
 type InputPost struct {
-	Content string `json:"content"`
-	Creator	*users.User `json:"creator"`
+	Content string      `json:"content"`
+	Creator *users.User `json:"creator"`
 }
 
 //PostUpdates represents the changes made to a particular post
@@ -124,9 +124,9 @@ func (store SQLStore) GetOldestPosts(threadID int64) ([]*Post, error) {
 	for postRows.Next() {
 		thisPost := &Post{}
 		thisPost.Creator = &users.User{}
-		if err := postRows.Scan(&thisPost.ID, &thisPost.ThreadID, &thisPost.Content, &thisPost.Creator.ID, &thisPost.CreatedAt, 
+		if err := postRows.Scan(&thisPost.ID, &thisPost.ThreadID, &thisPost.Content, &thisPost.Creator.ID, &thisPost.CreatedAt,
 			&thisPost.EditedAt); err != nil {
-				return nil, err
+			return nil, err
 		}
 		thisPost.Creator, err = store.GetCreator(thisPost.Creator.ID)
 		if err != nil {
@@ -151,9 +151,9 @@ func (store SQLStore) GetPostByID(postID int64) (*Post, error) {
 	thisPost := &Post{}
 	thisPost.Creator = &users.User{}
 	for postRows.Next() {
-		if err := postRows.Scan(&thisPost.ID, &thisPost.ThreadID, &thisPost.Content, &thisPost.Creator.ID, &thisPost.CreatedAt, 
+		if err := postRows.Scan(&thisPost.ID, &thisPost.ThreadID, &thisPost.Content, &thisPost.Creator.ID, &thisPost.CreatedAt,
 			&thisPost.EditedAt); err != nil {
-				return nil, err
+			return nil, err
 		}
 		thisPost.Creator, err = store.GetCreator(thisPost.Creator.ID)
 		if err != nil {
@@ -176,7 +176,7 @@ func (store SQLStore) GetCreator(id int64) (*users.User, error) {
 	defer userRows.Close()
 	thisUser := &users.User{}
 	for userRows.Next() {
-		if err := userRows.Scan(&thisUser.ID, &thisUser.Email, &thisUser.PassHash, &thisUser.UserName, &thisUser.FirstName, 
+		if err := userRows.Scan(&thisUser.ID, &thisUser.Email, &thisUser.PassHash, &thisUser.UserName, &thisUser.FirstName,
 			&thisUser.LastName, &thisUser.Bio, &thisUser.Points, &thisUser.PhotoURL); err != nil {
 			return nil, err
 		}
@@ -190,7 +190,7 @@ func (store SQLStore) GetCreator(id int64) (*users.User, error) {
 //InsertThread inserts a new thread into the Threads table of the database
 func (store SQLStore) InsertThread(newThread *Thread) (*Thread, error) {
 	threadExec := "insert into Threads(threadName, threadDescription, userWhoCreatedID, timeCreated, editedAt) values (?, ?, ?, ?, ?)"
-	res, err := store.db.Exec(threadExec, newThread.Name, newThread.Description, newThread.Creator.ID, newThread.CreatedAt, 
+	res, err := store.db.Exec(threadExec, newThread.Name, newThread.Description, newThread.Creator.ID, newThread.CreatedAt,
 		newThread.EditedAt)
 	if err != nil {
 		return nil, err
@@ -233,7 +233,7 @@ func (store SQLStore) UpdatePost(id int64, updates *PostUpdates) (*Post, error) 
 }
 
 //DeleteThread deletes the thread with the given ID from the threads table of the database
-func (store SQLStore) DeleteThread(id int64) (error) {
+func (store SQLStore) DeleteThread(id int64) error {
 	threadExec := "delete from Threads where id=?"
 	_, err := store.db.Exec(threadExec, id)
 	if err != nil {

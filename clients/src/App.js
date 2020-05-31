@@ -77,6 +77,13 @@ class App extends Component {
         this.setState({ user });
     }
 
+    /**
+     * @description sets the badges of the marketplace
+     */
+    setBages = (badges) => {
+        this.setState({ badges });
+    }
+
     render() {
         const { page, user } = this.state;
         return (
@@ -86,7 +93,8 @@ class App extends Component {
                         setPage={this.setPage}
                         setAuthToken={this.setAuthToken}
                         user={user}
-                        setUser={this.setUser} />
+                        setUser={this.setUser}
+                        setBages={this.setBages} />
                     :
                     <Auth page={page}
                         setPage={this.setPage}
