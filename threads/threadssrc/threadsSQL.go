@@ -70,14 +70,20 @@ func (store SQLStore) GetMostRecentThreads() ([]*Thread, error) {
 	for threadRows.Next() {
 		thisThread := &Thread{}
 		thisThread.Creator = &users.User{}
+		var createDate []byte 
+		var editDate []byte
 		if err := threadRows.Scan(&thisThread.ID, &thisThread.Name, &thisThread.Description, &thisThread.Creator.ID,
-			&thisThread.CreatedAt, &thisThread.EditedAt); err != nil {
+			&createDate, &editDate); err != nil {
 			return nil, err
 		}
 		thisThread.Creator, err = store.GetCreator(thisThread.Creator.ID)
 		if err != nil {
 			return nil, err
 		}
+		createDateConvert, _ := time.Parse("2006-01-02 15:04:05", string(createDate))
+		editDateConvert, _ := time.Parse("2006-01-02 15:04:05", string(editDate))
+		thisThread.CreatedAt = createDateConvert
+		thisThread.EditedAt = editDateConvert
 		output = append(output, thisThread)
 	}
 	if err = threadRows.Err(); err != nil {
@@ -96,15 +102,21 @@ func (store SQLStore) GetThreadByID(id int64) (*Thread, error) {
 	defer threadRows.Close()
 	thisThread := &Thread{}
 	thisThread.Creator = &users.User{}
+	var createDate []byte 
+	var editDate []byte
 	for threadRows.Next() {
 		if err := threadRows.Scan(&thisThread.ID, &thisThread.Name, &thisThread.Description, &thisThread.Creator.ID,
-			&thisThread.CreatedAt, &thisThread.EditedAt); err != nil {
+			&createDate, &editDate); err != nil {
 			return nil, err
 		}
 		thisThread.Creator, err = store.GetCreator(thisThread.Creator.ID)
 		if err != nil {
 			return nil, err
 		}
+		createDateConvert, _ := time.Parse("2006-01-02 15:04:05", string(createDate))
+		editDateConvert, _ := time.Parse("2006-01-02 15:04:05", string(editDate))
+		thisThread.CreatedAt = createDateConvert
+		thisThread.EditedAt = editDateConvert
 	}
 	if err = threadRows.Err(); err != nil {
 		return nil, err
@@ -124,14 +136,20 @@ func (store SQLStore) GetOldestPosts(threadID int64) ([]*Post, error) {
 	for postRows.Next() {
 		thisPost := &Post{}
 		thisPost.Creator = &users.User{}
-		if err := postRows.Scan(&thisPost.ID, &thisPost.ThreadID, &thisPost.Content, &thisPost.Creator.ID, &thisPost.CreatedAt,
-			&thisPost.EditedAt); err != nil {
+		var createDate []byte 
+		var editDate []byte
+		if err := postRows.Scan(&thisPost.ID, &thisPost.ThreadID, &thisPost.Content, &thisPost.Creator.ID, &createDate, 
+			&editDate); err != nil {
 			return nil, err
 		}
 		thisPost.Creator, err = store.GetCreator(thisPost.Creator.ID)
 		if err != nil {
 			return nil, err
 		}
+		createDateConvert, _ := time.Parse("2006-01-02 15:04:05", string(createDate))
+		editDateConvert, _ := time.Parse("2006-01-02 15:04:05", string(editDate))
+		thisPost.CreatedAt = createDateConvert
+		thisPost.EditedAt = editDateConvert
 		output = append(output, thisPost)
 	}
 	if postRows.Err() != nil {
@@ -150,15 +168,21 @@ func (store SQLStore) GetPostByID(postID int64) (*Post, error) {
 	defer postRows.Close()
 	thisPost := &Post{}
 	thisPost.Creator = &users.User{}
+	var createDate []byte 
+	var editDate []byte
 	for postRows.Next() {
-		if err := postRows.Scan(&thisPost.ID, &thisPost.ThreadID, &thisPost.Content, &thisPost.Creator.ID, &thisPost.CreatedAt,
-			&thisPost.EditedAt); err != nil {
+		if err := postRows.Scan(&thisPost.ID, &thisPost.ThreadID, &thisPost.Content, &thisPost.Creator.ID, &createDate, 
+			&editDate); err != nil {
 			return nil, err
 		}
 		thisPost.Creator, err = store.GetCreator(thisPost.Creator.ID)
 		if err != nil {
 			return nil, err
 		}
+		createDateConvert, _ := time.Parse("2006-01-02 15:04:05", string(createDate))
+		editDateConvert, _ := time.Parse("2006-01-02 15:04:05", string(editDate))
+		thisPost.CreatedAt = createDateConvert
+		thisPost.EditedAt = editDateConvert
 	}
 	if postRows.Err() != nil {
 		return nil, err
