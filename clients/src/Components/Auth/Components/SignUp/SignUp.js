@@ -112,6 +112,35 @@ class SignUp extends Component {
         this.setError("");
         this.props.setAuthToken(authToken);
         const user = await response.json();
+        var profileArray = [
+            "images/bear.png",
+            "images/cat.png",
+            "images/chicken.png",
+            "images/cow.png",
+            "images/crow.png",
+            "images/hen.png",
+            "images/hippopotamus.png",
+            "images/horse.png",
+            "images/kangaroo.png",
+            "images/koala.png",
+            "images/marten.png",
+            "images/monkey.png",
+            "images/mouse.png",
+            "images/owl.png",
+            "images/panda.png",
+            "images/penguin.png",
+            "images/seagull.png",
+            "images/tiger.png",
+            "images/whale.png",
+            "images/zebra.png",
+
+        ];
+
+        // TODO: UPDATE THIS IN THE DB SO THAT IT CAN BE VIEWED LATER (OUTSIDE OF PROPS)
+
+
+        var randomNumber = Math.floor(Math.random()*profileArray.length);
+        user.photoURL = profileArray[randomNumber]
         this.props.setUser(user);
     }
 

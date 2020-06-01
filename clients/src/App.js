@@ -11,7 +11,8 @@ class App extends Component {
         this.state = {
             page: localStorage.getItem("Authorization") ? PageTypes.signedInMain : PageTypes.signIn,
             authToken: localStorage.getItem("Authorization") || null,
-            user: null
+            user: null,
+            thread: null
         }
 
         this.getCurrentUser()
@@ -76,8 +77,16 @@ class App extends Component {
     setUser = (user) => {
         this.setState({ user });
     }
+
+    /**
+     * @description sets the user
+     */
+    setThread = (thread) => {
+        this.setState({ thread });
+    }
+
     render() {
-        const { page, user } = this.state;
+        const { page, user, thread } = this.state;
         return (
             <div>
                 {user ?
@@ -85,7 +94,10 @@ class App extends Component {
                         setPage={this.setPage}
                         setAuthToken={this.setAuthToken}
                         user={user}
-                        setUser={this.setUser} />
+                        setUser={this.setUser} 
+                        thread={thread}
+                        setThread={this.setThread}
+                        setChannel={this.setChannel} />
                     :
                     <Auth page={page}
                         setPage={this.setPage}

@@ -13,7 +13,7 @@ docker run -d \
 -e TLSKEY=/etc/letsencrypt/live/api.eradicatethevape.live//privkey.pem \
 -e SESSIONKEY="mystring" \
 -e REDISADDR="redisServer:6379" \
--e DSN="root:password@tcp(db:3306)/db?parseTime=true" \
+-e DSN="root:password@tcp(db:3306)/db" \
 -e MARKETPLACEADDR="marketplace:5200" \
 -e THREADSADDR="threads:5300" \
 -e PROGRESSADDR="progress:5400" \

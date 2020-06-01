@@ -8,5 +8,7 @@ export default {
     progress: "PROGRESS",
     profile: "PROFILE",
     threads: "THREADS",
+    specificThreads: "SPECIFICTHREADS",
+    createThreads: "CREATETHREADS",
     forgotPassword: "FORGOT_PASSWORD"
 }

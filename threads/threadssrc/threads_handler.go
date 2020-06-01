@@ -104,7 +104,7 @@ func (ctx *HandlerContext) SpecificThreadsHandler(w http.ResponseWriter, r *http
 	case http.MethodGet:
 		threadPosts, err := ctx.Store.GetOldestPosts(threadID)
 		if err != nil {
-			http.Error(w, fmt.Sprintf("Thread not found: %v", err), http.StatusNotFound)
+			http.Error(w, fmt.Sprintf("Thread not found: %v", err), http.StatusBadRequest)
 			return
 		}
 		w.Header().Add("Content-Type", "application/json")
@@ -119,6 +119,7 @@ func (ctx *HandlerContext) SpecificThreadsHandler(w http.ResponseWriter, r *http
 			http.Error(w, "Error decoding new post JSON", http.StatusInternalServerError)
 			return
 		}
+		postToAdd.Creator = thisUser
 		_, err := ctx.Store.GetThreadByID(threadID)
 		if err != nil {
 			http.Error(w, fmt.Sprintf("Thread not found: %v", err), http.StatusNotFound)
@@ -142,15 +143,18 @@ func (ctx *HandlerContext) SpecificThreadsHandler(w http.ResponseWriter, r *http
 			http.Error(w, fmt.Sprintf("Thread not found: %v", err), http.StatusNotFound)
 			return
 		}
-		if toDelete.Creator != thisUser {
-			http.Error(w, fmt.Sprintf("You are not the author of this thread. %v", err), http.StatusUnauthorized)
+		if toDelete.Creator.ID != thisUser.ID {
+			fmt.Println(toDelete.Creator)
+			http.Error(w, fmt.Sprintf("You are not the creator of this thread."), http.StatusUnauthorized)
+			return
 		}
 		err = ctx.Store.DeleteThread(threadID)
 		if err != nil {
 			http.Error(w, fmt.Sprintf("Error deleting thread: %v", err), http.StatusInternalServerError)
 			return
 		}
-		fmt.Print("Thread successfully deleted.")
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("Thread successfully deleted."))
 	default:
 		http.Error(w, "Method not supported", http.StatusMethodNotAllowed)
 		return
@@ -189,7 +193,7 @@ func (ctx *HandlerContext) SpecificPostHandler(w http.ResponseWriter, r *http.Re
 			http.Error(w, fmt.Sprintf("Unable to find post: %v", err), http.StatusNotFound)
 			return
 		}
-		if post.Creator != thisUser {
+		if post.Creator.ID != thisUser.ID {
 			http.Error(w, "You are not the creator of this post", http.StatusUnauthorized)
 			return
 		}
@@ -210,14 +214,18 @@ func (ctx *HandlerContext) SpecificPostHandler(w http.ResponseWriter, r *http.Re
 			http.Error(w, fmt.Sprintf("Post not found: %v", err), http.StatusNotFound)
 			return
 		}
-		if toDelete.Creator != thisUser {
+		if toDelete.Creator.ID != thisUser.ID {
+			fmt.Println(toDelete.Creator.ID)
+			fmt.Println(thisUser.ID)
 			http.Error(w, fmt.Sprintf("You are not the author of this post. %v", err), http.StatusUnauthorized)
+			return
 		}
 		err = ctx.Store.DeletePost(postID)
 		if err != nil {
 			http.Error(w, fmt.Sprintf("Error deleting post: %v", err), http.StatusInternalServerError)
 			return
 		}
-		fmt.Print("Post successfully deleted.")
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("Post successfully deleted."))
 	}
 }

@@ -26,7 +26,7 @@ func main() {
 
 	threadsContext := threads.NewHandlerContext(threads.NewSQLStore(db))
 	mux := http.NewServeMux()
-	mux.HandleFunc("v1/threads/{threadID}", threadsContext.SpecificThreadsHandler)
+	mux.HandleFunc("/v1/threads/", threadsContext.SpecificThreadsHandler)
 	mux.HandleFunc("/v1/threads", threadsContext.ThreadsHandler)
 	mux.HandleFunc("/v1/posts/", threadsContext.SpecificPostHandler)
 	log.Printf("Server is listening at %s...\n", addr)

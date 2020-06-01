@@ -2,8 +2,8 @@ package threads
 
 import (
 	"database/sql"
+	"errors"
 	"info441sp20-ashraysa/gateway/models/users"
-	"regexp"
 	"time"
 
 	//importing the MySQL driver without creating a local name for the package in our code
@@ -59,16 +59,16 @@ type PostUpdates struct {
 }
 
 //GetMostRecentThreads returns the most recent 50 threads --WILL LIKELY INCLUDE BEFORE QUERY--
-func (store SQLStore) GetMostRecentThreads() ([]*Thread, error) {
-	output := make([]*Thread, 5)
-	inq := regexp.QuoteMeta("select threadID, threadName, threadDescription, userWhoCreatedID, timeCreated, editedAt from Threads order by timeCreated desc")
+func (store SQLStore) GetMostRecentThreads() ([]Thread, error) {
+	var output []Thread
+	inq := "select threadID, threadName, threadDescription, userWhoCreatedID, timeCreated, editedAt from Threads order by timeCreated desc"
 	threadRows, err := store.db.Query(inq)
 	if err != nil {
 		return nil, err
 	}
 	defer threadRows.Close()
 	for threadRows.Next() {
-		thisThread := &Thread{}
+		var thisThread Thread
 		thisThread.Creator = &users.User{}
 		var createDate []byte
 		var editDate []byte
@@ -94,7 +94,7 @@ func (store SQLStore) GetMostRecentThreads() ([]*Thread, error) {
 
 //GetThreadByID retrieves the thread that has the given id
 func (store SQLStore) GetThreadByID(id int64) (*Thread, error) {
-	inq := regexp.QuoteMeta("select threadID, threadName, threadDescription, userWhoCreatedID, timeCreated, editedAt from Threads where threadID=?")
+	inq := "select threadID, threadName, threadDescription, userWhoCreatedID, timeCreated, editedAt from Threads where threadID=?"
 	threadRows, err := store.db.Query(inq, id)
 	if err != nil {
 		return nil, err
@@ -125,16 +125,16 @@ func (store SQLStore) GetThreadByID(id int64) (*Thread, error) {
 }
 
 //GetOldestPosts retrieves the first 25 posts of the thread with the given ID --WILL LIKELY INCLUDE AFTER QUERY--
-func (store SQLStore) GetOldestPosts(threadID int64) ([]*Post, error) {
-	output := make([]*Post, 5)
-	postInq := regexp.QuoteMeta("select postID, threadID, content, userWhoCreatedID, timeCreated, editedAt from Posts where threadID=? order by timeCreated asc")
+func (store SQLStore) GetOldestPosts(threadID int64) ([]Post, error) {
+	var output []Post
+	postInq := "select postID, threadID, content, userWhoCreatedID, timeCreated, editedAt from Posts where threadID=? order by timeCreated asc"
 	postRows, err := store.db.Query(postInq, threadID)
 	if err != nil {
 		return nil, err
 	}
 	defer postRows.Close()
 	for postRows.Next() {
-		thisPost := &Post{}
+		var thisPost Post
 		thisPost.Creator = &users.User{}
 		var createDate []byte
 		var editDate []byte
@@ -160,7 +160,7 @@ func (store SQLStore) GetOldestPosts(threadID int64) ([]*Post, error) {
 
 //GetPostByID returns the post with the given ID within the given thread (realized we might not need this one oops)
 func (store SQLStore) GetPostByID(postID int64) (*Post, error) {
-	postInq := regexp.QuoteMeta("select postID, threadID, content, userWhoCreatedID, timeCreated, editedAt from Posts where postID=?")
+	postInq := "select postID, threadID, content, userWhoCreatedID, timeCreated, editedAt from Posts where postID=?"
 	postRows, err := store.db.Query(postInq, postID)
 	if err != nil {
 		return nil, err
@@ -192,7 +192,7 @@ func (store SQLStore) GetPostByID(postID int64) (*Post, error) {
 
 //GetCreator returns a User with the given id (helper method)
 func (store SQLStore) GetCreator(id int64) (*users.User, error) {
-	userInq := regexp.QuoteMeta("select id, email, passHash, username, firstName, lastName, bio, points, photoURL from Users where id=?")
+	userInq := "select id, email, passHash, username, firstName, lastName, bio, points, photoUrl from Users where id=?"
 	userRows, err := store.db.Query(userInq, id)
 	if err != nil {
 		return nil, err
@@ -217,7 +217,7 @@ func (store SQLStore) InsertThread(newThread *Thread) (*Thread, error) {
 	res, err := store.db.Exec(threadExec, newThread.Name, newThread.Description, newThread.Creator.ID, newThread.CreatedAt,
 		newThread.EditedAt)
 	if err != nil {
-		return nil, err
+		return nil, errors.New("Cannot create a thread with a duplicate thread name")
 	}
 	newID, err := res.LastInsertId()
 	if err != nil {
@@ -244,7 +244,7 @@ func (store SQLStore) InsertPost(newPost *Post) (*Post, error) {
 
 //UpdatePost updates the post with the given ID
 func (store SQLStore) UpdatePost(id int64, updates *PostUpdates) (*Post, error) {
-	postExec := "update Posts set content=?, editedAt=? where id=?"
+	postExec := "update Posts set content=?, editedAt=? where postID=?"
 	_, err := store.db.Exec(postExec, updates.Content, time.Now(), id)
 	if err != nil {
 		return nil, err
@@ -258,7 +258,8 @@ func (store SQLStore) UpdatePost(id int64, updates *PostUpdates) (*Post, error) 
 
 //DeleteThread deletes the thread with the given ID from the threads table of the database
 func (store SQLStore) DeleteThread(id int64) error {
-	threadExec := "delete from Threads where id=?"
+	store.DeleteAllPosts(id)
+	threadExec := "delete from Threads where threadID=?"
 	_, err := store.db.Exec(threadExec, id)
 	if err != nil {
 		return err
@@ -268,7 +269,17 @@ func (store SQLStore) DeleteThread(id int64) error {
 
 //DeletePost deletes the post with the given ID from the posts table of the database
 func (store SQLStore) DeletePost(id int64) error {
-	postExec := "delete from Posts where id=?"
+	postExec := "delete from Posts where postID=?"
+	_, err := store.db.Exec(postExec, id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+//DeleteAllPosts deletes all the posts from the posts table for a given thread of the database
+func (store SQLStore) DeleteAllPosts(id int64) error {
+	postExec := "delete from Posts where threadID=?"
 	_, err := store.db.Exec(postExec, id)
 	if err != nil {
 		return err

@@ -7,18 +7,18 @@ import Button from 'react-bootstrap/Button';
 import {Link, RichText, Date} from 'prismic-reactjs';
 
 
-class Threads extends Component {
+class SpecificThreads extends Component {
   constructor(props) {
       super(props);
       this.state = {
-          threads: [],
+          posts: [],
           error: ''
       }
   }
 
   sendRequest = async (e) => {
       //e.preventDefault();
-      const response = await fetch(api.base + api.handlers.threads, {
+      const response = await fetch(api.base + api.handlers.specificThreads + this.props.thread.id, {
           method: "GET",
           headers: new Headers({
             "Authorization": localStorage.getItem("Authorization")
@@ -31,18 +31,21 @@ class Threads extends Component {
           return;
       }
       //alert("") // TODO make this better by refactoring errors IS THIS REQUIRED?
-      const threadResponse = await response.json();
+      const postResponse = await response.json();
       //console.log(response)
-      this.setState({
-        threads: threadResponse.map(thread => ({
-          id: thread.id,
-          name: thread.name,
-          description: thread.description,
-          creator: thread.creator,
-          createdAt: thread.createdAt,
-          editedAt: thread.editedAt
-        }))
-      });
+
+      if (postResponse != null) {
+        this.setState({
+          posts: postResponse.map(post => ({
+            id: post.id,
+            threadID: post.threadID,
+            content: post.content,
+            createdAt: post.createdAt,
+            creator: post.creator,
+            editedAt: post.editedAt
+          }))
+        });
+      } 
       //this.props.setBadges(badges);
   }
 
@@ -70,20 +73,20 @@ class Threads extends Component {
 
   render() {
       const { error} = this.state;
-      const listItems = this.state.threads.map((thread) =>
+      const listItems = this.state.posts.map((post) =>
         <li>
-          <div className="one-thread" onClick={(e) => { this.props.setPage(e, PageTypes.specificThreads); this.props.setThread(thread);}}>
+          <div className="one-thread" onClick={(e) => { this.props.setPage(e, PageTypes.specificThreads)}}>
             <div className="one">
-              <img src={thread.creator.photoURL}/>
-              <h5>{thread.creator.userName}</h5>
+              <img src="images/default_profile.png"/>
+              <h5>{post.creator.userName}</h5>
             </div>
             <div className="two">
-              <h2>{thread.name}</h2>
-              <h3>{thread.description}</h3>
+              <h2>{this.props.thread.name}</h2>
+              <h3>{post.content}</h3>
             </div>
             <div className="three">
               <h2>Last Edited:</h2>
-              <h3>{this.getParsedTime(thread.editedAt)}</h3>
+              <h3>{this.getParsedTime(post.editedAt)}</h3>
             </div>
           </div>
         </li>
@@ -95,15 +98,12 @@ class Threads extends Component {
           </div>
           <div className="picture">
             <div className="text">
-              <h1>Threads</h1>
-              <p>Welcome to a place where you get rewarded for your efforts! The badges provided below can be pinned to your
-              profile in a way that replicates how people in support groups recieve badges for milestones achieved in the quitting process.
-              The colors of our badges are inspired by the official AA coin milestone colors. You can purchase badges through points. You can earn points by
-              logging in every day that you are sober as well as by interacting with our threads section.</p>
+              <h1>Posts for <span className="red">{this.props.thread.name}</span>:</h1>
+              <p>{this.props.thread.description}</p>
              </div>
-            <img src="images/threads.png"/>
+            <img src="images/posts.png"/>
           </div>
-          <h2>Check out the latest <span className="red">threads</span>:</h2>
+          <h2>Check out the latest <span className="red">posts</span>:</h2>
           <div className="createButton">
               <Button variant="primary" onClick={(e) => { this.props.setPage(e, PageTypes.createThreads)}}>CREATE A NEW THREAD</Button>
           </div>
@@ -115,4 +115,4 @@ class Threads extends Component {
 
 }
 
-export default Threads;
+export default SpecificThreads;

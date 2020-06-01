@@ -429,6 +429,10 @@ footer h3 {
   margin: 20px;
 }
 
+.marketplace h5 {
+  margin-top: 0;
+}
+
 .marketplace .card h2 {
   margin-bottom: 0;
 }
@@ -488,6 +492,24 @@ footer h3 {
   font-size: 25px;
 }
 
+.marketplace .picture {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.marketplace .picture .text{
+  text-align: right;
+}
+
+.marketplace .picture .text p {
+  font-size: 16px;
+  line-height: 35px;
+}
+
+.marketplace .picture img {
+  width: 600px;
+}
 
 .progress {
   padding: 70px;
@@ -504,22 +526,32 @@ footer h3 {
   margin-left: 50px;
   font-weight: 200;
   margin: 0;
-  font-size: 250px;
+  font-size: 300px;
 }
 
-.progress p{
-  margin: 0;
-  font-size: 20px;
+.progress .picture {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.progress img {
-  float: left;
-  height: 360px;
+.progress .picture .text{
+  text-align: right;
+  width: 70%;
 }
 
-.progress .clock {
-  display: inline-flex;
+.progress .picture .text p {
+  font-size: 16px;
+  line-height: 35px;
 }
+
+.progress .picture .clockTwo {
+ flex-grow: 1;
+}
+
+.progress .picture .clockTwo p {
+  margin-top: 0;
+ }
 
 .progress button {
   background-color: red;
@@ -739,6 +771,36 @@ footer h3 {
   background-color: rgb(234, 234, 234);
 }
 
+.editProfile form input[name="name"] {
+  color: #555555;
+  line-height: 1.2;
+  font-size: 18px;
+  display: block;
+  width: 100%;
+  height: 55px;
+  padding: 0 25px 0 25px;
+  overflow: visible;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 20px;
+  background-color: rgb(234, 234, 234);
+}
+
+.editProfile form input[name="description"] {
+  color: #555555;
+  line-height: 1.2;
+  font-size: 18px;
+  display: block;
+  width: 100%;
+  height: 55px;
+  padding: 0 25px 0 25px;
+  overflow: visible;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 20px;
+  background-color: rgb(234, 234, 234);
+}
+
 .editProfile form input[type="submit"] {
   text-transform: uppercase;
   margin-top: 30px;
@@ -754,6 +816,7 @@ footer h3 {
   font-size: 16px;
   transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+
 
 .editProfile form input[type="submit"]:hover {
   box-shadow: 0 10px 20px rgba(0,0,0,0.25);
@@ -788,4 +851,127 @@ footer h3 {
   color: #555555;
   line-height: 1.4;
   text-transform: uppercase;
+}
+
+.threads {
+  padding: 70px;
+  text-align: center;
+}
+
+.threads .badges {
+  text-align: center;
+}
+
+.threads .picture {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.marketplace .picture {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.threads li{
+  list-style: none;
+  display: inline-block;
+}
+
+.threads .one-thread {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 70rem;
+  padding: 20px;
+  margin: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.threads .one-thread:hover {
+  background-color: rgb(224, 224, 224);
+  transform: translateY(-3px);
+  cursor: pointer;
+}
+
+.threads .one-thread .one h5 {
+  margin: 0;
+}
+
+.threads .one-thread .two {
+  text-align: left;
+  width: 25rem;
+}
+
+.threads .one-thread .two h2 {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.threads .one-thread .two h3 {
+  font-size: 15px;
+  font-weight: normal;
+  margin:0;
+  margin-top: 5px;
+}
+
+.threads .one-thread .three {
+  text-align: right;
+}
+
+.threads .one-thread .three h2 {
+  font-size: 17px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.threads .one-thread .three h3 {
+  font-size: 12px;
+  font-weight: normal;
+  margin:0;
+  margin-top: 5px;
+}
+
+.threads .one-thread img {
+  width: 80px;
+}
+
+.threads .picture {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.threads .picture .text{
+  text-align: right;
+}
+
+.threads .picture .text p {
+  font-size: 16px;
+  line-height: 35px;
+}
+
+.threads .picture img {
+  width: 600px;
+}
+
+.threads .createButton button {
+  background-color: red;
+  border: none;
+  padding: 7px 20px;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.threads .createButton button:hover {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+  transform: translateY(-6px);
+  opacity: 1;
+  cursor: pointer;
 }

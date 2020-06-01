@@ -8,9 +8,11 @@ import Marketplace from './Components/Marketplace/Marketplace';
 import Progress from './Components/Progress/Progress';
 import Profile from './Components/Profile/Profile';
 import Threads from './Components/Threads/Threads';
+import CreateThread from './Components/CreateThread/CreateThread';
+import SpecificThreads from './Components/SpecificThreads/SpecificThreads';
 import { BrowserRouter, Route, Switch, Link, NavLink, Redirect } from 'react-router-dom';
 
-const Main = ({ page, setPage, setAuthToken, setUser, user }) => {
+const Main = ({ page, setPage, setAuthToken, setUser, user, thread, setThread }) => {
     let content = <></>
     let contentPage = true;
     switch (page) {
@@ -30,10 +32,16 @@ const Main = ({ page, setPage, setAuthToken, setUser, user }) => {
             content = <Progress user={user} setUser={setUser}/>;
             break;
         case PageTypes.threads:
-            content = <Threads user={user} setUser={setUser}/>;
+            content = <Threads user={user} setPage={setPage} setThread={setThread}/>;
             break;
         case PageTypes.profile:
             content = <Profile user={user} setUser={setUser} setPage={setPage}/>;
+            break;
+        case PageTypes.createThreads:
+            content = <CreateThread user={user} setPage={setPage}/>;
+            break;
+        case PageTypes.specificThreads:
+            content = <SpecificThreads user={user} setPage={setPage} thread={thread}/>;
             break;
         default:
             content = <>Error, invalid path reached</>;
