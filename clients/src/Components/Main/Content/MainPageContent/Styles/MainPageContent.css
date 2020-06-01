@@ -80,10 +80,6 @@ nav h1 a{
     font-size: 15px;
 }
 
-.marketplace h5 {
-  font-size: 25px;
-}
-
 .sign-out button {
     position: fixed;
     top: 12px;
@@ -488,6 +484,11 @@ footer h3 {
   cursor: auto;
 }
 
+.marketplace h5 {
+  font-size: 25px;
+}
+
+
 .progress {
   padding: 70px;
   text-align: center;
@@ -546,4 +547,244 @@ footer h3 {
   line-height: 20px;
   text-align: center;
   color: black;
+}
+
+.profile-page {
+  height: 750px;
+}
+
+.profile {
+  padding: 70px;
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+  background-color: #0d0d0d;
+  margin-left: -10px;
+  margin-right: -10px;
+  height: 450px;
+}
+
+.profile h1 {
+  color: white;
+}
+
+.profile li {
+  list-style: none;
+  
+}
+
+.profile .card {
+  background-color: white;
+  display: inline-block;
+  padding: 50px;
+  margin: 20px;
+}
+
+.profile .card h2 {
+  margin-bottom: 0;
+}
+
+.profile .card p {
+  top: 0;
+  font-size: 15px;
+  text-align: left;
+  text-align: center;
+}
+
+.profile .card img {
+  width: 100px;
+}
+
+.profile .card button {
+  background-color: red;
+  border: none;
+  padding: 7px 20px;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.profile .card button:hover {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+  transform: translateY(-6px);
+  opacity: 1;
+  cursor: pointer;
+}
+
+.profile .card button:disabled {
+  background-color: grey;
+  border: none;
+  padding: 7px 20px;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  transition: none;
+}
+
+.profile .card button:disabled:hover {
+  box-shadow: none;
+  transform: none;
+  opacity: 1;
+  cursor: auto;
+}
+
+.profile h5 {
+  font-size: 25px;
+}
+
+.profile .badges {
+  display: flex;
+  justify-content: center;
+}
+
+.profile .badges .card {
+  border-radius: 15px;
+  flex: 1;
+  box-shadow: none;
+  padding: 20px;
+  margin:0;
+}
+
+.profile .card h4{
+  margin-bottom: 5px;
+  font-size: 15px;
+}
+
+.profile .badges .card img {
+  width: 40px;
+}
+
+.profile .badges .card h2 {
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.space {
+  margin-bottom: 100px;
+}
+
+.editProfile {
+  margin-top: 100px;
+  width: 500px;
+  display: inline-block;
+}
+
+.editProfile form {
+  background: #fff;
+  border-radius: 10px;
+  position: relative;
+  padding-right: 65px;
+  padding-left: 65px;
+  padding-bottom: 45px;
+  padding-top: 25px;
+  margin: 0px;
+  box-sizing: border-box;
+  display: block;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+}
+
+.editProfile form input[name="firstName"] {
+  color: #555555;
+  line-height: 1.2;
+  font-size: 18px;
+  display: block;
+  width: 100%;
+  height: 55px;
+  padding: 0 25px 0 25px;
+  overflow: visible;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 20px;
+  background-color: rgb(234, 234, 234);
+}
+
+.editProfile form input[name="lastName"] {
+  color: #555555;
+  line-height: 1.2;
+  font-size: 18px;
+  display: block;
+  width: 100%;
+  height: 55px;
+  padding: 0 25px 0 25px;
+  overflow: visible;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 20px;
+  background-color: rgb(234, 234, 234);
+}
+
+.editProfile form input[name="bio"] {
+  color: #555555;
+  line-height: 1.2;
+  font-size: 18px;
+  display: block;
+  width: 100%;
+  height: 55px;
+  padding: 0 25px 0 25px;
+  overflow: visible;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 20px;
+  background-color: rgb(234, 234, 234);
+}
+
+.editProfile form input[type="submit"] {
+  text-transform: uppercase;
+  margin-top: 30px;
+  background-color: red;
+  border: none;
+  padding: 15px 30px;
+  width: 100%;
+  color: white;
+  border-radius: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.editProfile form input[type="submit"]:hover {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+  transform: translateY(-3px);
+  cursor: pointer;
+}
+
+.editProfile form input[type="back"] {
+  text-transform: uppercase;
+  margin-top: 30px;
+  background-color: red;
+  border: none;
+  padding: 15px 30px;
+  width: 100%;
+  color: white;
+  border-radius: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.editProfile form input[type="back"]:hover {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+  transform: translateY(-3px);
+  cursor: pointer;
+}
+
+.editProfile form span {
+  font-size: 13px;
+  color: #555555;
+  line-height: 1.4;
+  text-transform: uppercase;
 }

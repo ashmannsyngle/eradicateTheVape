@@ -6,9 +6,10 @@ import UpdateName from './Components/UpdateName/UpdateName';
 import UpdateAvatar from './Components/UpdateAvatar/UpdateAvatar';
 import Marketplace from './Components/Marketplace/Marketplace';
 import Progress from './Components/Progress/Progress';
+import Profile from './Components/Profile/Profile';
 import { BrowserRouter, Route, Switch, Link, NavLink, Redirect } from 'react-router-dom';
 
-const Main = ({ page, setPage, setAuthToken, setUser, user, setProgress }) => {
+const Main = ({ page, setPage, setAuthToken, setUser, user }) => {
     let content = <></>
     let contentPage = true;
     switch (page) {
@@ -16,7 +17,7 @@ const Main = ({ page, setPage, setAuthToken, setUser, user, setProgress }) => {
             content = <MainPageContent user={user} setPage={setPage} />;
             break;
         case PageTypes.signedInUpdateName:
-            content = <UpdateName user={user} setUser={setUser} />;
+            content = <UpdateName user={user} setUser={setUser} setPage={setPage} />;
             break;
         case PageTypes.signedInUpdateAvatar:
             content = <UpdateAvatar user={user} setUser={setUser} />;
@@ -26,6 +27,9 @@ const Main = ({ page, setPage, setAuthToken, setUser, user, setProgress }) => {
             break;
         case PageTypes.progress:
             content = <Progress user={user} setUser={setUser}/>;
+            break;
+        case PageTypes.profile:
+            content = <Profile user={user} setUser={setUser} setPage={setPage}/>;
             break;
         default:
             content = <>Error, invalid path reached</>;
@@ -48,6 +52,9 @@ const Main = ({ page, setPage, setAuthToken, setUser, user, setProgress }) => {
               </li>
               <li id="threads">
                 <div><button onClick={(e) => { setPage(e, PageTypes.marketplace) }}>THREADS</button></div>
+              </li>
+              <li id="profile">
+                <div><button onClick={(e) => { setPage(e, PageTypes.profile) }}>PROFILE</button></div>
               </li>
             </ul>
           </nav>

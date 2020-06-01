@@ -11,7 +11,6 @@ class Marketplace extends Component {
       this.state = {
           badges: [],
           userBadges: [],
-          buttonClicked: false,
           error: ''
       }
   }
@@ -89,8 +88,9 @@ class Marketplace extends Component {
           badgeName: badge.badgeName,
           badgeDescription: badge.badgeDescription,
           imgURL: badge.imgURL,
-        }))
-      });
+        })),
+      }); 
+     
     }
    
     //this.props.setBadges(badges);
@@ -117,16 +117,15 @@ class Marketplace extends Component {
 
   sendAllRequests =(badge) => {
     this.sendRequestTwo(badge);
-    //this.sendRequest();
     setTimeout(() => {
       this.sendRequestFour();
     }, 1000);
-    this.setState({buttonClicked: true})
-    //this.sendRequestThree();
+    setTimeout(() => {
+      this.sendRequestThree();
+    }, 1000);
   }
 
   componentWillMount() {
-    // TODO: WILL ALSO NEED TO CHECK FOR IF BADGE IS ALREADY SELECTED OR NOT
     {this.sendRequest()}
     {this.sendRequestThree()}
   }
@@ -135,19 +134,9 @@ class Marketplace extends Component {
       this.setState({ error })
   }
 
-  checkBadges = (badge) => {
-    {this.sendRequestThree()}
-    for (var i=0; i < this.state.userBadges.length; i++) {
-      var current = this.state.userBadges[i];
-      if (current.badgeID == badge.badgeID) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   render() {
       //{this.sendRequest()}
+      console.log(this.state.userBadges)
       const { error} = this.state;
       const listItems = this.state.badges.map((badge) =>
         <li>
@@ -159,7 +148,7 @@ class Marketplace extends Component {
               <Card.Text>
                 {badge.badgeDescription}
               </Card.Text>
-              <Button variant="primary" disabled={this.checkBadges(badge) && this.state.buttonClicked} onClick={() => this.sendAllRequests(badge)}>ADD TO PROFILE</Button>
+              <Button variant="primary" disabled={this.state.userBadges.some(v => v.badgeID == badge.badgeID)} onClick={() => this.sendAllRequests(badge)}>ADD TO PROFILE</Button>
             </Card.Body>
           </Card>
         </li>

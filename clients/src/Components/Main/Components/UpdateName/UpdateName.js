@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import api from '../../../../Constants/APIEndpoints/APIEndpoints';
 import Errors from '../../../Errors/Errors';
+import PageTypes from '../../../../Constants/PageTypes/PageTypes';
 
 class UpdateName extends Component {
     constructor(props) {
@@ -31,9 +32,10 @@ class UpdateName extends Component {
             this.setError(error);
             return;
         }
-        alert("Name changed") // TODO make this better by refactoring errors
+        alert("Profile updated.")
         const user = await response.json();
         this.props.setUser(user);
+        this.props.setPage(e, PageTypes.profile);
     }
 
     setValue = (e) => {
@@ -46,9 +48,9 @@ class UpdateName extends Component {
 
     render() {
         const { firstName, lastName, bio, error } = this.state;
-        return <>
+        return <div className="editProfile">
             <Errors error={error} setError={this.setError} />
-            <div>Enter a new name</div>
+            <h2><span className="red">Edit</span> your profile:</h2>
             <form onSubmit={this.sendRequest}>
                 <div>
                     <span>First name: </span>
@@ -62,9 +64,10 @@ class UpdateName extends Component {
                     <span>Bio: </span>
                     <input name={"bio"} value={bio} onChange={this.setValue} />
                 </div>
-                <input type="submit" value="Change name" />
+                <input type="submit" value="UPDATE PROFILE"/>
+                <input type="back" value="GO BACK" onClick={(e) => this.props.setPage(e, PageTypes.profile)}/>
             </form>
-        </>
+        </div>
     }
 
 }
