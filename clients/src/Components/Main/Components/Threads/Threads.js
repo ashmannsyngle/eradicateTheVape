@@ -96,10 +96,11 @@ class Threads extends Component {
           <div className="picture">
             <div className="text">
               <h1>Threads</h1>
-              <p>Welcome to a place where you get rewarded for your efforts! The badges provided below can be pinned to your
-              profile in a way that replicates how people in support groups recieve badges for milestones achieved in the quitting process.
-              The colors of our badges are inspired by the official AA coin milestone colors. You can purchase badges through points. You can earn points by
-              logging in every day that you are sober as well as by interacting with our threads section.</p>
+              <p>Welcome to the threads section of your website! Share your addiction/addiction recovery stories here or just
+                 go through the other users discussions. There are a variety of threads that you can explore. Just scroll down and click on the thread
+                 that you find most interesting! Click on 'CREATE NEW THREAD' if you want to start a conversation. We will randomly award you points based
+                 on your interaction with these threads so make sure you're an active member! We believe in your recovery and urge you to talk about it!
+              </p>
              </div>
             <img src="images/threads.png"/>
           </div>
