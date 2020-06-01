@@ -457,6 +457,26 @@ footer h3 {
   cursor: pointer;
 }
 
+.marketplace .card button:disabled {
+  background-color: grey;
+  border: none;
+  padding: 7px 20px;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  transition: none;
+}
+
+.marketplace .card button:disabled:hover {
+  box-shadow: none;
+  transform: none;
+  opacity: 1;
+  cursor: auto;
+}
+
 .progress {
   padding: 70px;
   text-align: center;
@@ -507,5 +527,13 @@ footer h3 {
   transform: translateY(-6px);
   opacity: 1;
   cursor: pointer;
+}
+
+.mission h2 {
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 20px;
+  text-align: center;
+  color: black;
 }
 

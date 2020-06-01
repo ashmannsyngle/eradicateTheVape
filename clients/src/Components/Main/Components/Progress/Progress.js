@@ -10,6 +10,7 @@ class Progress extends Component {
         this.state = {
             progressID: 0,
             daysSober: 0,
+            dateLogged: '',
             userID: 0,
             error: ''
         }
@@ -34,31 +35,41 @@ class Progress extends Component {
         this.setState ({
           progressID: progress.progressID,
           daysSober: progress.daysSober,
+          dateLogged: new Date(progress.dateLogged),
           userID: progress.userID
         })
+        console.log(this.state.dateLogged)
     }
 
     sendRequestTwo = async (e) => {
-      //e.preventDefault();
-      const response = await fetch(api.base + api.handlers.progress, {
-          method: "PATCH",
-          headers: new Headers({
-            "Authorization": localStorage.getItem("Authorization")
+      var timeDiff = new Date() - this.state.dateLogged;
+      if (this.state.daysSober != 0 && timeDiff / (1000 * 3600) < 24) {
+        alert("You cannot log a day unless 24 hours have passed since your last log!");
+        this.setState({buttonDisable: true})
+      } else {
+        //e.preventDefault();
+          const response = await fetch(api.base + api.handlers.progress, {
+            method: "PATCH",
+            headers: new Headers({
+              "Authorization": localStorage.getItem("Authorization")
+          })
+        });
+        if (response.status >= 300) {
+            const error = await response.text();
+            console.log(error);
+            this.setError(error);
+            return;
+        }
+        //alert("") // TODO make this better by refactoring errors IS THIS REQUIRED?
+        const progress = await response.json();
+        this.setState ({
+          progressID: progress.progressID,
+          daysSober: progress.daysSober,
+          //daysLogged: new Date("2006-01-02 15:04:05" + progress.dateLogged),
+          userID: progress.userID
         })
-      });
-      if (response.status >= 300) {
-          const error = await response.text();
-          console.log(error);
-          this.setError(error);
-          return;
       }
-      //alert("") // TODO make this better by refactoring errors IS THIS REQUIRED?
-      const progress = await response.json();
-      this.setState ({
-        progressID: progress.progressID,
-        daysSober: progress.daysSober,
-        userID: progress.userID
-      })
+      
   }
 
   sendRequestThree = async (e) => {
@@ -78,7 +89,6 @@ class Progress extends Component {
     //alert("") // TODO make this better by refactoring errors IS THIS REQUIRED?
     const user = await response.json();
     this.props.setUser(user);
-    console.log(user)
 }
 
 sendAllRequests =() => {
@@ -100,7 +110,6 @@ sendAllRequests =() => {
 
     render() {
         const {progressID, daysSober, userID, error} = this.state;
-        console.log(daysSober)
         return <div className="progress">
             <Errors error={error} setError={this.setError} />
             <div className="display-user">

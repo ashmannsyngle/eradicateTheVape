@@ -22,7 +22,7 @@ const Main = ({ page, setPage, setAuthToken, setUser, user, setProgress }) => {
             content = <UpdateAvatar user={user} setUser={setUser} />;
             break;
         case PageTypes.marketplace:
-            content = <Marketplace user={user}/>;
+            content = <Marketplace user={user} setUser={setUser}/>;
             break;
         case PageTypes.progress:
             content = <Progress user={user} setUser={setUser}/>;
@@ -38,13 +38,16 @@ const Main = ({ page, setPage, setAuthToken, setUser, user, setProgress }) => {
             <h1 id="logo"><a onClick={(e) => setPage(e, PageTypes.signedInMain)}>EradicateThe<span className="red">Vape</span></a></h1>
             <ul>
               <li id="home">
-                <div><button onClick={(e) => { setPage(e, PageTypes.marketplace) }}>MARKETPLACE</button></div>
+                <div><button onClick={(e) => { setPage(e, PageTypes.signedInMain) }}>HOME</button></div>
               </li>
-              <li id="others">
+              <li id="progress">
                 <div><button onClick={(e) => { setPage(e, PageTypes.progress) }}>PROGRESS</button></div>
               </li>
-              <li id="confession">
-                <div><button onClick={(e) => { setPage(e, PageTypes.signedInUpdateName) }}>Update name</button></div>
+              <li id="marketplace">
+                <div><button onClick={(e) => { setPage(e, PageTypes.marketplace) }}>MARKETPLACE</button></div>
+              </li>
+              <li id="threads">
+                <div><button onClick={(e) => { setPage(e, PageTypes.marketplace) }}>THREADS</button></div>
               </li>
             </ul>
           </nav>

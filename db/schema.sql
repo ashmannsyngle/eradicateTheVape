@@ -21,6 +21,7 @@ ON Users (username);
 create table if not exists Progress (
     progressID int primary key auto_increment not null,
     daysSober int not null,
+    dateLogged datetime default CURRENT_TIMESTAMP not null,
     userID bigint not null,
     foreign key (userID) references Users(id)
 );
@@ -42,6 +43,9 @@ create table if not exists Badges (
     foreign key (badgeID) references Marketplace(badgeID),
     foreign key (userID) references Users(id)
 );
+
+CREATE UNIQUE INDEX badge_index
+ON Badges (badgeID, userID);
 
 create table if not exists Threads (
     threadID int primary key auto_increment not null,

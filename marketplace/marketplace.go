@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"info441sp20-ashraysa/gateway/models/users"
 	"net/http"
 	"path"
@@ -77,11 +78,32 @@ func (msq *MySQLStore) BadgeUserHandler(w http.ResponseWriter, r *http.Request) 
 			http.Error(w, "error decoding response body", http.StatusBadRequest)
 			return
 		}
-		if r.Method == "PATCH" {
-			// Add the badge to the current user's profile (only ID needed)
-			urlBase := path.Base(r.URL.String())
-			badgeID, _ := strconv.Atoi(urlBase)
+		urlBase := path.Base(r.URL.String())
+		badgeID, _ := strconv.Atoi(urlBase)
 
+		if r.Method == "GET" {
+			sqlQuery := "select m.badgeID, cost, badgeName, badgeDescription, imgURL from Badges as b join Marketplace as m on b.badgeID = m.badgeID where b.userID = ?"
+			res, err := msq.db.Query(sqlQuery, user.ID)
+			var userBadges []Marketplace
+			defer res.Close()
+			if err != nil {
+				http.Error(w, "Failed to find badges for user from marketplace", http.StatusBadRequest)
+				return
+			}
+			for res.Next() {
+				var badge Marketplace
+				if err := res.Scan(&badge.BadgeID, &badge.Cost, &badge.Name, &badge.Description, &badge.ImageURL); err != nil {
+					http.Error(w, "Error reading marketplace badges from result", http.StatusInternalServerError)
+					return
+				}
+				userBadges = append(userBadges, badge)
+			}
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			enc := json.NewEncoder(w)
+			enc.Encode(userBadges)
+		} else if r.Method == "PATCH" {
+			// Add the badge to the current user's profile (only ID needed)
 			marketplace := &Marketplace{}
 			sqlQuery := "select badgeID, cost, badgeName, badgeDescription, imgURL from Marketplace where badgeID = ?"
 			res, err := msq.db.Query(sqlQuery, badgeID)
@@ -90,7 +112,7 @@ func (msq *MySQLStore) BadgeUserHandler(w http.ResponseWriter, r *http.Request) 
 				return
 			}
 			for res.Next() {
-				res.Scan(&marketplace.BadgeID, &marketplace.Cost, &marketplace.ImageURL)
+				res.Scan(&marketplace.BadgeID, &marketplace.Cost, &marketplace.Name, &marketplace.Description, &marketplace.ImageURL)
 			}
 			if user.Points < marketplace.Cost {
 				http.Error(w, "User does not have enough points to buy badge", http.StatusBadRequest)
@@ -104,6 +126,8 @@ func (msq *MySQLStore) BadgeUserHandler(w http.ResponseWriter, r *http.Request) 
 			}
 			sqlQueryThree := "update Users set points = ? where id = ?"
 			_, errFour := msq.db.Exec(sqlQueryThree, user.Points-marketplace.Cost, user.ID)
+			fmt.Println(user.Points)
+			fmt.Println(marketplace.Cost)
 			if errFour != nil {
 				http.Error(w, "Error deducting points from User's points in the db", http.StatusInternalServerError)
 				return
@@ -112,8 +136,6 @@ func (msq *MySQLStore) BadgeUserHandler(w http.ResponseWriter, r *http.Request) 
 			w.Write([]byte("Badge was successfully added to user profile."))
 		} else if r.Method == "DELETE" {
 			// Remove the badge from the User's profile (only ID needed)
-			urlBase := path.Base(r.URL.String())
-			badgeID, _ := strconv.Atoi(urlBase)
 			sqlQuery := "delete from Badges where badgeID = ? and userID = ?"
 			_, err := msq.db.Exec(sqlQuery, badgeID, user.ID)
 			if err != nil {

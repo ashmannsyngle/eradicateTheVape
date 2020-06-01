@@ -151,7 +151,7 @@ export class OurMission extends Component {
   render() {
     let mission = (
       <div className="mission">
-        <h2><span className="vapemission">OUR MISSION</span></h2>
+        <h2>OUR <span className="red">MISSION</span></h2>
         <p>
         Quitting nicotine is hard, especially when you lack support. Groups like Alcoholics Anonymous exist for people with 
         alcoholism, but there aren’t very many groups for people addicted to nicotine products, such as vaping or smoking. 
