@@ -6,5 +6,6 @@ export default {
     signedInUpdateAvatar: "SIGNEDIN_UPDATEAVATAR",
     marketplace: "MARKETPLACE",
     progress: "PROGRESS",
+    profile: "PROFILE",
     forgotPassword: "FORGOT_PASSWORD"
 }
