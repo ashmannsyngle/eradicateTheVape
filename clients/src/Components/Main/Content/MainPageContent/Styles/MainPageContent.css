@@ -80,6 +80,10 @@ nav h1 a{
     font-size: 15px;
 }
 
+.marketplace h5 {
+  font-size: 25px;
+}
+
 .sign-out button {
     position: fixed;
     top: 12px;
@@ -409,11 +413,18 @@ footer h3 {
 
 .marketplace {
   padding: 70px;
+  text-align: center;
+}
+
+.badges {
+  text-align: center;
+  height: 100%;
+  width: 100%;
 }
 
 .marketplace li {
   list-style: none;
-  float: left;
+  display: inline-block;
 }
 
 .marketplace .card {
@@ -536,4 +547,3 @@ footer h3 {
   text-align: center;
   color: black;
 }
-

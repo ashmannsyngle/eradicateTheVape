@@ -65,7 +65,7 @@ class Progress extends Component {
         this.setState ({
           progressID: progress.progressID,
           daysSober: progress.daysSober,
-          //daysLogged: new Date("2006-01-02 15:04:05" + progress.dateLogged),
+          dateLogged: new Date(progress.dateLogged),
           userID: progress.userID
         })
       }
@@ -93,7 +93,7 @@ class Progress extends Component {
 
 sendAllRequests =() => {
   this.sendRequestTwo();
-  this.sendRequest();
+  //this.sendRequest();
   setTimeout(() => {
     this.sendRequestThree();
   }, 1000);

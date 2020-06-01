@@ -171,8 +171,11 @@ class Marketplace extends Component {
           </div>
           <h1>Marketplace</h1>
           <p>Welcome to a place where you get rewarded for your efforts! </p>
-          <h4>Points Available: <span className="red">{this.props.user.points}</span></h4>
-          {listItems}
+          <h5>Points Available: <span className="red">{this.props.user.points}</span></h5>
+          <div className="badges">
+            {listItems}
+          </div>
+          
       </div>
   }
 
