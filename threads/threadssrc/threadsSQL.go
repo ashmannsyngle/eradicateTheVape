@@ -266,5 +266,15 @@ func (store SQLStore) DeleteThread(id int64) error {
 	return nil
 }
 
+//DeletePost deletes the post with the given ID from the posts table of the database
+func (store SQLStore) DeletePost(id int64) error {
+	postExec := "delete from Posts where id=?"
+	_, err := store.db.Exec(postExec, id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 //Still Needed: DeleteThread
 //Could do but will need to adjust schema: get pinned threads, get threads by tag name
