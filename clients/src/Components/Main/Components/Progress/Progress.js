@@ -116,6 +116,10 @@ sendAllRequests =() => {
               <h1>Logged in as: <span className="red">{this.props.user.userName}</span></h1> 
             </div>
             <h3>{this.props.user.firstName}, track your <span className="red">progress</span> here</h3>
+            <p>The first step to overcoming your addiction is acceptance. Think of this as a sobriety clock. Here, you can keep track of the exact number of days you've been sober, STARTING TODAY!
+               All you need to do is click on the "Log Sober Day" button below and we'll update the number of days you've been sober. Once you log in, you won't be able to log once more for 24 hours since the
+               time you logged (obviously). You can earn points by logging in every day that you are sober. You are given 100 points for every day logged into the 'sobriety clock. You can buy badges inspired from the official
+               Alcohol Anonymous (AA) coin milestone colors.</p>
             <div className="clock">
               <div className="clockOne">
                 <img src="images/progress.png"/>

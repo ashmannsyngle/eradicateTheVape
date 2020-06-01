@@ -159,7 +159,10 @@ class Marketplace extends Component {
             <h1>Logged in as: <span className="red">{this.props.user.userName}</span></h1> 
           </div>
           <h1>Marketplace</h1>
-          <p>Welcome to a place where you get rewarded for your efforts! </p>
+          <p>Welcome to a place where you get rewarded for your efforts! The badges provided below can be pinned to your
+             profile in a way that replicates how people in Alcoholics Anonymous recieve badges for milestones achieved in the quitting process.
+             The colors of our badges is inspired from the offcial AA coin milestone colors. You can purchase badges through points. You can earn points by
+             logging in every day that you are sober. You are given 100 points for every day logged into the 'sobriety clock'.</p>
           <h5>Points Available: <span className="red">{this.props.user.points}</span></h5>
           <div className="badges">
             {listItems}
