@@ -85,7 +85,7 @@ func (ctx *HandlerContext) ThreadsHandler(w http.ResponseWriter, r *http.Request
 	}
 }
 
-//SpecificThreadsHandler handles requests to the endpoint /v1/threads/id/[id_number]
+//SpecificThreadsHandler handles requests to the endpoint /v1/threads/[id_number]
 func (ctx *HandlerContext) SpecificThreadsHandler(w http.ResponseWriter, r *http.Request) {
 	userHead := r.Header.Get("X-User")
 	if len(userHead) == 0 {
@@ -204,5 +204,20 @@ func (ctx *HandlerContext) SpecificPostHandler(w http.ResponseWriter, r *http.Re
 			http.Error(w, fmt.Sprintf("Error encoding JSON: %v", err), http.StatusInternalServerError)
 			return
 		}
+	case http.MethodDelete:
+		toDelete, err := ctx.Store.GetPostByID(postID)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Post not found: %v", err), http.StatusNotFound)
+			return
+		}
+		if toDelete.Creator != thisUser {
+			http.Error(w, fmt.Sprintf("You are not the author of this post. %v", err), http.StatusUnauthorized)
+		}
+		err = ctx.Store.DeletePost(postID)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Error deleting post: %v", err), http.StatusInternalServerError)
+			return
+		}
+		fmt.Print("Post successfully deleted.")
 	}
 }
