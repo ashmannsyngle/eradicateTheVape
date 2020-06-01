@@ -105,7 +105,7 @@ class Threads extends Component {
           </div>
           <h2>Check out the latest <span className="red">threads</span>:</h2>
           <div className="createButton">
-              <Button variant="primary" onClick={(e) => { this.props.setPage(e, PageTypes.createThreads)}}>CREATE A NEW THREAD</Button>
+              <Button variant="primary" onClick={(e) => { this.props.setPage(e, PageTypes.createPost)}}>CREATE A NEW THREAD</Button>
           </div>
           <div className="badges">
             {listItems}

@@ -10,6 +10,7 @@ export default {
         marketplaceBadges: "/v1/marketplace/",
         threads: "/v1/threads",
         specificThreads: "/v1/threads/",
+        posts:"/v1/posts/",
         progress: "/v1/progress",
         sessionsMine: "/v1/sessions/mine",
         resetPasscode: "/v1/resetcodes",

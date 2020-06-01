@@ -939,7 +939,7 @@ footer h3 {
 
 .threads .picture {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 }
 
@@ -974,4 +974,17 @@ footer h3 {
   transform: translateY(-6px);
   opacity: 1;
   cursor: pointer;
+}
+
+.threads .two {
+  text-align: center;
+}
+
+.threads .text img {
+  width: 30px;
+}
+
+.threads .text h5 {
+  margin: 0;
+  margin-bottom: 10px;
 }

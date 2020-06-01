@@ -9,6 +9,7 @@ import Progress from './Components/Progress/Progress';
 import Profile from './Components/Profile/Profile';
 import Threads from './Components/Threads/Threads';
 import CreateThread from './Components/CreateThread/CreateThread';
+import CreatePost from './Components/CreatePost/CreatePost';
 import SpecificThreads from './Components/SpecificThreads/SpecificThreads';
 import { BrowserRouter, Route, Switch, Link, NavLink, Redirect } from 'react-router-dom';
 
@@ -42,6 +43,9 @@ const Main = ({ page, setPage, setAuthToken, setUser, user, thread, setThread })
             break;
         case PageTypes.specificThreads:
             content = <SpecificThreads user={user} setPage={setPage} thread={thread}/>;
+            break;
+        case PageTypes.createPosts:
+            content = <CreatePost user={user} setPage={setPage}/>;
             break;
         default:
             content = <>Error, invalid path reached</>;

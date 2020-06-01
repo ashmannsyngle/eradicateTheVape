@@ -100,12 +100,15 @@ class SpecificThreads extends Component {
             <div className="text">
               <h1>Posts for <span className="red">{this.props.thread.name}</span>:</h1>
               <p>{this.props.thread.description}</p>
+              <h5>Thread created by: </h5>
+              <img src={this.props.thread.creator.photoURL}/>
+              <h5 className="username">{this.props.thread.creator.userName}</h5>
              </div>
             <img src="images/posts.png"/>
           </div>
           <h2>Check out the latest <span className="red">posts</span>:</h2>
           <div className="createButton">
-              <Button variant="primary" onClick={(e) => { this.props.setPage(e, PageTypes.createThreads)}}>CREATE A NEW THREAD</Button>
+              <Button variant="primary" onClick={(e) => { this.props.setPage(e, PageTypes.createPosts)}}>CREATE A NEW POST</Button>
           </div>
           <div className="badges">
             {listItems}

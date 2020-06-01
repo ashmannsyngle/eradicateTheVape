@@ -1,12 +1,12 @@
 package users
 
 import (
-	"crypto/md5"
-	"encoding/hex"
 	"errors"
 	"fmt"
+	"math/rand"
 	"net/mail"
 	"strings"
+	"time"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -83,11 +83,34 @@ func (nu *NewUser) ToUser() (*User, error) {
 		return nil, err
 	}
 
-	processEmail := strings.ToLower(strings.TrimSpace(nu.Email))
-	hasher := md5.New()
-	hasher.Write([]byte(processEmail))
-	emailHash := hex.EncodeToString(hasher.Sum(nil))
-	photoURL := "https://www.gravatar.com/avatar/" + string(emailHash)
+	profileArray := [...]string{
+		"images/bear.png",
+		"images/cat.png",
+		"images/chicken.png",
+		"images/cow.png",
+		"images/crow.png",
+		"images/hen.png",
+		"images/hippopotamus.png",
+		"images/horse.png",
+		"images/kangaroo.png",
+		"images/koala.png",
+		"images/marten.png",
+		"images/monkey.png",
+		"images/mouse.png",
+		"images/owl.png",
+		"images/panda.png",
+		"images/penguin.png",
+		"images/seagull.png",
+		"images/tiger.png",
+		"images/whale.png",
+		"images/zebra.png",
+	}
+
+	// TODO: UPDATE THIS IN THE DB SO THAT IT CAN BE VIEWED LATER (OUTSIDE OF PROPS)
+
+	s := rand.NewSource(time.Now().Unix())
+	r := rand.New(s) // initialize local pseudorandom generator
+	photoURL := profileArray[r.Intn(len(profileArray))]
 
 	result := &User{
 		ID:        int64(0),
