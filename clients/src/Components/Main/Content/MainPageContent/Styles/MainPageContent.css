@@ -551,6 +551,8 @@ footer h3 {
 
 .profile-page {
   height: 750px;
+  margin-left: -10px;
+  margin-right: -10px;
 }
 
 .profile {
@@ -559,8 +561,7 @@ footer h3 {
   display: inline-block;
   width: 100%;
   background-color: #0d0d0d;
-  margin-left: -10px;
-  margin-right: -10px;
+  
   height: 450px;
 }
 

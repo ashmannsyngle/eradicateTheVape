@@ -32,9 +32,9 @@ type Thread struct {
 
 //InputThread is a thread to be created on the forum
 type InputThread struct {
-	Name string	`json:"name"`
-	Description string	`json:"description"`
-	Creator	*users.User `json:"creator"`
+	Name        string      `json:"name"`
+	Description string      `json:"description"`
+	Creator     *users.User `json:"creator"`
 }
 
 //Post represents a post made on a specific thread
@@ -70,7 +70,7 @@ func (store SQLStore) GetMostRecentThreads() ([]*Thread, error) {
 	for threadRows.Next() {
 		thisThread := &Thread{}
 		thisThread.Creator = &users.User{}
-		var createDate []byte 
+		var createDate []byte
 		var editDate []byte
 		if err := threadRows.Scan(&thisThread.ID, &thisThread.Name, &thisThread.Description, &thisThread.Creator.ID,
 			&createDate, &editDate); err != nil {
@@ -94,7 +94,7 @@ func (store SQLStore) GetMostRecentThreads() ([]*Thread, error) {
 
 //GetThreadByID retrieves the thread that has the given id
 func (store SQLStore) GetThreadByID(id int64) (*Thread, error) {
-	inq := regexp.QuoteMeta("select threadID, threadName, threadDescription, userWhoCreatedID, timeCreated, editedAt from Threads where id=?")
+	inq := regexp.QuoteMeta("select threadID, threadName, threadDescription, userWhoCreatedID, timeCreated, editedAt from Threads where threadID=?")
 	threadRows, err := store.db.Query(inq, id)
 	if err != nil {
 		return nil, err
@@ -102,7 +102,7 @@ func (store SQLStore) GetThreadByID(id int64) (*Thread, error) {
 	defer threadRows.Close()
 	thisThread := &Thread{}
 	thisThread.Creator = &users.User{}
-	var createDate []byte 
+	var createDate []byte
 	var editDate []byte
 	for threadRows.Next() {
 		if err := threadRows.Scan(&thisThread.ID, &thisThread.Name, &thisThread.Description, &thisThread.Creator.ID,
@@ -136,9 +136,9 @@ func (store SQLStore) GetOldestPosts(threadID int64) ([]*Post, error) {
 	for postRows.Next() {
 		thisPost := &Post{}
 		thisPost.Creator = &users.User{}
-		var createDate []byte 
+		var createDate []byte
 		var editDate []byte
-		if err := postRows.Scan(&thisPost.ID, &thisPost.ThreadID, &thisPost.Content, &thisPost.Creator.ID, &createDate, 
+		if err := postRows.Scan(&thisPost.ID, &thisPost.ThreadID, &thisPost.Content, &thisPost.Creator.ID, &createDate,
 			&editDate); err != nil {
 			return nil, err
 		}
@@ -168,10 +168,10 @@ func (store SQLStore) GetPostByID(postID int64) (*Post, error) {
 	defer postRows.Close()
 	thisPost := &Post{}
 	thisPost.Creator = &users.User{}
-	var createDate []byte 
+	var createDate []byte
 	var editDate []byte
 	for postRows.Next() {
-		if err := postRows.Scan(&thisPost.ID, &thisPost.ThreadID, &thisPost.Content, &thisPost.Creator.ID, &createDate, 
+		if err := postRows.Scan(&thisPost.ID, &thisPost.ThreadID, &thisPost.Content, &thisPost.Creator.ID, &createDate,
 			&editDate); err != nil {
 			return nil, err
 		}

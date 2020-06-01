@@ -18,19 +18,19 @@ func (newPost *InputPost) toPost(threadID int64) *Post {
 		Content:   newPost.Content,
 		CreatedAt: time.Now(),
 		Creator:   newPost.Creator,
-		EditedAt: time.Now(),
+		EditedAt:  time.Now(),
 	}
 	return post
 }
 
 //toThread converts an InputThread into a Thread
-func (newThread *InputThread) toThread() (*Thread) {
+func (newThread *InputThread) toThread() *Thread {
 	thread := &Thread{
-		Name: newThread.Name,
+		Name:        newThread.Name,
 		Description: newThread.Description,
-		CreatedAt: time.Now(),
-		Creator: newThread.Creator,
-		EditedAt: time.Now(),
+		CreatedAt:   time.Now(),
+		Creator:     newThread.Creator,
+		EditedAt:    time.Now(),
 	}
 	return thread
 }
@@ -66,6 +66,7 @@ func (ctx *HandlerContext) ThreadsHandler(w http.ResponseWriter, r *http.Request
 			http.Error(w, "Error decoding new thread JSON", http.StatusInternalServerError)
 			return
 		}
+		threadToAdd.Creator = thisUser
 		newThread := threadToAdd.toThread()
 		newThread, err := ctx.Store.InsertThread(newThread)
 		if err != nil {

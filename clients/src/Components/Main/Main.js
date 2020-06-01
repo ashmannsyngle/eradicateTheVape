@@ -7,6 +7,7 @@ import UpdateAvatar from './Components/UpdateAvatar/UpdateAvatar';
 import Marketplace from './Components/Marketplace/Marketplace';
 import Progress from './Components/Progress/Progress';
 import Profile from './Components/Profile/Profile';
+import Threads from './Components/Threads/Threads';
 import { BrowserRouter, Route, Switch, Link, NavLink, Redirect } from 'react-router-dom';
 
 const Main = ({ page, setPage, setAuthToken, setUser, user }) => {
@@ -27,6 +28,9 @@ const Main = ({ page, setPage, setAuthToken, setUser, user }) => {
             break;
         case PageTypes.progress:
             content = <Progress user={user} setUser={setUser}/>;
+            break;
+        case PageTypes.threads:
+            content = <Threads user={user} setUser={setUser}/>;
             break;
         case PageTypes.profile:
             content = <Profile user={user} setUser={setUser} setPage={setPage}/>;
@@ -51,7 +55,7 @@ const Main = ({ page, setPage, setAuthToken, setUser, user }) => {
                 <div><button onClick={(e) => { setPage(e, PageTypes.marketplace) }}>MARKETPLACE</button></div>
               </li>
               <li id="threads">
-                <div><button onClick={(e) => { setPage(e, PageTypes.marketplace) }}>THREADS</button></div>
+                <div><button onClick={(e) => { setPage(e, PageTypes.threads) }}>THREADS</button></div>
               </li>
               <li id="profile">
                 <div><button onClick={(e) => { setPage(e, PageTypes.profile) }}>PROFILE</button></div>

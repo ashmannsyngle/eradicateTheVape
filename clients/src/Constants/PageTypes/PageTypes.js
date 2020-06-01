@@ -7,5 +7,6 @@ export default {
     marketplace: "MARKETPLACE",
     progress: "PROGRESS",
     profile: "PROFILE",
+    threads: "THREADS",
     forgotPassword: "FORGOT_PASSWORD"
 }
