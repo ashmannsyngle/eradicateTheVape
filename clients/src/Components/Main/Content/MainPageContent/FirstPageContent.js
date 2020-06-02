@@ -131,12 +131,12 @@ export class ContentFive extends Component {
         <p> *Most of the data above is taken from <a href="https://e-cigarettes.surgeongeneral.gov/knowtherisks.html"> here</a></p>
         <div className="four">
           <div className="line"></div>
-          <blockquote>"It made me look cool and tasted just like mango." <span>- Anonymous user</span></blockquote>
-          <blockquote>"I don't feel like starting my day without it." <span>- Anonymous user</span></blockquote>
+          <blockquote>"The intuitive UI and the ability to track my sobriety daily was so useful amidst this pandemic especially!" <span>- Anonymous user</span></blockquote>
+          <blockquote>"Threads where people can connect with others who go through the same things you have in your recovery just makes the quitting process a whole lot easier." <span>- Anonymous user</span></blockquote>
           <h1>That's how I feel!</h1>
           <h2>Yeah, we <span className="red">know</span>.</h2>
           <img src="images/read_posts.png" alt="person reading online posts" className="center" />
-          <p>Read posts like this where users from around the world talk about their vaping addiction in a separate section. Feel free to like some of these posts as well so that we can help you overcome your addiction better!</p>
+          <p>Read posts like this where users from around the world talk about their vaping addiction in a separate section.</p>
           <div className="btn">
             <a href="/others">GO THERE</a>
           </div>
