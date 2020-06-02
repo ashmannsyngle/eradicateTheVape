@@ -9,6 +9,7 @@ class CreateThread extends Component {
         this.state = {
             name: '',
             description: '',
+            amount: 50,
             error: ''
         }
     }
@@ -25,6 +26,13 @@ class CreateThread extends Component {
                 "Content-Type": "application/json"
             })
         });
+        if (description.length > 499) {
+            this.setError("Description cannot be more than 500 characters!");
+            return;
+        } else if (name.length > 79) {
+            this.setError("Name cannot be more than 80 characters!");
+            return;
+        }
         if (response.status >= 300) {
             const error = await response.text();
             console.log(error);
@@ -32,8 +40,54 @@ class CreateThread extends Component {
             return;
         }
         alert("Thread Created!")
+        this.sendRequestTwo()
+        setTimeout(() => {
+            this.sendRequestThree()
+          }, 1000);
+        console.log(this.props.user)
         this.props.setPage(e, PageTypes.threads);
     }
+
+    sendRequestTwo = async (e) => {
+        //e.preventDefault();
+        const { amount } = this.state;
+        const sendData = { amount };
+        console.log(sendData)
+        const response = await fetch(api.base + api.handlers.progressPoints, {
+            method: "POST",
+            body: JSON.stringify(sendData),
+            headers: new Headers({
+                "Authorization": localStorage.getItem("Authorization"),
+                "Content-Type": "application/json"
+            })
+        });
+        if (response.status >= 300) {
+            const error = await response.text();
+            console.log(error);
+            this.setError(error);
+            return;
+        }
+        this.props.setPage(e, PageTypes.threads);
+    }
+
+    sendRequestThree = async (e) => {
+        //e.preventDefault();
+        const response = await fetch(api.base + api.handlers.myuser, {
+            method: "GET",
+            headers: new Headers({
+              "Authorization": localStorage.getItem("Authorization")
+          })
+        });
+        if (response.status >= 300) {
+            const error = await response.text();
+            console.log(error);
+            this.setError(error);
+            return;
+        }
+        //alert("") // TODO make this better by refactoring errors IS THIS REQUIRED?
+        const user = await response.json();
+        this.props.setUser(user);
+      }
 
     setValue = (e) => {
         this.setState({ [e.target.name]: e.target.value });

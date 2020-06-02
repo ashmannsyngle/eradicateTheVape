@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"info441sp20-ashraysa/gateway/models/users"
 	"net/http"
 	"strings"
@@ -15,6 +16,11 @@ type Progress struct {
 	DaysSober  int       `json:"daysSober"`
 	DateLogged time.Time `json:"dateLogged"`
 	UserID     int64     `json:"userID"`
+}
+
+// Points represents a Points struct
+type Points struct {
+	Amount int `json:"amount"`
 }
 
 // MySQLStore represents a MySQL store
@@ -110,6 +116,41 @@ func (msq *MySQLStore) ProgressUserHandler(w http.ResponseWriter, r *http.Reques
 			w.WriteHeader(http.StatusOK)
 			enc := json.NewEncoder(w)
 			enc.Encode(progress)
+		} else {
+			http.Error(w, "invalid request method", http.StatusMethodNotAllowed)
+			return
+		}
+	} else {
+		http.Error(w, "User is not authenticated", http.StatusUnauthorized)
+		return
+	}
+}
+
+// UserPointsHandler updates the points of the user (for creating threads/posts)
+func (msq *MySQLStore) UserPointsHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Header.Get("X-User") != "" {
+		decoder := json.NewDecoder(strings.NewReader(r.Header.Get("X-User")))
+		user := &users.User{}
+		err := decoder.Decode(user)
+		if err != nil {
+			http.Error(w, "error decoding response body", http.StatusBadRequest)
+			return
+		}
+		if r.Method == "POST" {
+
+			decoder := json.NewDecoder(r.Body)
+			amountOfPoints := &Points{}
+			decoder.Decode(amountOfPoints)
+			sqlQueryFour := "update Users set points = ? where id = ?"
+			_, errFour := msq.db.Exec(sqlQueryFour, user.Points+amountOfPoints.Amount, user.ID)
+			fmt.Println(amountOfPoints)
+			fmt.Println(user.Points + amountOfPoints.Amount)
+			if errFour != nil {
+				http.Error(w, "Error updating points for the current user", http.StatusInternalServerError)
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+			w.Write([]byte("User points updated."))
 		} else {
 			http.Error(w, "invalid request method", http.StatusMethodNotAllowed)
 			return

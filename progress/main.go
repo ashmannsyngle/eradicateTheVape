@@ -28,6 +28,7 @@ func main() {
 
 	r := mux.NewRouter()
 	r.HandleFunc("/v1/progress", ctx.ProgressUserHandler)
+	r.HandleFunc("/v1/progress/", ctx.UserPointsHandler)
 
 	log.Printf("server is listening at %s...", addr)
 	log.Fatal(http.ListenAndServe(addr, r))

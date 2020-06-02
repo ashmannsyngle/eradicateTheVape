@@ -128,9 +128,11 @@ class Threads extends Component {
 
   handler = (thread, event) => {
     this.sendRequestTwo(thread)
-    const temp = this.state.deletedThread
-    temp[thread.id] = false
-    this.setState({ deletedThread: temp})
+    if (thread.creator.id == this.props.user.id) {
+      const temp = this.state.deletedThread
+      temp[thread.id] = false
+      this.setState({ deletedThread: temp})
+    }
     event.stopPropagation()
   }
 

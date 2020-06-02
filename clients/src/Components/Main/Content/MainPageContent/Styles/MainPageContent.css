@@ -1,5 +1,8 @@
-.avatar {
-    max-width: 300px;
+body {
+  display: flex;
+  flex-direction: column; /* creates rows out of the elements main and footer */
+  height: 100vh; 
+  margin:0;
 }
 
 span.green {
@@ -134,6 +137,7 @@ nav .sign-out {
 
 .content {
     padding-top: 20px;
+    bottom: 100px;
 }
 
 .content .one h2 {
@@ -260,13 +264,10 @@ nav .sign-out {
   }
 
   footer {
-    position: absolute;
     margin-top: 50px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 0;
-    height: 200px;
+    margin-right: -10px;
+    margin-left: -10px;
+    height: 400px;
     background-color: black;
     color: white;
     text-align: center;
@@ -316,6 +317,12 @@ footer a:hover {
 footer img {
     width: 200px;
     height: 1px;  
+}
+
+footer .footer-logo img{
+  margin-top: 15px;
+  width: 300px;
+  height: 150px;
 }
 
 footer h3 {
@@ -496,7 +503,7 @@ footer h3 {
 
 .marketplace .picture {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 }
 
@@ -507,6 +514,7 @@ footer h3 {
 .marketplace .picture .text p {
   font-size: 16px;
   line-height: 35px;
+  max-width: 600px;
 }
 
 .marketplace .picture img {
@@ -799,7 +807,7 @@ footer h3 {
   display: block;
   resize: none;
   width: 100%;
-  height: 120px;
+  height: 200px;
   padding: 25px;
   overflow: visible;
   margin-bottom: 10px;
@@ -992,6 +1000,7 @@ footer h3 {
 }
 
 .threads .picture .text p {
+  margin-right: 0;
   font-size: 16px;
   line-height: 35px;
   word-wrap: break-word;
@@ -1034,3 +1043,4 @@ footer h3 {
   margin: 0;
   margin-bottom: 10px;
 }
+

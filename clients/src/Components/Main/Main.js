@@ -39,7 +39,7 @@ const Main = ({ page, setPage, setAuthToken, setUser, user, thread, setThread })
             content = <Profile user={user} setUser={setUser} setPage={setPage}/>;
             break;
         case PageTypes.createThreads:
-            content = <CreateThread user={user} setPage={setPage}/>;
+            content = <CreateThread user={user} setUser={setUser} setPage={setPage}/>;
             break;
         case PageTypes.specificThreads:
             content = <SpecificThreads user={user} setPage={setPage} thread={thread}/>;
@@ -85,6 +85,9 @@ const Main = ({ page, setPage, setAuthToken, setUser, user, thread, setThread })
         </div>
         {content}
         <footer>
+            <div className="footer-logo">
+                <img src="images/footer_logo.jpg" />
+            </div>
             <div className="contact_group">
             <img src="images/line.png" alt="line for decoration" />
             <h3>CONTACT US</h3>

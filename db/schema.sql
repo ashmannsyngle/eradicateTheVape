@@ -57,7 +57,7 @@ ON Badges (badgeID, userID);
 create table if not exists Threads (
     threadID int primary key auto_increment not null,
     threadName varchar(80) not null,
-    threadDescription varchar(255),
+    threadDescription varchar(500),
     userWhoCreatedID bigint not null,
     timeCreated datetime not null,
     editedAt datetime not null,
@@ -72,7 +72,7 @@ insert into Threads (threadName, threadDescription, userWhoCreatedID, timeCreate
 create table if not exists Posts (
     postID int primary key auto_increment not null,
     threadID int not null,
-    content varchar (500) not null,
+    content varchar (1500) not null,
     userWhoCreatedID bigint not null,
     timeCreated datetime not null,
     editedAt datetime not null,

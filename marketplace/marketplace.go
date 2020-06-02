@@ -3,7 +3,6 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
-	"fmt"
 	"info441sp20-ashraysa/gateway/models/users"
 	"net/http"
 	"path"
@@ -126,8 +125,6 @@ func (msq *MySQLStore) BadgeUserHandler(w http.ResponseWriter, r *http.Request) 
 			}
 			sqlQueryThree := "update Users set points = ? where id = ?"
 			_, errFour := msq.db.Exec(sqlQueryThree, user.Points-marketplace.Cost, user.ID)
-			fmt.Println(user.Points)
-			fmt.Println(marketplace.Cost)
 			if errFour != nil {
 				http.Error(w, "Error deducting points from User's points in the db", http.StatusInternalServerError)
 				return

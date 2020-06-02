@@ -116,6 +116,7 @@ func main() {
 	mux.HandleFunc("/v1/sessions", handlerctx.SessionsHandler)
 	mux.HandleFunc("/v1/sessions/", handlerctx.SpecificSessionHandler)
 	mux.Handle("/v1/progress", progressProxy)
+	mux.Handle("/v1/progress/", progressProxy)
 	mux.Handle("/v1/threads", threadsProxy)
 	mux.Handle("/v1/threads/", threadsProxy)
 	mux.Handle("/v1/posts/", threadsProxy)

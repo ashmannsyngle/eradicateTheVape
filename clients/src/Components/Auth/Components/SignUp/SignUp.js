@@ -102,6 +102,10 @@ class SignUp extends Component {
                 "Content-Type": "application/json"
             })
         });
+        if (bio.length > 254) {
+            this.setError("Bio cannot be more than 255 characters!");
+            return;
+        }
         if (response.status >= 300) {
             const error = await response.text();
             this.setError(error);

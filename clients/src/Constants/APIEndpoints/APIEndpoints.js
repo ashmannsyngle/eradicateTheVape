@@ -12,6 +12,7 @@ export default {
         specificThreads: "/v1/threads/",
         posts:"/v1/posts/",
         progress: "/v1/progress",
+        progressPoints: "/v1/progress/",
         sessionsMine: "/v1/sessions/mine",
         resetPasscode: "/v1/resetcodes",
         passwords: "/v1/passwords/"
