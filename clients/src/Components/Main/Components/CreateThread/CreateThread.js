@@ -10,14 +10,16 @@ class CreateThread extends Component {
             name: '',
             description: '',
             amount: 50,
+            anon: '',
             error: ''
         }
     }
 
     sendRequest = async (e) => {
         e.preventDefault();
-        const { name, description } = this.state;
-        const sendData = { name, description };
+        const { name, description, anon } = this.state;
+        console.log(anon)
+        const sendData = { name, description, anon };
         const response = await fetch(api.base + api.handlers.threads, {
             method: "POST",
             body: JSON.stringify(sendData),
@@ -96,12 +98,25 @@ class CreateThread extends Component {
         this.setState({ error })
     }
 
+    toggleChange = () => {
+        this.setState({
+          anon: !this.state.anon,
+        });
+      }
+
     render() {
-        const { name, description, error } = this.state;
+        const { name, description, anon, error } = this.state;
         return <div className="editProfile">
             <Errors error={error} setError={this.setError} />
             <h2><span className="red">Create</span> a thread:</h2>
             <form onSubmit={this.sendRequest}>
+                <div className="createthread">
+                    <span>Would you like to be <b>anonymous</b>?</span>
+                    <label className="checkbox-label">
+                        <input name={"anon"} value={anon} type="checkbox" checked={this.state.anon} onChange={(e) => this.toggleChange()} />
+                        <span class="checkbox-custom" />
+                    </label>
+                </div>
                 <div>
                     <span>Name of thread: </span>
                     <input name={"name"} value={name} onChange={this.setValue} />

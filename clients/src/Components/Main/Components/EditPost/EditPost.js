@@ -80,11 +80,22 @@ class EditPost extends Component {
         <li>
           <div className="one-thread" id="post">
             <div className="one">
-              <div>
+              {/* <div>
                 {this.renderBadges(this.props.post)}
               </div>         
               <img src={this.props.post.creator.photoURL}/>
-              <h5>{this.props.post.creator.userName}</h5>
+              <h5>{this.props.post.creator.userName}</h5> */}
+              {this.props.post.anon ? <div>
+                <div>
+                    <img src="images/anonymous.png"/>
+                    <h5>Anonymous User</h5>
+                </div></div>: <div>
+                <div>
+                    {this.renderBadges(this.props.post)}
+                </div>
+                    <img src={this.props.post.creator.photoURL}/>
+                    <h5>{this.props.post.creator.userName}</h5>
+                </div>} 
             </div>
             <div className="two" id="post">
               <h3>{this.props.post.content}</h3>
@@ -100,7 +111,7 @@ class EditPost extends Component {
         return <div className="editProfile" id="post">
             <span>
                 <Errors error={error} setError={this.setError} />
-                <h2>Edit <span className="red">post:</span>:</h2>
+                <h2>Edit <span className="red">post</span>:</h2>
                 {postPreview}
                 <form onSubmit={this.sendRequest}>
                     <div>

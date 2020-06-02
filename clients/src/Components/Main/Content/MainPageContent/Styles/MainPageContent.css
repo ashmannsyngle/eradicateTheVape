@@ -33,6 +33,7 @@ nav img {
   margin:10px;
   margin-left: 20px;
   width: 40px;
+  cursor: pointer;
 }
 
 nav ul {
@@ -718,6 +719,19 @@ footer h3 {
   width: 500px;
   display: inline-block;
 }
+.editProfile form span.thread {
+  margin-bottom: 10px;
+}
+
+.editProfile .createthread {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+  width: 300px;
+}
 
 .editProfile span {
   width: 800px;
@@ -798,6 +812,85 @@ footer h3 {
   border: none;
   border-radius: 20px;
   background-color: rgb(234, 234, 234);
+}
+
+.editProfile .checkbox-label {
+  display: block;
+  position: relative;
+  margin: auto;
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 24px;
+  height: 24px;
+  width: 24px;
+  clear: both;
+}
+
+.editProfile form input[name="anon"] {
+  font-size: 20px;
+  position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 999;
+}
+
+.editProfile form .checkbox-custom {
+  position: absolute;
+    height: 24px;
+    width: 24px;
+    background-color: rgb(234, 234, 234);
+    border-radius: 5px;
+    transition: all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+}
+
+.editProfile form .checkbox-custom::after {
+  position: absolute;
+    content: "";
+    left: 12px;
+    top: 12px;
+    height: 0px;
+    width: 0px;
+    border-radius: 5px;
+    border: solid red;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(0deg) scale(0);
+    -ms-transform: rotate(0deg) scale(0);
+    transform: rotate(0deg) scale(0);
+    opacity:1;
+    transition: all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+}
+
+.editProfile form input[name="anon"]:checked ~ .checkbox-custom {
+  background-color: red;
+    border-radius: 5px;
+    -webkit-transform: rotate(0deg) scale(1);
+    -ms-transform: rotate(0deg) scale(1);
+    transform: rotate(0deg) scale(1);
+    opacity:1;
+}
+
+.editProfile form input[name="anon"]:checked ~ .checkbox-custom::after {
+  -webkit-transform: rotate(45deg) scale(1);
+  -ms-transform: rotate(45deg) scale(1);
+  transform: rotate(45deg) scale(1);
+  opacity:1;
+  left: 8px;
+  top: 3px;
+  width: 6px;
+  height: 12px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  background-color: transparent;
+  border-radius: 0;
+
 }
 
 .editProfile form textarea[name="description"] {
@@ -888,6 +981,7 @@ footer h3 {
   text-transform: uppercase;
 }
 
+
 .threads {
   padding: 70px;
   text-align: center;
@@ -946,6 +1040,7 @@ footer h3 {
 
 .threads .one-thread .one h5 {
   margin: 0;
+  width: 8rem;
 }
 
 .threads .one-thread .two {

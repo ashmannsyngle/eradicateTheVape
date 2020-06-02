@@ -37,6 +37,7 @@ class Threads extends Component {
           name: thread.name,
           description: thread.description,
           creator: thread.creator,
+          anon: thread.anon,
           createdAt: thread.createdAt,
           editedAt: thread.editedAt,
           badges: []
@@ -149,11 +150,17 @@ class Threads extends Component {
       { this.state.deletedThread[thread.id] ? 
       <div className="one-thread" onClick={(e) => { this.props.setPage(e, PageTypes.specificThreads); this.props.setThread(thread);}}>
           <div className="one">
+          {thread.anon ? <div>
             <div>
-              {this.renderBadges(thread)}
-            </div>            
-            <img src={thread.creator.photoURL}/>
-            <h5>{thread.creator.userName}</h5>
+              <img src="images/anonymous.png"/>
+              <h5>Anonymous User</h5>
+            </div></div>: <div>
+              <div>
+                {this.renderBadges(thread)}
+              </div>
+              <img src={thread.creator.photoURL}/>
+              <h5>{thread.creator.userName}</h5>
+            </div>}            
           </div>
           <div className="two">
             <h2>{thread.name}</h2>

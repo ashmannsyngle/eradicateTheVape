@@ -42,6 +42,7 @@ class SpecificThreads extends Component {
             content: post.content,
             createdAt: post.createdAt,
             creator: post.creator,
+            anon: post.anon,
             editedAt: post.editedAt,
             badges: []
           }))
@@ -159,11 +160,17 @@ class SpecificThreads extends Component {
         { this.state.deletedPost[post.id] ? 
           <div className="one-thread" id="post">
             <div className="one">
+            {post.anon ? <div>
+            <div>
+              <img src="images/anonymous.png"/>
+              <h5>Anonymous User</h5>
+            </div></div>: <div>
               <div>
                 {this.renderBadges(post)}
-              </div>         
+              </div>
               <img src={post.creator.photoURL}/>
               <h5>{post.creator.userName}</h5>
+            </div>} 
             </div>
             <div className="two" id="post">
               <h3>{post.content}</h3>
@@ -190,9 +197,16 @@ class SpecificThreads extends Component {
               <h1>Posts for <span className="red">{this.props.thread.name}</span>:</h1>
               <p>{this.props.thread.description}</p>
               <h5>Thread created by: </h5>
-              <img src={this.props.thread.creator.photoURL}/>
-              <h5 className="username">{this.props.thread.creator.userName}</h5>
-              <h7>Remember that <b>{this.props.thread.creator.userName}</b> can <b>delete</b> your posts!</h7>
+              { this.props.thread.anon ? <div>
+                <img src="images/anonymous.png"/>
+                <h5 className="username">Anonymous User</h5>
+              </div> : <div>
+                <img src={this.props.thread.creator.photoURL}/>
+                <h5 className="username">{this.props.thread.creator.userName}</h5>
+              </div>}
+              { this.props.thread.anon ? 
+              <h7>Remember that <b>Anonymous User</b> can <b>delete</b> your posts!</h7>:
+              <h7>Remember that <b>{this.props.thread.creator.userName}</b> can <b>delete</b> your posts!</h7>}
              </div>
             <img src="images/posts.png"/>
           </div>

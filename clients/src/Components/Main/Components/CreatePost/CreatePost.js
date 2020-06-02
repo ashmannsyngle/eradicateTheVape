@@ -9,14 +9,15 @@ class CreatePost extends Component {
         this.state = {
             content: '',
             amount: 10,
+            anon: false,
             error: ''
         }
     }
 
     sendRequest = async (e) => {
         e.preventDefault();
-        const { content } = this.state;
-        const sendData = { content };
+        const { content, anon } = this.state;
+        const sendData = { content, anon };
         const response = await fetch(api.base + api.handlers.specificThreads + this.props.thread.id, {
             method: "POST",
             body: JSON.stringify(sendData),
@@ -92,13 +93,26 @@ class CreatePost extends Component {
         this.setState({ error })
     }
 
+    toggleChange = () => {
+        this.setState({
+          anon: !this.state.anon,
+        });
+      }
+
     render() {
-        const { content, error } = this.state;
+        const { content, anon, error } = this.state;
         return <div className="editProfile" id="post">
             <span>
                 <Errors error={error} setError={this.setError} />
                 <h2>Write a <span className="red">post</span>:</h2>
                 <form onSubmit={this.sendRequest}>
+                <div className="createthread">
+                    <span>Would you like to be anonymous?</span>
+                    <label className="checkbox-label">
+                        <input name={"anon"} value={anon} type="checkbox" checked={this.state.anon} onChange={(e) => this.toggleChange()} />
+                        <span class="checkbox-custom" />
+                    </label>
+                </div>
                     <div>
                         <textarea name={"content"} value={content} onChange={this.setValue}/>
                     </div>

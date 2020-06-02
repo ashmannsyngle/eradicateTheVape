@@ -59,6 +59,7 @@ create table if not exists Threads (
     threadName varchar(80) not null,
     threadDescription varchar(500),
     userWhoCreatedID bigint not null,
+    anon bool default false not null,
     timeCreated datetime not null,
     editedAt datetime not null,
     foreign key (userWhoCreatedID) references Users(id)
@@ -74,6 +75,7 @@ create table if not exists Posts (
     threadID int not null,
     content varchar (1500) not null,
     userWhoCreatedID bigint not null,
+    anon bool default false not null,
     timeCreated datetime not null,
     editedAt datetime not null,
     foreign key (userWhoCreatedID) references Users(id),

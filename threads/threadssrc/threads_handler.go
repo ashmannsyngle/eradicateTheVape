@@ -18,6 +18,7 @@ func (newPost *InputPost) toPost(threadID int64) *Post {
 		Content:   newPost.Content,
 		CreatedAt: time.Now(),
 		Creator:   newPost.Creator,
+		Anonymous: newPost.Anonymous,
 		EditedAt:  time.Now(),
 	}
 	return post
@@ -30,6 +31,7 @@ func (newThread *InputThread) toThread() *Thread {
 		Description: newThread.Description,
 		CreatedAt:   time.Now(),
 		Creator:     newThread.Creator,
+		Anonymous:   newThread.Anonymous,
 		EditedAt:    time.Now(),
 	}
 	return thread

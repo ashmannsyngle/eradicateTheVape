@@ -26,6 +26,7 @@ type Thread struct {
 	Name        string      `json:"name"`
 	Description string      `json:"description"`
 	Creator     *users.User `json:"creator"`
+	Anonymous   bool        `json:"anon"`
 	CreatedAt   time.Time   `json:"createdAt"`
 	EditedAt    time.Time   `json:"editedAt"`
 }
@@ -34,6 +35,7 @@ type Thread struct {
 type InputThread struct {
 	Name        string      `json:"name"`
 	Description string      `json:"description"`
+	Anonymous   bool        `json:"anon"`
 	Creator     *users.User `json:"creator"`
 }
 
@@ -44,13 +46,15 @@ type Post struct {
 	Content   string      `json:"content"`
 	CreatedAt time.Time   `json:"createdAt"`
 	Creator   *users.User `json:"creator"`
+	Anonymous bool        `json:"anon"`
 	EditedAt  time.Time   `json:"editedAt"`
 }
 
 //InputPost represents a post someone is about to submit
 type InputPost struct {
-	Content string      `json:"content"`
-	Creator *users.User `json:"creator"`
+	Content   string      `json:"content"`
+	Anonymous bool        `json:"anon"`
+	Creator   *users.User `json:"creator"`
 }
 
 //PostUpdates represents the changes made to a particular post
@@ -61,7 +65,7 @@ type PostUpdates struct {
 //GetMostRecentThreads returns the most recent 50 threads --WILL LIKELY INCLUDE BEFORE QUERY--
 func (store SQLStore) GetMostRecentThreads() ([]Thread, error) {
 	var output []Thread
-	inq := "select threadID, threadName, threadDescription, userWhoCreatedID, timeCreated, editedAt from Threads order by timeCreated desc"
+	inq := "select threadID, threadName, threadDescription, userWhoCreatedID, anon, timeCreated, editedAt from Threads order by timeCreated desc"
 	threadRows, err := store.db.Query(inq)
 	if err != nil {
 		return nil, err
@@ -72,7 +76,7 @@ func (store SQLStore) GetMostRecentThreads() ([]Thread, error) {
 		thisThread.Creator = &users.User{}
 		var createDate []byte
 		var editDate []byte
-		if err := threadRows.Scan(&thisThread.ID, &thisThread.Name, &thisThread.Description, &thisThread.Creator.ID,
+		if err := threadRows.Scan(&thisThread.ID, &thisThread.Name, &thisThread.Description, &thisThread.Creator.ID, &thisThread.Anonymous,
 			&createDate, &editDate); err != nil {
 			return nil, err
 		}
@@ -94,7 +98,7 @@ func (store SQLStore) GetMostRecentThreads() ([]Thread, error) {
 
 //GetThreadByID retrieves the thread that has the given id
 func (store SQLStore) GetThreadByID(id int64) (*Thread, error) {
-	inq := "select threadID, threadName, threadDescription, userWhoCreatedID, timeCreated, editedAt from Threads where threadID=?"
+	inq := "select threadID, threadName, threadDescription, userWhoCreatedID, anon, timeCreated, editedAt from Threads where threadID=?"
 	threadRows, err := store.db.Query(inq, id)
 	if err != nil {
 		return nil, err
@@ -105,7 +109,7 @@ func (store SQLStore) GetThreadByID(id int64) (*Thread, error) {
 	var createDate []byte
 	var editDate []byte
 	for threadRows.Next() {
-		if err := threadRows.Scan(&thisThread.ID, &thisThread.Name, &thisThread.Description, &thisThread.Creator.ID,
+		if err := threadRows.Scan(&thisThread.ID, &thisThread.Name, &thisThread.Description, &thisThread.Creator.ID, &thisThread.Anonymous,
 			&createDate, &editDate); err != nil {
 			return nil, err
 		}
@@ -127,7 +131,7 @@ func (store SQLStore) GetThreadByID(id int64) (*Thread, error) {
 //GetOldestPosts retrieves the first 25 posts of the thread with the given ID --WILL LIKELY INCLUDE AFTER QUERY--
 func (store SQLStore) GetOldestPosts(threadID int64) ([]Post, error) {
 	var output []Post
-	postInq := "select postID, threadID, content, userWhoCreatedID, timeCreated, editedAt from Posts where threadID=? order by timeCreated asc"
+	postInq := "select postID, threadID, content, userWhoCreatedID, anon, timeCreated, editedAt from Posts where threadID=? order by timeCreated asc"
 	postRows, err := store.db.Query(postInq, threadID)
 	if err != nil {
 		return nil, err
@@ -138,7 +142,7 @@ func (store SQLStore) GetOldestPosts(threadID int64) ([]Post, error) {
 		thisPost.Creator = &users.User{}
 		var createDate []byte
 		var editDate []byte
-		if err := postRows.Scan(&thisPost.ID, &thisPost.ThreadID, &thisPost.Content, &thisPost.Creator.ID, &createDate,
+		if err := postRows.Scan(&thisPost.ID, &thisPost.ThreadID, &thisPost.Content, &thisPost.Creator.ID, &thisPost.Anonymous, &createDate,
 			&editDate); err != nil {
 			return nil, err
 		}
@@ -160,7 +164,7 @@ func (store SQLStore) GetOldestPosts(threadID int64) ([]Post, error) {
 
 //GetPostByID returns the post with the given ID within the given thread (realized we might not need this one oops)
 func (store SQLStore) GetPostByID(postID int64) (*Post, error) {
-	postInq := "select postID, threadID, content, userWhoCreatedID, timeCreated, editedAt from Posts where postID=?"
+	postInq := "select postID, threadID, content, userWhoCreatedID, anon, timeCreated, editedAt from Posts where postID=?"
 	postRows, err := store.db.Query(postInq, postID)
 	if err != nil {
 		return nil, err
@@ -171,7 +175,7 @@ func (store SQLStore) GetPostByID(postID int64) (*Post, error) {
 	var createDate []byte
 	var editDate []byte
 	for postRows.Next() {
-		if err := postRows.Scan(&thisPost.ID, &thisPost.ThreadID, &thisPost.Content, &thisPost.Creator.ID, &createDate,
+		if err := postRows.Scan(&thisPost.ID, &thisPost.ThreadID, &thisPost.Content, &thisPost.Creator.ID, &thisPost.Anonymous, &createDate,
 			&editDate); err != nil {
 			return nil, err
 		}
@@ -213,8 +217,8 @@ func (store SQLStore) GetCreator(id int64) (*users.User, error) {
 
 //InsertThread inserts a new thread into the Threads table of the database
 func (store SQLStore) InsertThread(newThread *Thread) (*Thread, error) {
-	threadExec := "insert into Threads(threadName, threadDescription, userWhoCreatedID, timeCreated, editedAt) values (?, ?, ?, ?, ?)"
-	res, err := store.db.Exec(threadExec, newThread.Name, newThread.Description, newThread.Creator.ID, newThread.CreatedAt,
+	threadExec := "insert into Threads(threadName, threadDescription, userWhoCreatedID, anon, timeCreated, editedAt) values (?, ?, ?, ?, ?, ?)"
+	res, err := store.db.Exec(threadExec, newThread.Name, newThread.Description, newThread.Creator.ID, newThread.Anonymous, newThread.CreatedAt,
 		newThread.EditedAt)
 	if err != nil {
 		return nil, errors.New("Cannot create a thread with a duplicate thread name")
@@ -229,8 +233,8 @@ func (store SQLStore) InsertThread(newThread *Thread) (*Thread, error) {
 
 //InsertPost inserts a new post into the Posts table of the database
 func (store SQLStore) InsertPost(newPost *Post) (*Post, error) {
-	postExec := "insert into Posts(threadID, content, userWhoCreatedID, timeCreated, editedAt) values (?, ?, ?, ?, ?)"
-	res, err := store.db.Exec(postExec, newPost.ThreadID, newPost.Content, newPost.Creator.ID, newPost.CreatedAt, newPost.EditedAt)
+	postExec := "insert into Posts(threadID, content, userWhoCreatedID, anon, timeCreated, editedAt) values (?, ?, ?, ?, ?, ?)"
+	res, err := store.db.Exec(postExec, newPost.ThreadID, newPost.Content, newPost.Creator.ID, newPost.Anonymous, newPost.CreatedAt, newPost.EditedAt)
 	if err != nil {
 		return nil, err
 	}
