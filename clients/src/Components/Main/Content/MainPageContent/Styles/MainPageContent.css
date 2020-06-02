@@ -929,6 +929,21 @@ footer h3 {
   cursor: pointer;
 }
 
+.threads .one-thread#post {
+  transition: none;
+  border-radius: 20px;
+}
+
+.threads .one-thread#post .one{
+  margin-right: 15px;
+}
+
+.threads .one-thread#post:hover {
+  background-color: white;
+  transform: none;
+  cursor: default;
+}
+
 .threads .one-thread .one h5 {
   margin: 0;
 }
@@ -936,6 +951,11 @@ footer h3 {
 .threads .one-thread .two {
   text-align: left;
   width: 25rem;
+}
+
+.threads .one-thread .two#post {
+  text-align: left;
+  width: 35rem;
 }
 
 .threads .one-thread .two h2 {
@@ -969,10 +989,41 @@ footer h3 {
   margin-top: 5px;
 }
 
+.threads .one-thread .four#post-edit {
+  margin-right: 10px;
+  margin-left: 10px;
+  width: 50px;
+}
+
+.threads .one-thread .four#post-delete img {
+  width: 50px;
+  border-radius: 10px;
+  transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.threads .one-thread .four#post-delete img:hover {
+  transform: translateY(-3px);
+  width: 50px;
+  border-radius: 10px;
+}
+
+.threads .one-thread .four#post-edit img {
+  width: 30px;
+  border-radius: 10px;
+  transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.threads .one-thread .four#post-edit img:hover {
+  transform: translateY(-3px);
+  width: 50px;
+  border-radius: 10px;
+}
+
 .threads .one-thread .four img {
   width: 50px;
   border-radius: 10px;
 }
+
 
 .threads .one-thread img {
   z-index: 99999;
@@ -999,12 +1050,15 @@ footer h3 {
   text-align: right;
 }
 
+.threads .picture .text h7 {
+  font-size: small;
+  font-style: italic;
+}
+
 .threads .picture .text p {
-  margin-right: 0;
   font-size: 16px;
   line-height: 35px;
   word-wrap: break-word;
-  max-width: 600px;
 }
 
 .threads .picture img {
@@ -1042,5 +1096,102 @@ footer h3 {
 .threads .text h5 {
   margin: 0;
   margin-bottom: 10px;
+}
+
+.editProfile li{
+  list-style: none;
+  display: inline-block;
+}
+
+.editProfile .one-thread {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 70rem;
+  padding: 20px;
+  margin: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.editProfile .one-thread:hover {
+  background-color: rgb(224, 224, 224);
+  transform: translateY(-3px);
+  cursor: pointer;
+}
+
+.editProfile .one-thread#post {
+  transition: none;
+  border-radius: 20px;
+}
+
+.editProfile .one-thread#post .one{
+  margin-right: 15px;
+}
+
+.editProfile .one-thread#post:hover {
+  background-color: white;
+  transform: none;
+  cursor: default;
+}
+
+.editProfile .one-thread .one h5 {
+  margin: 0;
+}
+
+.editProfile .one-thread .two {
+  text-align: left;
+  width: 25rem;
+}
+
+.editProfile .one-thread .two#post {
+  text-align: left;
+  width: 35rem;
+}
+
+.editProfile .one-thread .two h2 {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.editProfile .one-thread .two h3 {
+  font-size: 15px;
+  font-weight: normal;
+  margin:0;
+  margin-top: 5px;
+  word-wrap: break-word;
+}
+
+.editProfile .one-thread .three {
+  text-align: right;
+}
+
+.editProfile .one-thread .three h2 {
+  font-size: 17px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.editProfile .one-thread .three h3 {
+  font-size: 12px;
+  font-weight: normal;
+  margin:0;
+  margin-top: 5px;
+}
+
+.editProfile .one-thread img {
+  z-index: 99999;
+  margin-top: 5px;
+  width: 60px;
+}
+
+.editProfile .one-thread img:hover {
+  margin-top: 5px;
+  width: 60px;
+}
+
+.editProfile .one-thread img.badge {
+  width: 20px;
 }
 

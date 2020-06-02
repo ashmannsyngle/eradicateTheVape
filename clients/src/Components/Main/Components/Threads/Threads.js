@@ -78,7 +78,6 @@ class Threads extends Component {
         method: "DELETE",
         headers: new Headers({
             "Authorization": localStorage.getItem("Authorization"),
-            "Content-Type": "application/json"
         })
     });
     if (response.status >= 300) {
@@ -136,6 +135,13 @@ class Threads extends Component {
     event.stopPropagation()
   }
 
+  checkDelete = (thread) => {
+    if (thread.creator.id != this.props.user.id) {
+      return false;
+    }
+    return true;
+  }
+
   render() {
       const { error} = this.state;
       const listItems = this.state.threads.map((thread) =>
@@ -157,9 +163,11 @@ class Threads extends Component {
             <h2>Created At:</h2>
             <h3>{this.getParsedTime(thread.createdAt)}</h3>
           </div>
+          { this.checkDelete(thread) ? 
           <div className="four">
             <img src="images/trash.png"  onClick={(event) => this.handler(thread, event)}/>      
-          </div>
+          </div> : null}
+          
         </div> : null }
         
       </li>

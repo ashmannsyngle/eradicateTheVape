@@ -214,7 +214,14 @@ func (ctx *HandlerContext) SpecificPostHandler(w http.ResponseWriter, r *http.Re
 			http.Error(w, fmt.Sprintf("Post not found: %v", err), http.StatusNotFound)
 			return
 		}
-		if toDelete.Creator.ID != thisUser.ID {
+
+		thread, errTwo := ctx.Store.GetThreadByID(toDelete.ThreadID)
+		if errTwo != nil {
+			http.Error(w, fmt.Sprintf("Thread not found for post: %v", err), http.StatusInternalServerError)
+			return
+		}
+
+		if thread.Creator.ID != thisUser.ID && toDelete.Creator.ID != thisUser.ID {
 			fmt.Println(toDelete.Creator.ID)
 			fmt.Println(thisUser.ID)
 			http.Error(w, fmt.Sprintf("You are not the author of this post. %v", err), http.StatusUnauthorized)

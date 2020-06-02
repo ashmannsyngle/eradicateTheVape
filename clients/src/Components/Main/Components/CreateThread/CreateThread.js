@@ -44,7 +44,6 @@ class CreateThread extends Component {
         setTimeout(() => {
             this.sendRequestThree()
           }, 1000);
-        console.log(this.props.user)
         this.props.setPage(e, PageTypes.threads);
     }
 

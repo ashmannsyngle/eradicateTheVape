@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import api from '../../../../Constants/APIEndpoints/APIEndpoints';
 import PageTypes from '../../../../Constants/PageTypes/PageTypes';
 import Errors from '../../../Errors/Errors';
-import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import {Link, RichText, Date} from 'prismic-reactjs';
 
@@ -12,6 +11,7 @@ class SpecificThreads extends Component {
       super(props);
       this.state = {
           posts: [],
+          deletedPost:{},
           error: ''
       }
   }
@@ -42,12 +42,56 @@ class SpecificThreads extends Component {
             content: post.content,
             createdAt: post.createdAt,
             creator: post.creator,
-            editedAt: post.editedAt
+            editedAt: post.editedAt,
+            badges: []
           }))
         });
-      } 
+      }
+      
+      for (var i = 0; i < this.state.posts.length; i++) {
+        const temp = this.state.deletedPost
+        const id = this.state.posts[i].id
+        temp[id] = true
+        this.setState({ deletedPost: temp})
+        
+        const currPost = this.state.posts[i]
+        const response = await fetch(api.base + api.handlers.marketplaceBadges + currPost.creator.id, {
+          method: "GET",
+          headers: new Headers({
+            "Authorization": localStorage.getItem("Authorization")
+          })
+        });
+        if (response.status >= 300) {
+            const error = await response.text();
+            console.log(error);
+            this.setError(error);
+            return;
+        }
+        const badgesResponse = await response.json();
+        const prevState = this.state
+        prevState.posts[i].badges = badgesResponse
+        this.setState({ posts: prevState.posts})
+      }
       //this.props.setBadges(badges);
   }
+
+  sendRequestTwo = async (e) => {
+    //e.preventDefault();
+    const response = await fetch(api.base + api.handlers.posts + e.id, {
+        method: "DELETE",
+        headers: new Headers({
+            "Authorization": localStorage.getItem("Authorization"),
+        })
+    });
+    if (response.status >= 300) {
+        const error = await response.text();
+        console.log(error);
+        alert(error)
+        return;
+    }
+    alert("Post deleted!")
+    this.props.setPage(e, PageTypes.specificThreads);
+}
 
 
   componentWillMount() {
@@ -71,24 +115,72 @@ class SpecificThreads extends Component {
     return formattedTimestamp;
   }
 
+  renderBadges = (post) => {
+    if (post.badges != null) {
+      const badges = post.badges.map((badge) =>
+        <li>
+          <img src={badge.imgURL} className="badge"/>
+        </li>
+      );
+      return badges;
+    } 
+    return <></>
+  }
+
+  handler = (post, event) => {
+    this.sendRequestTwo(post)
+    if (post.creator.id == this.props.user.id || this.props.thread.creator.id == this.props.user.id) {
+      const temp = this.state.deletedPost
+      temp[post.id] = false
+      this.setState({ deletedPost: temp})
+    }
+    event.stopPropagation()
+  }
+
+  checkEdit = (post) => {
+    if (post.creator.id != this.props.user.id) {
+      return false;
+    }
+    return true;
+  }
+
+  checkDelete = (post) => {
+    if (this.props.thread.creator.id != this.props.user.id) {
+      return false;
+    }
+    return true;
+  }
+
+
   render() {
       const { error} = this.state;
       const listItems = this.state.posts.map((post) =>
         <li>
-          <div className="one-thread" onClick={(e) => { this.props.setPage(e, PageTypes.specificThreads)}}>
+        { this.state.deletedPost[post.id] ? 
+          <div className="one-thread" id="post">
             <div className="one">
-              <img src="images/default_profile.png"/>
+              <div>
+                {this.renderBadges(post)}
+              </div>         
+              <img src={post.creator.photoURL}/>
               <h5>{post.creator.userName}</h5>
             </div>
-            <div className="two">
-              <h2>{this.props.thread.name}</h2>
+            <div className="two" id="post">
               <h3>{post.content}</h3>
             </div>
             <div className="three">
               <h2>Last Edited:</h2>
               <h3>{this.getParsedTime(post.editedAt)}</h3>
             </div>
-          </div>
+            {this.checkEdit(post) ? 
+            <div className="four" id="post-edit">
+              <img src="images/edit.png"  onClick={(e) => { this.props.setPage(e, PageTypes.editPost); this.props.setPost(post)} }/>      
+            </div> : null}
+            {this.checkDelete(post) ? 
+            <div className="four" id="post-delete">
+              <img src="images/trash.png"  onClick={(event) => this.handler(post, event)}/>      
+            </div> : null}
+          </div> : null }
         </li>
       );
       return <div className="threads">
@@ -100,6 +192,7 @@ class SpecificThreads extends Component {
               <h5>Thread created by: </h5>
               <img src={this.props.thread.creator.photoURL}/>
               <h5 className="username">{this.props.thread.creator.userName}</h5>
+              <h7>Remember that <b>{this.props.thread.creator.userName}</b> can <b>delete</b> your posts!</h7>
              </div>
             <img src="images/posts.png"/>
           </div>

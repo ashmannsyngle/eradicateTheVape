@@ -8,6 +8,7 @@ class CreatePost extends Component {
         super(props);
         this.state = {
             content: '',
+            amount: 10,
             error: ''
         }
     }
@@ -24,6 +25,10 @@ class CreatePost extends Component {
                 "Content-Type": "application/json"
             })
         });
+        if (content == "") {
+            this.setError("Cannot make an empty post!");
+            return;
+        }
         if (response.status >= 300) {
             const error = await response.text();
             console.log(error);
@@ -31,8 +36,53 @@ class CreatePost extends Component {
             return;
         }
         alert("Post Created!")
+        this.sendRequestTwo()
+        setTimeout(() => {
+            this.sendRequestThree()
+          }, 1000);
         this.props.setPage(e, PageTypes.specificThreads);
     }
+
+    sendRequestTwo = async (e) => {
+        //e.preventDefault();
+        const { amount } = this.state;
+        const sendData = { amount };
+        console.log(sendData)
+        const response = await fetch(api.base + api.handlers.progressPoints, {
+            method: "POST",
+            body: JSON.stringify(sendData),
+            headers: new Headers({
+                "Authorization": localStorage.getItem("Authorization"),
+                "Content-Type": "application/json"
+            })
+        });
+        if (response.status >= 300) {
+            const error = await response.text();
+            console.log(error);
+            this.setError(error);
+            return;
+        }
+        this.props.setPage(e, PageTypes.specificThreads);
+    }
+
+    sendRequestThree = async (e) => {
+        //e.preventDefault();
+        const response = await fetch(api.base + api.handlers.myuser, {
+            method: "GET",
+            headers: new Headers({
+              "Authorization": localStorage.getItem("Authorization")
+          })
+        });
+        if (response.status >= 300) {
+            const error = await response.text();
+            console.log(error);
+            this.setError(error);
+            return;
+        }
+        //alert("") // TODO make this better by refactoring errors IS THIS REQUIRED?
+        const user = await response.json();
+        this.props.setUser(user);
+      }
 
     setValue = (e) => {
         this.setState({ [e.target.name]: e.target.value });

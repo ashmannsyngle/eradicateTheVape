@@ -11,5 +11,6 @@ export default {
     specificThreads: "SPECIFICTHREADS",
     createThreads: "CREATETHREADS",
     createPost: "CREATEPOST",
+    editPost: "EDITPOST",
     forgotPassword: "FORGOT_PASSWORD"
 }

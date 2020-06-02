@@ -10,10 +10,11 @@ import Profile from './Components/Profile/Profile';
 import Threads from './Components/Threads/Threads';
 import CreateThread from './Components/CreateThread/CreateThread';
 import CreatePost from './Components/CreatePost/CreatePost';
+import EditPost from './Components/EditPost/EditPost';
 import SpecificThreads from './Components/SpecificThreads/SpecificThreads';
 import { BrowserRouter, Route, Switch, Link, NavLink, Redirect } from 'react-router-dom';
 
-const Main = ({ page, setPage, setAuthToken, setUser, user, thread, setThread }) => {
+const Main = ({ page, setPage, setAuthToken, setUser, user, thread, setThread, post, setPost}) => {
     let content = <></>
     let contentPage = true;
     switch (page) {
@@ -42,10 +43,13 @@ const Main = ({ page, setPage, setAuthToken, setUser, user, thread, setThread })
             content = <CreateThread user={user} setUser={setUser} setPage={setPage}/>;
             break;
         case PageTypes.specificThreads:
-            content = <SpecificThreads user={user} setPage={setPage} thread={thread}/>;
+            content = <SpecificThreads user={user} setPage={setPage} thread={thread}  setPost={setPost}/>;
             break;
         case PageTypes.createPosts:
-            content = <CreatePost user={user} setPage={setPage} thread={thread}/>;
+            content = <CreatePost user={user} setUser={setUser} setPage={setPage} thread={thread}/>;
+            break;
+        case PageTypes.editPost:
+            content = <EditPost user={user} setUser={setUser} setPage={setPage} thread={thread} post={post} setPost={setPost}/>;
             break;
         default:
             content = <>Error, invalid path reached</>;
