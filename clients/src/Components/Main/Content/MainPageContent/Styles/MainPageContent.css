@@ -11,7 +11,12 @@ span.red {
 }
 
 nav{
-	position: fixed;
+  position: fixed;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
 	width: 100%;
 	background-color: black;
 	text-align: center;
@@ -21,35 +26,25 @@ nav{
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-nav h1 {
-    cursor: pointer;
-  float: left;
-  margin: 0;
-  width: 200px;
-  margin-right: 0;
-  margin-left: 10px;
-  text-align: left;
-  text-decoration: none;
-  font-family: 'Caveat', cursive;
-  font-size: 30px;
-  padding: 0px 5px;
-  display: block;
-  color: #FFF;
+nav img {
+  margin:10px;
+  margin-left: 20px;
+  width: 40px;
 }
 
 nav ul {
-    margin: 0;
-    margin-top: 5px;
-    margin-left: -100px;
-	padding: 0;
-	display: inline-block;
+  display: flex;
+  margin: 0;
+  margin-top: 5px;
+  padding: 0;
+  border-radius: 10px;
 }
 
 nav ul li {
     list-style: none;
-	margin: 0;
+    background: none;
+	  margin: 0;
     padding: 0;
-    float:left;
 }
 
 nav h1 a{
@@ -58,38 +53,45 @@ nav h1 a{
   }
   
   nav ul li button{
+    margin-right: 10px;
+    outline: none;
     text-decoration: none;
-    padding: 10px 30px;
-    display: block;
+    padding: 8px 20px;
+    background: none;
+    border: none;
+    color: white;
+    border-radius: 20px;
+    font-size: 13px;
     text-align: center;
-    transition: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
   nav ul li button:hover{
-    color: red;
+    background: red;
     transform: translateY(-3px);
   }
 
+nav .two {
+  align-self: center;
+}
+
+nav .sign-out {
+  margin-right: 10px;
+}
+
 .display-user h1 {
-    position: fixed;
-    right: 180px;
-    top: 6px;
     color: white;
     font-weight: 400;
-    z-index: 999999999999;
     font-size: 15px;
 }
 
 .sign-out button {
-    position: fixed;
-    top: 12px;
-    z-index: 999999999999;
-    right: 10px;
+  
     background-color: red;
     border: none;
-    padding: 5px 20px;
+    padding: 10px 20px;
     color: white;
-    border-radius: 10px;
+    border-radius: 20px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -709,6 +711,10 @@ footer h3 {
   display: inline-block;
 }
 
+.editProfile span {
+  width: 800px;
+}
+
 .editProfile form {
   background: #fff;
   border-radius: 10px;
@@ -786,15 +792,36 @@ footer h3 {
   background-color: rgb(234, 234, 234);
 }
 
-.editProfile form input[name="description"] {
+.editProfile form textarea[name="description"] {
   color: #555555;
   line-height: 1.2;
   font-size: 18px;
   display: block;
+  resize: none;
   width: 100%;
-  height: 55px;
-  padding: 0 25px 0 25px;
+  height: 120px;
+  padding: 25px;
   overflow: visible;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 20px;
+  background-color: rgb(234, 234, 234);
+}
+
+#post {
+  width: 900px;
+}
+
+.editProfile form textarea[name="content"] {
+  color: #555555;
+  line-height: 1.2;
+  font-size: 18px;
+  display: block;
+  resize: none;
+  width: 100%;
+  height: 250px;
+  padding: 25px;
+  word-wrap: break-word;
   margin-bottom: 10px;
   border: none;
   border-radius: 20px;
@@ -879,7 +906,7 @@ footer h3 {
 
 .threads .one-thread {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
   width: 70rem;
   padding: 20px;
@@ -914,6 +941,7 @@ footer h3 {
   font-weight: normal;
   margin:0;
   margin-top: 5px;
+  word-wrap: break-word;
 }
 
 .threads .one-thread .three {
@@ -933,8 +961,24 @@ footer h3 {
   margin-top: 5px;
 }
 
+.threads .one-thread .four img {
+  width: 50px;
+  border-radius: 10px;
+}
+
 .threads .one-thread img {
-  width: 80px;
+  z-index: 99999;
+  margin-top: 5px;
+  width: 60px;
+}
+
+.threads .one-thread img:hover {
+  margin-top: 5px;
+  width: 60px;
+}
+
+.threads .one-thread img.badge {
+  width: 20px;
 }
 
 .threads .picture {
@@ -950,6 +994,8 @@ footer h3 {
 .threads .picture .text p {
   font-size: 16px;
   line-height: 35px;
+  word-wrap: break-word;
+  max-width: 600px;
 }
 
 .threads .picture img {

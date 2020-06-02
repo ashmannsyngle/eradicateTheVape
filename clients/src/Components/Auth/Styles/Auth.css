@@ -228,9 +228,6 @@ span.red {
   text-align: center;
 }
 
-.logo h1 {
-  text-decoration: none;
-  font-family: 'Caveat', cursive;
-  font-size: 40px;
-  margin-bottom: 0;
+.logo img {
+  width: 450px;
 }

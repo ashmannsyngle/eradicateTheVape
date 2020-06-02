@@ -55,7 +55,7 @@ class CreateThread extends Component {
                 </div>
                 <div>
                     <span>Description: </span>
-                    <input name={"description"} value={description} onChange={this.setValue} />
+                    <textarea name={"description"} value={description} onChange={this.setValue} />
                 </div>
                 <input type="submit" value="CREATE THREAD"/>
                 <input type="back" value="GO BACK" onClick={(e) => this.props.setPage(e, PageTypes.threads)}/>

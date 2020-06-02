@@ -3,21 +3,20 @@ import api from '../../../../Constants/APIEndpoints/APIEndpoints';
 import Errors from '../../../Errors/Errors';
 import PageTypes from '../../../../Constants/PageTypes/PageTypes';
 
-class CreateThread extends Component {
+class CreatePost extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: '',
-            description: '',
+            content: '',
             error: ''
         }
     }
 
     sendRequest = async (e) => {
         e.preventDefault();
-        const { name, description } = this.state;
-        const sendData = { name, description };
-        const response = await fetch(api.base + api.handlers.threads, {
+        const { content } = this.state;
+        const sendData = { content };
+        const response = await fetch(api.base + api.handlers.specificThreads + this.props.thread.id, {
             method: "POST",
             body: JSON.stringify(sendData),
             headers: new Headers({
@@ -31,8 +30,8 @@ class CreateThread extends Component {
             this.setError(error);
             return;
         }
-        alert("Thread Created!")
-        this.props.setPage(e, PageTypes.threads);
+        alert("Post Created!")
+        this.props.setPage(e, PageTypes.specificThreads);
     }
 
     setValue = (e) => {
@@ -44,25 +43,22 @@ class CreateThread extends Component {
     }
 
     render() {
-        const { name, description, error } = this.state;
-        return <div className="editProfile">
-            <Errors error={error} setError={this.setError} />
-            <h2><span className="red">Create</span> a thread:</h2>
-            <form onSubmit={this.sendRequest}>
-                <div>
-                    <span>Name of thread: </span>
-                    <input name={"name"} value={name} onChange={this.setValue} />
-                </div>
-                <div>
-                    <span>Description: </span>
-                    <input name={"description"} value={description} onChange={this.setValue} />
-                </div>
-                <input type="submit" value="CREATE THREAD"/>
-                <input type="back" value="GO BACK" onClick={(e) => this.props.setPage(e, PageTypes.threads)}/>
-            </form>
+        const { content, error } = this.state;
+        return <div className="editProfile" id="post">
+            <span>
+                <Errors error={error} setError={this.setError} />
+                <h2>Write a <span className="red">post</span>:</h2>
+                <form onSubmit={this.sendRequest}>
+                    <div>
+                        <textarea name={"content"} value={content} onChange={this.setValue}/>
+                    </div>
+                    <input type="submit" value="CREATE POST"/>
+                    <input type="back" value="GO BACK" onClick={(e) => this.props.setPage(e, PageTypes.specificThreads)}/>
+                </form>
+            </span>
         </div>
     }
 
 }
 
-export default CreateThread;
+export default CreatePost;

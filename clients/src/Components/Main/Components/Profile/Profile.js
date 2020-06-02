@@ -17,7 +17,7 @@ class Profile extends Component {
 
   sendRequestThree = async (e) => {
     //e.preventDefault();
-    const response = await fetch(api.base + api.handlers.marketplaceBadges + "1", {
+    const response = await fetch(api.base + api.handlers.marketplaceBadges + this.props.user.id, {
       method: "GET",
       headers: new Headers({
         "Authorization": localStorage.getItem("Authorization")
@@ -71,9 +71,6 @@ class Profile extends Component {
       return <div className="profile-page">
       <div className="profile">
           <Errors error={error} setError={this.setError} />
-          <div className="display-user">
-            <h1>Logged in as: <span className="red">{this.props.user.userName}</span></h1> 
-          </div>
           <h1>Here's your <span className="red">Profile</span>:</h1>
           <Card style={{ width: '40rem' }}>
             <Card.Img variant="top" src={this.props.user.photoURL} />

@@ -112,9 +112,6 @@ sendAllRequests =() => {
         const {progressID, daysSober, userID, error} = this.state;
         return <div className="progress">
             <Errors error={error} setError={this.setError} />
-            <div className="display-user">
-              <h1>Logged in as: <span className="red">{this.props.user.userName}</span></h1> 
-            </div>
             <div className="picture">
               <div className="text">
                 <h1>Sobreity <span className="red">Clock</span></h1>

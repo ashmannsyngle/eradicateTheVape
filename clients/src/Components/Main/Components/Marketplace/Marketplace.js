@@ -65,7 +65,7 @@ class Marketplace extends Component {
 
   sendRequestThree = async (e) => {
     //e.preventDefault();
-    const response = await fetch(api.base + api.handlers.marketplaceBadges + "1", {
+    const response = await fetch(api.base + api.handlers.marketplaceBadges + this.props.user.id, {
       method: "GET",
       headers: new Headers({
         "Authorization": localStorage.getItem("Authorization")
@@ -135,8 +135,6 @@ class Marketplace extends Component {
   }
 
   render() {
-      //{this.sendRequest()}
-      console.log(this.state.userBadges)
       const { error} = this.state;
       const listItems = this.state.badges.map((badge) =>
         <li>
@@ -155,9 +153,6 @@ class Marketplace extends Component {
       );
       return <div className="marketplace">
           <Errors error={error} setError={this.setError} />
-          <div className="display-user">
-            <h1>Logged in as: <span className="red">{this.props.user.userName}</span></h1> 
-          </div>
           <div className="picture">
             <div className="text">
               <h1>Market<span className="red">place</span></h1>

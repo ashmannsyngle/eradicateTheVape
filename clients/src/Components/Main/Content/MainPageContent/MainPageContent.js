@@ -8,9 +8,6 @@ import {ContentOne, ContentTwo, ContentThree, ContentFour, ContentFive, OurMissi
 const MainPageContent = ({ user, setPage }) => {
 
     return <>
-        <div className="display-user">
-           <h1>Logged in as: <span className="red">{user.userName}</span></h1> 
-        </div>
         <Content />
     </>
 }

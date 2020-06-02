@@ -120,7 +120,7 @@ class SignUp extends Component {
         const { error } = this.state;
         return <div className="sign-in-page">
             <div className="logo">
-                <h1>EradicateThe<span className="red">Vape</span></h1>
+                <img src="images/logo.png" />
             </div>
             <div className="container">
                 <h1>Sign <span className="red">Up</span></h1>

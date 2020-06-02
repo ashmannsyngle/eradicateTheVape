@@ -81,7 +81,7 @@ class SignIn extends Component {
         const { error } = this.state;
         return <div className="sign-in-page">
             <div className="logo">
-                <h1>EradicateThe<span className="red">Vape</span></h1>
+                <img src="images/logo.png" />
             </div>
             <div className="container">
                 <h1>Sign <span className="red">In</span></h1>
@@ -95,7 +95,6 @@ class SignIn extends Component {
                     fields={this.fields} />
                 <div className="button-group">
                     <button className="btn btn-primary mr-2" onClick={(e) => this.props.setPage(e, PageTypes.signUp)}>NEW? SIGN UP!</button>
-                    <button className="btn btn-primary" onClick={(e) => this.props.setPage(e, PageTypes.forgotPassword)}>FORGOT PASSWORD</button>
                 </div>
             </div>
         </div>

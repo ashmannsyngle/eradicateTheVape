@@ -93,9 +93,6 @@ class SpecificThreads extends Component {
       );
       return <div className="threads">
           <Errors error={error} setError={this.setError} />
-          <div className="display-user">
-            <h1>Logged in as: <span className="red">{this.props.user.userName}</span></h1> 
-          </div>
           <div className="picture">
             <div className="text">
               <h1>Posts for <span className="red">{this.props.thread.name}</span>:</h1>

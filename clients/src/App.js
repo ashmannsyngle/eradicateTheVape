@@ -60,8 +60,8 @@ class App extends Component {
     }
 
     setPage = (e, page) => {
-        e.preventDefault();
         this.setState({ page });
+        return false;
     }
 
     /**

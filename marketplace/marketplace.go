@@ -83,7 +83,7 @@ func (msq *MySQLStore) BadgeUserHandler(w http.ResponseWriter, r *http.Request) 
 
 		if r.Method == "GET" {
 			sqlQuery := "select m.badgeID, cost, badgeName, badgeDescription, imgURL from Badges as b join Marketplace as m on b.badgeID = m.badgeID where b.userID = ?"
-			res, err := msq.db.Query(sqlQuery, user.ID)
+			res, err := msq.db.Query(sqlQuery, badgeID)
 			var userBadges []Marketplace
 			defer res.Close()
 			if err != nil {
