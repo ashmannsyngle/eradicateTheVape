@@ -17,6 +17,7 @@ import { BrowserRouter, Route, Switch, Link, NavLink, Redirect } from 'react-rou
 const Main = ({ page, setPage, setAuthToken, setUser, user, thread, setThread, post, setPost}) => {
     let content = <></>
     let contentPage = true;
+    window.scrollTo(0, 0);
     switch (page) {
         case PageTypes.signedInMain:
             content = <MainPageContent user={user} setPage={setPage} />;
@@ -56,6 +57,7 @@ const Main = ({ page, setPage, setAuthToken, setUser, user, thread, setThread, p
             contentPage = false;
             break;
     }
+    
     return <>
         <div>
         <nav>

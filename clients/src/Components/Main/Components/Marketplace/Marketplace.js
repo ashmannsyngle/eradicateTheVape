@@ -3,6 +3,7 @@ import api from '../../../../Constants/APIEndpoints/APIEndpoints';
 import Errors from '../../../Errors/Errors';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import ReactDOM from 'react-dom'
 
 
 class Marketplace extends Component {
@@ -130,6 +131,8 @@ class Marketplace extends Component {
     {this.sendRequestThree()}
   }
 
+  componentDidUpdate = () => { ReactDOM.findDOMNode(this).scrollIntoView(); }
+
   setError = (error) => {
       this.setState({ error })
   }
@@ -156,10 +159,10 @@ class Marketplace extends Component {
           <div className="picture">
             <div className="text">
               <h1>Market<span className="red">place</span></h1>
-              <p>Welcome to a place where you get rewarded for your efforts! The badges provided below can be pinned to your
-              profile in a way that replicates how people in support groups recieve badges for milestones achieved in the quitting process.
-              The colors of our badges are inspired by the official AA coin milestone colors. You can purchase badges through points. You can earn points by
-              logging in every day that you are sober as well as by interacting with our threads section.</p>
+              <p>Welcome to a place where you get <b>rewarded</b> for your efforts! The <b><span className="red">badges</span></b> provided below can be <b>pinned to your
+              profile</b>. This is similar to how people in support groups recieve badges for <b>milestones achieved in the quitting process</b>.
+              The colors of most of our badges are <b>inspired by the official AA coin milestone colors</b>. You can purchase badges through <b><span className="red">points</span></b>. You can <b>earn points</b> by
+              generally <b>interacting with the website</b> - such as using the sobrierty clock as well as engaging with our threads section.</p>
              </div>
             <img src="images/marketplace.png"/>
           </div>

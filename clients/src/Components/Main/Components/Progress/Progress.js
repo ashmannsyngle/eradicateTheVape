@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import api from '../../../../Constants/APIEndpoints/APIEndpoints';
+import ReactDOM from 'react-dom'
 import Errors from '../../../Errors/Errors';
 import Button from 'react-bootstrap/Button';
 
@@ -104,6 +105,8 @@ sendAllRequests =() => {
       {this.sendRequest()}
     }
 
+    componentDidUpdate = () => { ReactDOM.findDOMNode(this).scrollIntoView(); }
+
     setError = (error) => {
         this.setState({ error })
     }
@@ -115,10 +118,9 @@ sendAllRequests =() => {
             <div className="picture">
               <div className="text">
                 <h1>Sobreity <span className="red">Clock</span></h1>
-                <p>The first step to overcoming your addiction is acceptance. Think of this as a sobriety clock. Here, you can keep track of the exact number of days you've been sober.
-               All you need to do is click on the "Log Sober Day" button below and we'll update the number of days you've been sober. Once you log in, you won't be able to log once more for 24 hours since the
-               time you logged. You can earn points by logging in every day that you are sober. You are given 100 points for every day logged into the 'sobriety clock. You can use these points to buy cool badges 
-               from the Marketplace! Finally, remember - be honest to yourself.</p>
+                <p>The first step to overcoming your addiction is <b>acceptance</b>. Think of this as a <b>sobriety clock</b>. Here, you can keep track of the exact number of <b>days</b> you've been <b>sober</b>.
+               All you need to do is click on the <b><span className="red">Log Sober Day</span></b> button below and we'll update the number of days you've been sober. Once you log a sober day, <b>you won't be able to do it again until <span className="red">24</span> hours pass</b>. You are <b>awarded <span className="red">100</span> points</b> for every day logged into the 'sobriety clock. You can use these points to <b>buy cool badges</b>
+               from the <b>Marketplace</b>! Finally, remember - <b>be honest to yourself</b>.</p>
               </div>
               <div className="clockTwo">
                 <h2><span className="red">{daysSober}</span></h2>

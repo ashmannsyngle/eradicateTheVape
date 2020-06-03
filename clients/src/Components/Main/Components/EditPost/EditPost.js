@@ -80,11 +80,6 @@ class EditPost extends Component {
         <li>
           <div className="one-thread" id="post">
             <div className="one">
-              {/* <div>
-                {this.renderBadges(this.props.post)}
-              </div>         
-              <img src={this.props.post.creator.photoURL}/>
-              <h5>{this.props.post.creator.userName}</h5> */}
               {this.props.post.anon ? <div>
                 <div>
                     <img src="images/anonymous.png"/>
@@ -117,7 +112,7 @@ class EditPost extends Component {
                     <div>
                         <textarea name={"content"} value={content} onChange={this.setValue}/>
                     </div>
-                    <input type="submit" value="EDIT POST"/>
+                    <input type="submit" value="UPDATE POST"/>
                     <input type="back" value="GO BACK" onClick={(e) => this.props.setPage(e, PageTypes.specificThreads)}/>
                 </form>
             </span>

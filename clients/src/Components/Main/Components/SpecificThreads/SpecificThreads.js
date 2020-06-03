@@ -96,6 +96,7 @@ class SpecificThreads extends Component {
 
 
   componentWillMount() {
+    {window.scrollTo(0, 0);}
     {this.sendRequest()}
   }
 
@@ -175,7 +176,7 @@ class SpecificThreads extends Component {
             <div className="two" id="post">
               <h3>{post.content}</h3>
             </div>
-            <div className="three">
+            <div className="three" id="post-three">
               <h2>Last Edited:</h2>
               <h3>{this.getParsedTime(post.editedAt)}</h3>
             </div>

@@ -104,6 +104,10 @@ class CreateThread extends Component {
         });
       }
 
+      componentWillMount() {
+        {window.scrollTo(0, 0);}
+      }
+
     render() {
         const { name, description, anon, error } = this.state;
         return <div className="editProfile">

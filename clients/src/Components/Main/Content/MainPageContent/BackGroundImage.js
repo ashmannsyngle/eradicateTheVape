@@ -5,7 +5,7 @@ export default class BackGroundImage extends Component {
       <div className="hero-image" role="img" aria-label="man smoking a vape">
         <div className="hero-text">
           <h1>Lead a <span className="green">healthier</span> life.</h1>
-          <h1>Talk about your <span className="red">addiction</span> here.</h1>
+          <h1>Deal with your <span className="red">addiction</span> here.</h1>
         </div>
       </div>
     );

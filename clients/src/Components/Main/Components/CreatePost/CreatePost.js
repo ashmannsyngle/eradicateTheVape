@@ -98,6 +98,12 @@ class CreatePost extends Component {
           anon: !this.state.anon,
         });
       }
+      
+    componentWillMount() {
+        {window.scrollTo(0, 0);}
+      }
+
+
 
     render() {
         const { content, anon, error } = this.state;

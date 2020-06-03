@@ -565,15 +565,17 @@ footer h3 {
  }
 
 .progress button {
+  margin-top: 20px;
   background-color: red;
   border: none;
-  padding: 7px 20px;
+  padding: 12px 25px;
   color: white;
   border-radius: 5px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 14px;
+  font-size: 18px;
+  font-weight: 300;
   transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -1075,6 +1077,7 @@ footer h3 {
   font-size: 17px;
   font-weight: bold;
   margin: 0;
+  margin-bottom: 0;
 }
 
 .threads .one-thread .three h3 {
@@ -1193,6 +1196,12 @@ footer h3 {
   margin-bottom: 10px;
 }
 
+.threads h5 {
+  font-weight: 400;
+  margin-top: 0;
+  font-style: italic;
+}
+
 .editProfile li{
   list-style: none;
   display: inline-block;
@@ -1204,6 +1213,7 @@ footer h3 {
   align-items: center;
   width: 70rem;
   padding: 20px;
+  flex-wrap: wrap;
   margin: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -1218,6 +1228,7 @@ footer h3 {
 .editProfile .one-thread#post {
   transition: none;
   border-radius: 20px;
+  width: 75rem;
 }
 
 .editProfile .one-thread#post .one{
@@ -1262,6 +1273,10 @@ footer h3 {
   text-align: right;
 }
 
+div#post-three {
+  margin-right: 30px;
+}
+
 .editProfile .one-thread .three h2 {
   font-size: 17px;
   font-weight: bold;
@@ -1290,3 +1305,45 @@ footer h3 {
   width: 20px;
 }
 
+.mission h2 {
+  font-weight: 400;
+    font-size: 30px;
+    line-height: 20px;
+    text-align: center;
+}
+
+.mission img.logo {
+  width: 500px;
+}
+
+.mission .features {
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.mission .features li {
+  list-style: none;
+  
+}
+
+.mission .features .card {
+  background-color: white;
+  padding: 20px;
+  margin: 20px;
+  height: 10rem;
+  border-radius: 10px;
+}
+.mission .features .card h2 {
+  margin-bottom: 0;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.mission .features .card img {
+  width: 50px;
+}

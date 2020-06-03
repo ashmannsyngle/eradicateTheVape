@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import PageTypes from '../../../../Constants/PageTypes/PageTypes';
+
 export class ContentOne extends Component {
   render() {
     let content = (
@@ -125,20 +129,24 @@ export class ContentFour extends Component {
 }
 
 export class ContentFive extends Component {
+  constructor(props) {
+    super(props);
+  }
+  
   render() {
     let content = (
       <div>
         <p> *Most of the data above is taken from <a href="https://e-cigarettes.surgeongeneral.gov/knowtherisks.html"> here</a></p>
         <div className="four">
           <div className="line"></div>
-          <blockquote>"The intuitive UI and the ability to track my sobriety daily was so useful amidst this pandemic especially!" <span>- Anonymous user</span></blockquote>
+          <blockquote>"I need a place where I can talk to others about the struggle of getting over my nicotine addiction." <span>- Anonymous user</span></blockquote>
           <blockquote>"Threads where people can connect with others who go through the same things you have in your recovery just makes the quitting process a whole lot easier." <span>- Anonymous user</span></blockquote>
           <h1>That's how I feel!</h1>
           <h2>Yeah, we <span className="red">know</span>.</h2>
           <img src="images/read_posts.png" alt="person reading online posts" className="center" />
           <p>Read posts like this where users from around the world talk about their vaping addiction in a separate section.</p>
           <div className="btn">
-            <a href="/others">GO THERE</a>
+            <a onClick={(e) => this.props.setPage(e, PageTypes.threads)}>GO THERE</a>
           </div>
         </div>
       </div>
@@ -151,15 +159,58 @@ export class OurMission extends Component {
   render() {
     let mission = (
       <div className="mission">
-        <h2>OUR <span className="red">MISSION</span></h2>
+        <img src="images/mission-logo.png" className="logo" />
         <p>
-        Quitting nicotine is hard, especially when you lack support. Groups like Alcoholics Anonymous exist for people with 
-        alcoholism, but there aren’t very many groups for people addicted to nicotine products, such as vaping or smoking. 
-        There are also people who don’t know where to start with the whole process of quitting, or need reliable resources 
-        on how to quit. Through Eradicate the Vape, we wish to connect people across all stages of recovery, from those who 
-        haven’t started to those who’ve crossed the finish line. Through our forums service and personalized goals, we hope 
-        to provide support, connections, and resources to everyone on their journey to quit nicotine once and for all. 
+        Quitting nicotine is <b>hard</b>, especially when you lack <b>support</b>. Groups like Alcoholics Anonymous exist for people with 
+        alcoholism, but there <b>aren’t very many groups</b> for people addicted to nicotine products, such as vaping or smoking. 
+        There are also people who <b>don’t know where to start</b> with the whole process of quitting, or need reliable resources 
+        on how to quit. Through <b><span className="red">Eradicate the Vape</span></b>, we wish to connect people across all stages of recovery, from those who 
+        haven’t started to those who’ve crossed the finish line. Through our <b>forums service</b> and <b>incentive-based goals</b>, we hope 
+        to provide <b>support, connections, and resources</b> to everyone on their journey to quit nicotine once and for all. 
         </p>
+        <h2>Check Out Our <span className="red">Features</span>:</h2>
+        <div className="features">
+          <li>
+            <Card style={{ width: '10rem' }}>
+              <Card.Img variant="top" src="images/clock.png" />
+              <Card.Body>
+                <h2>Log Sober Days into the Sobriety Clock</h2>
+              </Card.Body>
+            </Card>
+          </li>
+          <li>
+            <Card style={{ width: '10rem' }}>
+              <Card.Img variant="top" src="images/market.png" />
+              <Card.Body>
+                <h2>Buy Cool Badges Using Points in the Marketplace</h2>
+              </Card.Body>
+            </Card>
+          </li>
+          <li>
+            <Card style={{ width: '10rem' }}>
+              <Card.Img variant="top" src="images/message.png" />
+              <Card.Body>
+                <h2>Interact With Other Using Threads & Posts</h2>
+              </Card.Body>
+            </Card>
+          </li>
+          <li>
+            <Card style={{ width: '10rem' }}>
+              <Card.Img variant="top" src="images/anonymous.png" />
+              <Card.Body>
+                <h2>Option to Stay Anonymous in Threads or Posts</h2>
+              </Card.Body>
+            </Card>
+          </li>
+          <li>
+            <Card style={{ width: '10rem' }}>
+              <Card.Img variant="top" src="images/hippopotamus.png" />
+              <Card.Body>
+                <h2>Edit Your Profile We Give You a Cool Picture!</h2>
+              </Card.Body>
+            </Card>
+          </li>
+        </div>
       </div>
     );
     return mission;

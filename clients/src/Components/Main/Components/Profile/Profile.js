@@ -4,6 +4,8 @@ import PageTypes from '../../../../Constants/PageTypes/PageTypes';
 import Errors from '../../../Errors/Errors';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import ReactDOM from 'react-dom'
+
 
 
 class Profile extends Component {
@@ -50,6 +52,9 @@ class Profile extends Component {
   componentWillMount() {
     {this.sendRequestThree()}
   }
+
+  componentDidUpdate = () => { ReactDOM.findDOMNode(this).scrollIntoView(); }
+
 
   setError = (error) => {
       this.setState({ error })

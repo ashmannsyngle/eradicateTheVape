@@ -8,7 +8,7 @@ import {ContentOne, ContentTwo, ContentThree, ContentFour, ContentFive, OurMissi
 const MainPageContent = ({ user, setPage }) => {
 
     return <>
-        <Content />
+        <Content setPage={setPage}/>
     </>
 }
 
@@ -23,7 +23,7 @@ export class Content extends Component {
             <ContentTwo />
             <ContentThree />
             <ContentFour />
-            <ContentFive />
+            <ContentFive setPage={this.props.setPage}/>
           </div>
         </div>
       )

@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import api from '../../../../Constants/APIEndpoints/APIEndpoints';
 import PageTypes from '../../../../Constants/PageTypes/PageTypes';
 import Errors from '../../../Errors/Errors';
-import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import {Link, RichText, Date} from 'prismic-reactjs';
+import {Date} from 'prismic-reactjs';
+import ReactDOM from 'react-dom'
+
 
 
 class Threads extends Component {
@@ -95,6 +96,7 @@ class Threads extends Component {
 
   componentWillMount() {
     {this.sendRequest()}
+    {window.scrollTo(0, 0);}
   }
 
   setError = (error) => {
@@ -185,15 +187,16 @@ class Threads extends Component {
           <div className="picture">
             <div className="text">
               <h1>Threads</h1>
-              <p>Welcome to the threads section of your website! Share your addiction/addiction recovery stories here or just
-                 go through the other users discussions. There are a variety of threads that you can explore. Just scroll down and click on the thread
-                 that you find most interesting. Create a new thread if you want to start a conversation. You will be randomly awarded points based
-                 on your interaction with these threads so make sure you're active. We believe in your recovery and urge you to talk about it!
+              <p>Welcome to the threads! Feel free to <b>share</b> your thoughts/feelings here or just
+                 browse through what others are thinking. There are a <b>variety of threads</b> that you can explore. Just scroll down and click on the thread
+                 that you find most interesting. <b>Create a new thread</b> if you want to start a new conversation/topic. You will also be <b>randomly awarded points</b> based
+                 on your interaction with these threads so <b>make sure you're active</b>. We believe in your recovery and urge you to talk about it!
               </p>
              </div>
             <img src="images/threads.png"/>
           </div>
           <h2>Check out the latest <span className="red">threads</span>:</h2>
+          <h5>Clicking on a thread leads to it's posts</h5>
           <div className="createButton">
               <Button variant="primary" onClick={(e) => { this.props.setPage(e, PageTypes.createThreads)}}>CREATE A NEW THREAD</Button>
           </div>
