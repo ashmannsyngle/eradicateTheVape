@@ -147,6 +147,9 @@ class SpecificThreads extends Component {
   }
 
   checkDelete = (post) => {
+    if (post.creator.id == this.props.user.id) {
+      return true;
+    }
     if (this.props.thread.creator.id != this.props.user.id) {
       return false;
     }
