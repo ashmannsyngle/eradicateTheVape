@@ -17,65 +17,114 @@ This site can serve as an alternative to reddit or facebook as it reduces the ne
 * /v1/users
     * **POST**: Create a new user
         * 201: User successfully created
+        * 400: Status Bad Request (invalid user information sent by client)
+        * 405: Status Method Not Allowed
         * 415: Unsupported Media Type
 * /v1/users/**{userID}** _or_ **‘me’**
     * **GET**: Get a user
         * 200: User successfully retrieved
         * 401: Status Unauthorized
         * 404: User Not Found
+        * 405: Status Method Not Allowed
     * **PATCH**: Update a user
         * 200: User successfully updated
         * 403: Status Forbidden
+        * 405: Status Method Not Allowed
         * 415: Unsupported Media Type
 #### The Marketplace
-* v1/marketplace/**{ItemID}**
-    * **PATCH**: Updates current user with recently bought item
+* v1/marketplace
+    * **GET**: Gets all badges in the Marketplace
+        * 200: Badges successfully retrieved
+        * 401: Status Unauthorized
+        * 405: Status Method Not Allowed
+        * 500: Internal Server Error
+* v1/marketplace/**{BadgeID}**
+    * **GET**: Gets all badges for specific user
+        * 200: Badges successfully retrieved
+        * 400: Status Bad Request (invalid user id sent by client)
+        * 401: Status Unauthorized
+        * 405: Status Method Not Allowed
+        * 500: Internal Server Error (if there is some error in the SQL scan)
+    * **PATCH**: Updates current user with recently bought badge
         * 200: Item successfully added to user’s profile
-        * 403: Status Forbidden 
-        * 415: Unsupported Media Type
+        * 400: Status Bad Request (invalid badge id sent by client)
+        * 401: Status Unauthorized
+        * 405: Status Method Not Allowed
+        * 500: Internal Server Error (if there is some error in the SQL scan)
     * **DELETE**: Delete the item from the users profile
         * 200: Item successfully deleted
+        * 401: Status Unauthorized
         * 403: Status Forbidden
+        * 405: Status Method Not Allowed
+        * 500: Internal Server Error (if there is some error in the SQL scan)
 
-#### The Forum Itself 
+#### The Threads Itself 
 * /v1/threads
-    * **GET**: Thread homepage
-        * 200: Return list of the latest threads or the pinned threads (if any)
-        * 500: Internal Server Error
-* /v1/threads/tagged/[tagname]
-    * **GET**: Threads under the tag [tagname]
-        * 200: Return list of most recent/pinned threads containing that tag
-        * 500: Internal Server Error
-* /v1/threads/id/{threadID}
+    * **GET**: Get most recent threads 
+        * 200: Return list of the latest threads (if any)
+        * 400: Status Bad Request (invalid badge id sent by client)
+        * 401: Status Unauthorized
+        * 500: Internal Server Error (if there is any error in SQL or encoding response)
+    * **POST**: Creates a new thread
+        * 201: Thread successfully created
+        * 400: Status Bad Request (invalid thread creation request by client)
+        * 401: Status Unauthorized
+        * 500: Internal Server Error (if there is any error in encoding response)
+* /v1/threads/**{ThreadID}**
     * **GET**: Thread with inputted thread ID
         * 200: Returns list of posts in chronological order that were made in that specific thread
-        * 404: Thread not found
-        * 500: Internal Server Error
-    * **POST**: Reloads page and adds newly submitted post to the end of the thread
-        * 200: Returns list of posts in chronological order that were made in that specific thread, goes immediately to new post
+        * 400: Status Bad Request (invalid user in header)
         * 401: Status Unauthorized
-        * 404: Thread not found
-        * 500: Internal Server Error
-    * **DELETE**: Deletes thread and redirects user back to /v1/others
-        * 200: Thread is deleted--triggers redirect and reloads /v1/others with original thread now deleted
-        * 401: Unauthorized--user cannot delete thread unless they are the one who created it
-        * 404: Thread not found
-        * 500: Internal Server Error
-* /v1/posts/{postID}
+        * 500: Internal Server Error (if there is any error in encoding response)
+    * **POST**: Adds newly submitted post to the end of the thread
+        * 201: Post successfully created and added to end of thread
+        * 400: Status Bad Request (invalid user in header)
+        * 401: Status Unauthorized
+        * 404: Thread for specific post not found
+        * 500: Internal Server Error (if there is any error in encoding response)
+    * **DELETE**: Deletes thread 
+        * 200: Thread is successfully deleted
+        * 400: Status Bad Request (invalid user in header)
+        * 401: Status Unauthorized
+        * 404: Thread to delete not found
+        * 500: Internal Server Error (if there is any error in deleting the thread)
+* /v1/posts/**{PostID}**
     * **PATCH**: User edits post in a thread
         * 200: Post successfully updated
+        * 400: Status Bad Request (invalid user in header)
         * 403: Status Forbidden 
+        * 404: Post to update not found
         * 415: Unsupported Media Type
-        * 500: Internal Server Error
+        * 500: Internal Server Error (if there is any error in the SQL or encoding response)
 * /v1/sessions
     * **POST**: Begin a new session using an existing user's credentials.
         * 201: New session successfully created
         * 401: Status Unauthorized
+        * 405: Status Method Not Allowed
         * 415: Unsupported Media Type
 * /v1/sessions/mine
     * **DELETE**: Ends the current user’s session
         * 200: Session successfully ended
         * 403: Status Forbidden
+        * 405: Status Method Not Allowed
+
+#### The User Progress 
+* /v1/progress
+    * **GET**: Get progress of current user (also creates a progress tracker if first time logging in)
+        * 200: Successully gets the progress information of current user
+        * 400: Status Bad Request (invalid user in header)
+        * 500: Internal Server Error (if there is any error in SQL insertion)
+    * **PATCH**: Updates current user progress
+        * 200: Successully updated the progress of current user
+        * 400: Status Bad Request (invalid user in header or invalid request by client)
+        * 500: Internal Server Error (if there is any error in SQL updating)
+* /v1/progress/
+    * **POST**: Updates points of current user (for threads and post creation)
+        * 200: Successully updates the points of current user
+        * 400: Status Bad Request (invalid user in header)
+        * 401: Status Unauthorized
+        * 405: Status Method Not Allowed
+        * 500: Internal Server Error (if there is any error in SQL insertion)
 
 ### User Cases and Priority
 
@@ -93,7 +142,7 @@ This site can serve as an alternative to reddit or facebook as it reduces the ne
 
 ![our architectural diagram](img/INFO_441_Architectual_Diagram.png)
 
-When the user makes a request to our website, the gateway server first authenticates the user and verifies the session token provided against the redis store. Based on this request, the reverse proxy will redirect the request to either the ‘threads’ microservice or the ‘User Information’ microservice. The threads microservice will render a page that will show data stored in our ‘threads and posts’ database. The User Information Microservice will render a page that will show specific user data stored in our ‘User Progress and Marketplace’ database.
+When the user makes a request to our website, the gateway server first authenticates the user and verifies the session token provided against the redis store. Based on this request, the reverse proxy will redirect the request to either the ‘Threads’ microservice, the 'Marketplace' microservice or the ‘Progress’ microservice. The Threads microservice will render a page that will show the threads and posts stored in our main database. The 'Marketplace' Microservice will render a page that will show information about the badges from our marketplace. The 'Progress' Microservice will render a page that will show information about the user progress from our database. Finally, database will contain specific user data and information from all our microservices.
 
 
 ### Appendix
@@ -117,9 +166,16 @@ When the user makes a request to our website, the gateway server first authentic
   * **userID** int not null,
   * foreign key (userID) references Users(id)
 
+* CREATE UNIQUE INDEX email_index ON Users (email);
+
+* CREATE UNIQUE INDEX username_index ON Users (username);
+
 * **Marketplace**:
   * **badgeID** int primary key auto_increment not null,
   * **cost** int not null
+  * **badgeName** varchar(30) not null
+  * **badgeDescription** varchar(255) not null
+  * **imgURL** varchar(255) not null
   
 * **Badges**:
   * **badgeID** int not null,
@@ -127,17 +183,27 @@ When the user makes a request to our website, the gateway server first authentic
   * foreign key (badgeID) references Marketplace(badgeID)
   * foreign key (userID) references Users(id)
 
+* CREATE UNIQUE INDEX badge_index ON Badges (badgeID, userID);
+
 * **Threads**:
-  * **threadID** int primary key auto_increment not null,
-  * **userWhoCreatedID** int not null,
-  * **timeCreated** datetime not null,
+  * **threadID** int primary key auto_increment not null
+  * **threadName** varchar(80) not null
+  * **threadDescription** varchar(500)
+  * **userWhoCreatedID** int not null
+  * **anon** bool default false not null
+  * **timeCreated** datetime not null
+  * **editedAt** datetime not null
   * foreign key (userWhoCreatedID) references Users(id)
 
+* CREATE UNIQUE INDEX thread_index ON Threads (threadName);
+
 * **Posts**:
-  * **postID** int primary key auto_increment not null,
-  * **threadID** int not null,
-  * **content** varchar (500) not null,
-  * **userWhoCreatedID** int not null,
-  * **timeCreated** datetime not null,
+  * **postID** int primary key auto_increment not null
+  * **threadID** int not null
+  * **content** varchar (1500) not null
+  * **userWhoCreatedID** int not null
+  * **anon** bool default false not null
+  * **timeCreated** datetime not null
+  * **editedAt** datetime not null
   * foreign key (userWhoCreatedID) references Users(id)
   * foreign key (threadID) references Threads(threadID)
