@@ -11,7 +11,7 @@ class Progress extends Component {
         this.state = {
             progressID: 0,
             daysSober: 0,
-            dateLogged: '',
+            dateLogged: new Date(),
             userID: 0,
             error: ''
         }
@@ -39,13 +39,12 @@ class Progress extends Component {
           dateLogged: new Date(progress.dateLogged),
           userID: progress.userID
         })
-        console.log(this.state.dateLogged)
     }
 
     sendRequestTwo = async (e) => {
-      var timeDiff = new Date() - this.state.dateLogged;
-      if (this.state.daysSober != 0 && timeDiff / (1000 * 3600) < 24) {
-        alert("You cannot log a day unless 24 hours have passed since your last log!");
+      var today = new Date();
+      if (this.state.daysSober != 0 && today.getDate() === this.state.dateLogged.getDate()) {
+        alert("You cannot log a day on the same day as your last log! Come back tomorrow!");
         this.setState({buttonDisable: true})
       } else {
         //e.preventDefault();
@@ -119,7 +118,7 @@ sendAllRequests =() => {
               <div className="text">
                 <h1>Sobreity <span className="red">Clock</span></h1>
                 <p>The first step to overcoming your addiction is <b>acceptance</b>. Think of this as a <b>sobriety clock</b>. Here, you can keep track of the exact number of <b>days</b> you've been <b>sober</b>.
-               All you need to do is click on the <b><span className="red">Log Sober Day</span></b> button below and we'll update the number of days you've been sober. Once you log a sober day, <b>you won't be able to do it again until <span className="red">24</span> hours pass</b>. You are <b>awarded <span className="red">100</span> points</b> for every day logged into the 'sobriety clock. You can use these points to <b>buy cool badges</b>
+               All you need to do is click on the <b><span className="red">Log Sober Day</span></b> button below and we'll update the number of days you've been sober. Once you log a sober day, <b>you won't be able to do it again until the <span className="red">next</span> day</b>. You are <b>awarded <span className="red">100</span> points</b> for every day logged into the 'sobriety clock. You can use these points to <b>buy cool badges </b>
                from the <b>Marketplace</b>! Finally, remember - <b>be honest to yourself</b>.</p>
               </div>
               <div className="clockTwo">

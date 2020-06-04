@@ -10,7 +10,7 @@ class CreateThread extends Component {
             name: '',
             description: '',
             amount: 50,
-            anon: '',
+            anon: false,
             error: ''
         }
     }
