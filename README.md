@@ -96,6 +96,8 @@ This site can serve as an alternative to reddit or facebook as it reduces the ne
         * 404: Post to update not found
         * 415: Unsupported Media Type
         * 500: Internal Server Error (if there is any error in the SQL or encoding response)
+
+#### The Session Store (Redis) 
 * /v1/sessions
     * **POST**: Begin a new session using an existing user's credentials.
         * 201: New session successfully created
