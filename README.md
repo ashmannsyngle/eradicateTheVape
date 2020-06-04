@@ -1,5 +1,7 @@
-# Project Proposal: Addiction Support Forums
+# Project Proposal: Eradicate The Vape
 By Ashmann Syngle, Shray Arora and Sarah West
+
+![EradicateTheVape](img/eradicatethevapelogo.png)
 
 ## Project Pitch
 For our project, our target audience is people struggling with addictive substances, such as nicotine. 
