@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Auth from './Components/Auth/Auth';
 import PageTypes from './Constants/PageTypes/PageTypes';
 import Main from './Components/Main/Main';
-//import './Styles/App.css';
 import api from './Constants/APIEndpoints/APIEndpoints';
 
 class App extends Component {

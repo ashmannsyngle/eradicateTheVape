@@ -18,7 +18,6 @@ class Progress extends Component {
     }
 
     sendRequest = async (e) => {
-        //e.preventDefault();
         const response = await fetch(api.base + api.handlers.progress, {
             method: "GET",
             headers: new Headers({
@@ -27,11 +26,9 @@ class Progress extends Component {
         });
         if (response.status >= 300) {
             const error = await response.text();
-            console.log(error);
             this.setError(error);
             return;
         }
-        //alert("") // TODO make this better by refactoring errors IS THIS REQUIRED?
         const progress = await response.json();
         this.setState ({
           progressID: progress.progressID,
@@ -47,7 +44,6 @@ class Progress extends Component {
         alert("You cannot log a day on the same day as your last log! Come back tomorrow!");
         this.setState({buttonDisable: true})
       } else {
-        //e.preventDefault();
           const response = await fetch(api.base + api.handlers.progress, {
             method: "PATCH",
             headers: new Headers({
@@ -56,11 +52,9 @@ class Progress extends Component {
         });
         if (response.status >= 300) {
             const error = await response.text();
-            console.log(error);
             this.setError(error);
             return;
         }
-        //alert("") // TODO make this better by refactoring errors IS THIS REQUIRED?
         const progress = await response.json();
         this.setState ({
           progressID: progress.progressID,
@@ -73,7 +67,6 @@ class Progress extends Component {
   }
 
   sendRequestThree = async (e) => {
-    //e.preventDefault();
     const response = await fetch(api.base + api.handlers.myuser, {
         method: "GET",
         headers: new Headers({
@@ -82,22 +75,18 @@ class Progress extends Component {
     });
     if (response.status >= 300) {
         const error = await response.text();
-        console.log(error);
         this.setError(error);
         return;
     }
-    //alert("") // TODO make this better by refactoring errors IS THIS REQUIRED?
     const user = await response.json();
     this.props.setUser(user);
 }
 
 sendAllRequests =() => {
   this.sendRequestTwo();
-  //this.sendRequest();
   setTimeout(() => {
     this.sendRequestThree();
   }, 1000);
-  //this.sendRequestThree();
 }
 
     componentWillMount() {

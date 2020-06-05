@@ -27,7 +27,6 @@ class Threads extends Component {
       });
       if (response.status >= 300) {
           const error = await response.text();
-          console.log(error);
           this.setError(error);
           return;
       }
@@ -48,7 +47,6 @@ class Threads extends Component {
       for (var i = 0; i < this.state.threads.length; i++) {
         const temp = this.state.deletedThread
         const id = this.state.threads[i].id
-        console.log(id)
         temp[id] = true
         this.setState({ deletedThread: temp})
         
@@ -62,7 +60,6 @@ class Threads extends Component {
         });
         if (response.status >= 300) {
             const error = await response.text();
-            console.log(error);
             this.setError(error);
             return;
         }
@@ -71,11 +68,9 @@ class Threads extends Component {
         prevState.threads[i].badges = badgesResponse
         this.setState({ threads: prevState.threads})
       }
-      console.log(this.state.deletedThread)
   }
 
   sendRequestTwo = async (e) => {
-    //e.preventDefault();
     const response = await fetch(api.base + api.handlers.specificThreads + e.id, {
         method: "DELETE",
         headers: new Headers({
@@ -84,8 +79,6 @@ class Threads extends Component {
     });
     if (response.status >= 300) {
         const error = await response.text();
-        console.log(error);
-        //this.setError(error);
         alert(error)
         return;
     }

@@ -106,8 +106,6 @@ func (nu *NewUser) ToUser() (*User, error) {
 		"images/zebra.png",
 	}
 
-	// TODO: UPDATE THIS IN THE DB SO THAT IT CAN BE VIEWED LATER (OUTSIDE OF PROPS)
-
 	s := rand.NewSource(time.Now().Unix())
 	r := rand.New(s) // initialize local pseudorandom generator
 	photoURL := profileArray[r.Intn(len(profileArray))]

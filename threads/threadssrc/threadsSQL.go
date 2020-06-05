@@ -290,6 +290,3 @@ func (store SQLStore) DeleteAllPosts(id int64) error {
 	}
 	return nil
 }
-
-//Still Needed: DeleteThread
-//Could do but will need to adjust schema: get pinned threads, get threads by tag name

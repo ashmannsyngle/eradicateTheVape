@@ -18,7 +18,6 @@ class CreateThread extends Component {
     sendRequest = async (e) => {
         e.preventDefault();
         const { name, description, anon } = this.state;
-        console.log(anon)
         const sendData = { name, description, anon };
         const response = await fetch(api.base + api.handlers.threads, {
             method: "POST",
@@ -37,7 +36,6 @@ class CreateThread extends Component {
         }
         if (response.status >= 300) {
             const error = await response.text();
-            console.log(error);
             this.setError(error);
             return;
         }
@@ -50,7 +48,6 @@ class CreateThread extends Component {
     }
 
     sendRequestTwo = async (e) => {
-        //e.preventDefault();
         const { amount } = this.state;
         const sendData = { amount };
         console.log(sendData)
@@ -64,7 +61,6 @@ class CreateThread extends Component {
         });
         if (response.status >= 300) {
             const error = await response.text();
-            console.log(error);
             this.setError(error);
             return;
         }
@@ -72,7 +68,6 @@ class CreateThread extends Component {
     }
 
     sendRequestThree = async (e) => {
-        //e.preventDefault();
         const response = await fetch(api.base + api.handlers.myuser, {
             method: "GET",
             headers: new Headers({
@@ -81,11 +76,9 @@ class CreateThread extends Component {
         });
         if (response.status >= 300) {
             const error = await response.text();
-            console.log(error);
             this.setError(error);
             return;
         }
-        //alert("") // TODO make this better by refactoring errors IS THIS REQUIRED?
         const user = await response.json();
         this.props.setUser(user);
       }

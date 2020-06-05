@@ -32,7 +32,6 @@ class CreatePost extends Component {
         }
         if (response.status >= 300) {
             const error = await response.text();
-            console.log(error);
             this.setError(error);
             return;
         }
@@ -45,10 +44,8 @@ class CreatePost extends Component {
     }
 
     sendRequestTwo = async (e) => {
-        //e.preventDefault();
         const { amount } = this.state;
         const sendData = { amount };
-        console.log(sendData)
         const response = await fetch(api.base + api.handlers.progressPoints, {
             method: "POST",
             body: JSON.stringify(sendData),
@@ -59,7 +56,6 @@ class CreatePost extends Component {
         });
         if (response.status >= 300) {
             const error = await response.text();
-            console.log(error);
             this.setError(error);
             return;
         }
@@ -67,7 +63,6 @@ class CreatePost extends Component {
     }
 
     sendRequestThree = async (e) => {
-        //e.preventDefault();
         const response = await fetch(api.base + api.handlers.myuser, {
             method: "GET",
             headers: new Headers({
@@ -76,11 +71,9 @@ class CreatePost extends Component {
         });
         if (response.status >= 300) {
             const error = await response.text();
-            console.log(error);
             this.setError(error);
             return;
         }
-        //alert("") // TODO make this better by refactoring errors IS THIS REQUIRED?
         const user = await response.json();
         this.props.setUser(user);
       }

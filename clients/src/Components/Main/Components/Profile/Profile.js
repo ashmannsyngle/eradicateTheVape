@@ -18,7 +18,6 @@ class Profile extends Component {
   }
 
   sendRequestThree = async (e) => {
-    //e.preventDefault();
     const response = await fetch(api.base + api.handlers.marketplaceBadges + this.props.user.id, {
       method: "GET",
       headers: new Headers({
@@ -27,13 +26,10 @@ class Profile extends Component {
     });
     if (response.status >= 300) {
         const error = await response.text();
-        console.log(error);
         this.setError(error);
         return;
     }
-    //alert("") // TODO make this better by refactoring errors IS THIS REQUIRED?
     const badgesResponse = await response.json();
-    //console.log(response)
     if (badgesResponse != null) {
       this.setState({
         userBadges: badgesResponse.map(badge => ({
@@ -44,9 +40,7 @@ class Profile extends Component {
           imgURL: badge.imgURL,
         }))
       });
-    }
-   
-    //this.props.setBadges(badges);
+    }   
   }
 
   componentWillMount() {
@@ -61,7 +55,6 @@ class Profile extends Component {
   }
 
   render() {
-      //{this.sendRequest()}
       const { error} = this.state;
       const listItems = this.state.userBadges.map((badge) =>
         <li>

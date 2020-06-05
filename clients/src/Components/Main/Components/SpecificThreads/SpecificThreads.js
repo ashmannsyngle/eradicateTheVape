@@ -17,7 +17,6 @@ class SpecificThreads extends Component {
   }
 
   sendRequest = async (e) => {
-      //e.preventDefault();
       const response = await fetch(api.base + api.handlers.specificThreads + this.props.thread.id, {
           method: "GET",
           headers: new Headers({
@@ -26,14 +25,10 @@ class SpecificThreads extends Component {
       });
       if (response.status >= 300) {
           const error = await response.text();
-          console.log(error);
           this.setError(error);
           return;
       }
-      //alert("") // TODO make this better by refactoring errors IS THIS REQUIRED?
       const postResponse = await response.json();
-      //console.log(response)
-
       if (postResponse != null) {
         this.setState({
           posts: postResponse.map(post => ({
@@ -64,7 +59,6 @@ class SpecificThreads extends Component {
         });
         if (response.status >= 300) {
             const error = await response.text();
-            console.log(error);
             this.setError(error);
             return;
         }
@@ -73,11 +67,9 @@ class SpecificThreads extends Component {
         prevState.posts[i].badges = badgesResponse
         this.setState({ posts: prevState.posts})
       }
-      //this.props.setBadges(badges);
   }
 
   sendRequestTwo = async (e) => {
-    //e.preventDefault();
     const response = await fetch(api.base + api.handlers.posts + e.id, {
         method: "DELETE",
         headers: new Headers({
@@ -86,7 +78,6 @@ class SpecificThreads extends Component {
     });
     if (response.status >= 300) {
         const error = await response.text();
-        console.log(error);
         alert(error)
         return;
     }

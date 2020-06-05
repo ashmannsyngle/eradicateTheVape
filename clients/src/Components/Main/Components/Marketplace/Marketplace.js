@@ -17,7 +17,6 @@ class Marketplace extends Component {
   }
 
   sendRequest = async (e) => {
-      //e.preventDefault();
       const response = await fetch(api.base + api.handlers.marketplace, {
           method: "GET",
           headers: new Headers({
@@ -26,13 +25,10 @@ class Marketplace extends Component {
       });
       if (response.status >= 300) {
           const error = await response.text();
-          console.log(error);
           this.setError(error);
           return;
       }
-      //alert("") // TODO make this better by refactoring errors IS THIS REQUIRED?
       const badgesResponse = await response.json();
-      //console.log(response)
       this.setState({
         badges: badgesResponse.map(badge => ({
           badgeID: badge.badgeID,
@@ -42,13 +38,9 @@ class Marketplace extends Component {
           imgURL: badge.imgURL,
         }))
       });
-      //this.props.setBadges(badges);
   }
 
   sendRequestTwo = async (e) => {
-    //e.preventDefault();
-    // const { badge } = this.state;
-    // const sendData = { badge };
     const response = await fetch(api.base + api.handlers.marketplaceBadges + e.badgeID, {
         method: "PATCH",
         headers: new Headers({
@@ -57,7 +49,6 @@ class Marketplace extends Component {
     });
     if (response.status >= 300) {
         const error = await response.text();
-        console.log(error);
         this.setError(error);
         return;
     }
@@ -65,7 +56,6 @@ class Marketplace extends Component {
   }
 
   sendRequestThree = async (e) => {
-    //e.preventDefault();
     const response = await fetch(api.base + api.handlers.marketplaceBadges + this.props.user.id, {
       method: "GET",
       headers: new Headers({
@@ -74,13 +64,10 @@ class Marketplace extends Component {
     });
     if (response.status >= 300) {
         const error = await response.text();
-        console.log(error);
         this.setError(error);
         return;
     }
-    //alert("") // TODO make this better by refactoring errors IS THIS REQUIRED?
     const badgesResponse = await response.json();
-    //console.log(response)
     if (badgesResponse != null) {
       this.setState({
         userBadges: badgesResponse.map(badge => ({
@@ -93,12 +80,9 @@ class Marketplace extends Component {
       }); 
      
     }
-   
-    //this.props.setBadges(badges);
   }
 
   sendRequestFour = async (e) => {
-    //e.preventDefault();
     const response = await fetch(api.base + api.handlers.myuser, {
         method: "GET",
         headers: new Headers({
@@ -107,11 +91,9 @@ class Marketplace extends Component {
     });
     if (response.status >= 300) {
         const error = await response.text();
-        console.log(error);
         this.setError(error);
         return;
     }
-    //alert("") // TODO make this better by refactoring errors IS THIS REQUIRED?
     const user = await response.json();
     this.props.setUser(user);
   }

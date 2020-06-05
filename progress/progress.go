@@ -3,7 +3,6 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
-	"fmt"
 	"info441sp20-ashraysa/gateway/models/users"
 	"net/http"
 	"strings"
@@ -143,8 +142,6 @@ func (msq *MySQLStore) UserPointsHandler(w http.ResponseWriter, r *http.Request)
 			decoder.Decode(amountOfPoints)
 			sqlQueryFour := "update Users set points = ? where id = ?"
 			_, errFour := msq.db.Exec(sqlQueryFour, user.Points+amountOfPoints.Amount, user.ID)
-			fmt.Println(amountOfPoints)
-			fmt.Println(user.Points + amountOfPoints.Amount)
 			if errFour != nil {
 				http.Error(w, "Error updating points for the current user", http.StatusInternalServerError)
 				return

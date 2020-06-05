@@ -146,7 +146,6 @@ func (ctx *HandlerContext) SpecificThreadsHandler(w http.ResponseWriter, r *http
 			return
 		}
 		if toDelete.Creator.ID != thisUser.ID {
-			fmt.Println(toDelete.Creator)
 			http.Error(w, fmt.Sprintf("You are not the creator of this thread."), http.StatusUnauthorized)
 			return
 		}
@@ -224,8 +223,6 @@ func (ctx *HandlerContext) SpecificPostHandler(w http.ResponseWriter, r *http.Re
 		}
 
 		if thread.Creator.ID != thisUser.ID && toDelete.Creator.ID != thisUser.ID {
-			fmt.Println(toDelete.Creator.ID)
-			fmt.Println(thisUser.ID)
 			http.Error(w, fmt.Sprintf("You are not the author of this post. %v", err), http.StatusUnauthorized)
 			return
 		}
