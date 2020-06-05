@@ -1,7 +1,7 @@
 # Project Proposal: Eradicate The Vape
 By Ashmann Syngle, Shray Arora and Sarah West
 
-![EradicateTheVape](img/eradicatethevapelogo.png)
+![EradicateTheVape](img/mission-logo.png)
 
 ## Project Pitch
 For our project, our target audience is people struggling with addictive substances, such as nicotine. 
@@ -40,7 +40,7 @@ This site can serve as an alternative to reddit or facebook as it reduces the ne
         * 401: Status Unauthorized
         * 405: Status Method Not Allowed
         * 500: Internal Server Error
-* v1/marketplace/**{BadgeID}**
+* v1/marketplace/**{BadgeID/UserID}**
     * **GET**: Gets all badges for specific user
         * 200: Badges successfully retrieved
         * 400: Status Bad Request (invalid user id sent by client)
@@ -94,10 +94,17 @@ This site can serve as an alternative to reddit or facebook as it reduces the ne
     * **PATCH**: User edits post in a thread
         * 200: Post successfully updated
         * 400: Status Bad Request (invalid user in header)
-        * 403: Status Forbidden 
+        * 401: Status Unauthorized (invalid user in header)
         * 404: Post to update not found
         * 415: Unsupported Media Type
         * 500: Internal Server Error (if there is any error in the SQL or encoding response)
+    * **DELETE**: User deletes post in a thread
+        * 200: Post successfully deleted
+        * 400: Status Bad Request (invalid user in header)
+        * 401: Status Unauthorized (invalid user in header)
+        * 404: Post to delete not found
+        * 415: Unsupported Media Type
+        * 500: Internal Server Error (if there is any error in the SQL)
 
 #### The Session Store (Redis) 
 * /v1/sessions
@@ -136,11 +143,21 @@ This site can serve as an alternative to reddit or facebook as it reduces the ne
 |---|---|---|---|
 | P0  | Registered User  | I want to be able to create my own threads  | User will send a **POST request** to the /v1/threads endpoint, which will lead to the Threads microservice. This will insert a new row into the **Threads table of the database**. All the most recent threads, including this new one, can now be retreieved by sending   **GET request** to the same endpoint.  |
 | P0  | Registered User  | I want to be able to make posts in other threads  | User will send a **POST request** to the /v1/threads/{threadID} endpoint, which will lead to the Threads microservice. This will then insert a row into the **Posts table of the database** with the respective threadID, which will symbolizes a new post to the thread that has that threadID.  |
-| P0  | Registered User | I want to be able to view all threads  | User will send a **GET request** to /v1/threads endpoint, which will lead to the Threads microservice, which will return a list of all the threads (ordered by most recent). In order to get the user and badge information, the client code sends a **GET request** to /v1/users/{userID}, which leads to the |
-| P1  | Registered/Unregistered User  | I want to find pinned posts that may describe thread rules or resources  | Like above, the user will send a **GET request** to /v1/threads/ to find a list of threads. Pinned posts will always be placed at the top of the list.  |
-| P1  | Registered User  | I want to keep track of my progress on my goal towards sobriety  | The server will display information regarding the user’s progress by accessing the **progress column** of the **users table in the users/marketplace/process database** (i.e. running a query). It will then display said progress at the top of the page when the user signs in for the first time that day.  |
-| P1  | Registered User  | I want to exchange the points I receive by logging in for badges to add to my profile  | User would send a **PATCH request** to v1/marketplace/{ItemID}, where the ItemID will be an input included with their request. The ItemID corresponds to a table of possible items and badges from **the users/marketplace/process database**. From there, the user’s profile will update to include the page they selected.  |
-| P2  | Unregistered User  | I want to know how to sign up  | User would locate the sign-up page in the web client. Then, they would send a **POST request** with their inputted information (email, password, etc.) to create their account, similar to UserHandler.  |
+| P0  | Registered User | I want to be able to view all threads  | User will send a **GET request** to /v1/threads endpoint, which will lead to the Threads microservice, which will return a list of all the threads (ordered by most recent). In order to get the user and badge information, the client code sends a **GET request** to /v1/users/{userID} which will retrive the user informtion for each creator of each thread. It will also send a **GET request** to /v1/marketplace/{userID} to get the badges for all the creators of the threads.|
+| P0  | Registered User | I want to be able to view all posts in a thread  | User will send a **GET request** to /v1/threads/{threadID} endpoint, which will lead to the Threads microservice, which will return a list of all the posts in that thread. In order to get the user and badge information, the client code sends a **GET request** to /v1/users/{userID} which will retrive the user informtion for each creator of each post. It will also send a **GET request** to /v1/marketplace/{userID} to get the badges for all the creators of the posts.|
+| P0  | Registered User  | I want to be able to buy Badges from the Marketplace  | User will send a **PATCH request** to the /v1/marketplace/{badgeID} endpoint, which will lead to the Marketplace microservice. This will then insert a row into the **Badges table of the database** with the respective badgeID and the current user ID, which will symbolizes a new badge on the user's profile. It will also update the current user's points after deducting for the specific badge bought. |
+| P0  | Registered User  | I want to be able to log in my progress into the sobrierty clock (assuming user has done it once before) | On a new date from the last log, user will send a **PATCH request** to the /v1/progress endpoint, which will lead to the Progress microservice. This will then update the 'daysSober' field in the respective row of the **Progress table of the database** with the incremented days sober. It will also update the current user's points by adding 100 points for the new day logged. |
+| P1  | Registered | I want to be able to view my Profile  | User will send a **GET request** to /v1/users/{userID} to find information about the current user. The client code also sends a **GET request** to /v1/marketplace/{userID} to get the badges for the user and show it on the Profile page |
+| P1  | Registered | I want to be able to edit my Profile  | User will send a **PATCH request** to /v1/users/{userID} to update the information of the current user. |
+| P1  | Registered User  | I want to keep track of my progress on my goal towards sobriety  | User will send a **GET request** to /v1/progress endpoint, which will lead to the Progress microservice. This will get the daysSober for that particular user. |
+| P1  | Registered User  | I want to stay anonymous when making a thread/post  | User will send a **POST request** to the /v1/threads (or /v1/threads/{threadID}) endpoint, which will lead to the Threads microservice. This will insert a new row into the **Threads/Posts table of the database** with the 'anon' field set to true. |
+| P1  | Registered User  | I want to be able to log in my progress into the sobrierty clock for the first time | User will send a **GET request** to the /v1/progress endpoint, which will lead to the Progress microservice. Since this is the first tine, the server will create a new row in the **Progress table of the database** with the days sober as 1. It will also update the current user's points by adding 100 points for the new day logged. |
+| P2  | Unregistered User  | I want to sign up  | User would locate the sign-up page in the web client. Then, they would send a **POST request** to /v1/users endpoint, with their inputted information (email, password, etc.) to create their account. This will create a new row in the **Users table of the database** |
+| P2  | Registered User  | I want to edit my posts  | User will send a **PATCH request** to the /v1/posts/{PostID} endpoint, which will lead to the Threads microservice. This will update the respective row in the **Posts table of the database** with the updated content. |
+| P2  | Registered User  | As creator of one of the threads, I want to delete a post that I do not like  | User would send a **DELETE request** to /v1/posts/{postID} endpoint, which would lead to Post microservice. The server will check that they are the creator of the channel that post is a part of and delete the respective row from the **Posts table of the database** |
+| P2  | Registered User  | I want to see all the badges in the marketplace  | User would send a **GET request** to /v1/marketplace endpoint, which will lead to the Marketplace microservice. This will return the list of all badges in the marketplace from the **Marketplace table of the database**  |
+| P2  | Registered User  | I want to delete the post I made  | User would send a **DELETE request** to /v1/posts/{postID} endpoint, which would lead to Post microservice. This will delete the respective post from the **Posts table of the database** |
+| P2  | Registered User  | I want to delete the thread I made  | User would send a **DELETE request** to /v1/threads/{threadID} endpoint, which would lead to Threads microservice. This will delete the respective thread from the **Threads table of the database**  |
 
 ### Architectural Diagram
 
