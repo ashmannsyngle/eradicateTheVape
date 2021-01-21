@@ -4,7 +4,7 @@ docker pull ashmann7/etvgateway
 
 # docker network rm customNetwork
 
-# docker network create customNetwork
+docker network create customNetwork
 
 docker run -d \
 --network customNetwork \
